@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import GlobalStyle from '@styles/global-styles';
 import Theme from '@styles/theme';
 import { ThemeProvider } from 'styled-components';
+import './app.css';
 
 const queryClient = new QueryClient();
 
