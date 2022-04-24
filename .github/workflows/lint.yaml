@@ -1,0 +1,30 @@
+name: Lint
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - '!main'
+jobs:
+  check-skip:
+    name: Check to skip CI
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[ci skip]') }}
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+  test:
+    name: Checking source code
+    runs-on: ubuntu-latest
+    needs: check-skip
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install packages
+        run: npm install
+      - name: Prettier
+        run: npm run prettier
+      - name: ESLint
+        run: npm run lint
