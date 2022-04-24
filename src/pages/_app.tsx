@@ -6,6 +6,8 @@ import Theme from '@styles/theme';
 import { ThemeProvider } from 'styled-components';
 import './_app.css';
 
+import { SVGSprite } from '@components/Common';
+
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={Theme}>
           <GlobalStyle />
           <Component {...pageProps} />
+          <SVGSprite />
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>
