@@ -4,7 +4,7 @@ interface SVGSpriteProps {}
 
 const SVGSprite = (prop: SVGSpriteProps) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg">
+    <svg xmlns="http://www.w3.org/2000/svg" display="none">
       <symbol id="heart" viewBox="0 0 24 24">
         <path
           fillRule="evenodd"
