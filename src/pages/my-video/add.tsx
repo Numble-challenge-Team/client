@@ -28,7 +28,7 @@ interface MouseEventWithFileType {
 
 interface MyVideoAddProps {}
 
-const MyVideoAdd: NextPage<MyVideoAddProps> = (prop) => {
+const MyVideoAdd: NextPage<MyVideoAddProps> = () => {
   const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
   const [isVideoDragging, setIsVideoDragging] = useState<boolean>(false);
   const [videoURL, setVideoURL] = useState<string | null>(null);
@@ -129,7 +129,7 @@ const MyVideoAdd: NextPage<MyVideoAddProps> = (prop) => {
   };
 
   return (
-    <Layout hasNavigation={false}>
+    <Layout hasHeader={false}>
       <MyVideoStyled.Form onSubmit={submitVideo}>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
 
