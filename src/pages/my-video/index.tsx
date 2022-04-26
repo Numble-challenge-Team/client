@@ -1,11 +1,10 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
 
 import Layout from '@components/Layout/Layout';
 
 interface MyVideoProps {}
 
-const MyVideo: NextPage<MyVideoProps> = (prop) => {
+function MyVideo(prop: MyVideoProps) {
   return (
     <Layout>
       <Link href="/my-video/add">
@@ -13,6 +12,6 @@ const MyVideo: NextPage<MyVideoProps> = (prop) => {
       </Link>
     </Layout>
   );
-};
+}
 
 export default MyVideo;

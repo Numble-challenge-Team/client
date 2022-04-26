@@ -28,7 +28,7 @@ interface MouseEventWithFileType {
 
 interface MyVideoAddProps {}
 
-const MyVideoAdd: NextPage<MyVideoAddProps> = () => {
+function MyVideoAdd (prop: MyVideoAddProps) {
   const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
   const [isVideoDragging, setIsVideoDragging] = useState<boolean>(false);
   const [videoURL, setVideoURL] = useState<string | null>(null);
