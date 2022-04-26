@@ -1,19 +1,8 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
-  position: relative;
-  margin: 0 auto;
-  max-width: 37.5rem;
-  padding: 0 2rem;
-
-  // 임시 방편 -> Global Style로 옮겨야됨
-  font-family: 'NanumSquareR';
-  font-size: 1.4rem;
-  color: #808080;
-
   & input,
-  textarea,
-  button {
+  textarea {
     width: 100%;
     padding: 1.4rem 1rem;
     border: 1px solid #e3e3e3;
@@ -41,7 +30,6 @@ export const FileContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   border-radius: 0.8rem;
 
   &::before {
@@ -80,6 +68,21 @@ export const Image = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 0.8rem;
+`;
+
+export const DeleteFileButton = styled.button`
+  position: absolute;
+  top: -0.9rem;
+  right: -0.9rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background-color: #0c364e;
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+  line-height: 0.8;
 `;
 
 export const UploadLabel = styled.label<{ isDragging: boolean }>`
@@ -128,8 +131,14 @@ export const Submit = styled.button`
   position: sticky;
   bottom: 2rem;
   display: block;
+  width: 100%;
+  padding: 1.4rem 1rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 8px;
+  font-size: 1.4rem;
   font-family: 'NanumSquareB';
-  color: #808080;
+  background-color: #5ce5ee;
+  color: #000000;
 
   &:disabled {
     border: none;
