@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 
 interface SVGSpriteProps {}
 
-const SVGSprite = (prop: SVGSpriteProps) => {
+function SVGSprite(prop: SVGSpriteProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" display="none">
       <symbol id="heart" viewBox="0 0 24 24">
@@ -40,6 +40,6 @@ const SVGSprite = (prop: SVGSpriteProps) => {
       </symbol>
     </svg>
   );
-};
+}
 
 export default SVGSprite;
