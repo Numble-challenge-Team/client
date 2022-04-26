@@ -7,13 +7,17 @@ import Navigation from './Navigation/Navigation';
 import * as LayoutStyled from './LayoutStyle';
 
 interface LayoutProps {
-  hasNavigation?: boolean;
+  hasHeader?: boolean;
 }
 
-function Layout({ children, hasNavigation = true }: PropsWithChildren<LayoutProps>) {
+function Layout({ children, hasHeader = true }: PropsWithChildren<LayoutProps>) {
   return (
     <>
-      <header>{hasNavigation && <Navigation />}</header>
+      {hasHeader && (
+        <LayoutStyled.Header>
+          <Navigation />
+        </LayoutStyled.Header>
+      )}
       <LayoutStyled.Main>{children}</LayoutStyled.Main>
     </>
   );
