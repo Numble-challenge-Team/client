@@ -1,18 +1,22 @@
 import { PropsWithChildren } from 'react';
 
+import React from 'react';
+
 import Navigation from './Navigation/Navigation';
 
-interface LayoutProps {}
+import * as LayoutStyled from './LayoutStyle';
 
-const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
+interface LayoutProps {
+  hasNavigation?: boolean;
+}
+
+function Layout({ children, hasNavigation = true }: PropsWithChildren<LayoutProps>) {
   return (
     <>
-      <header>
-        <Navigation />
-      </header>
-      <main>{children}</main>
+      <header>{hasNavigation && <Navigation />}</header>
+      <LayoutStyled.Main>{children}</LayoutStyled.Main>
     </>
   );
-};
+}
 
 export default Layout;

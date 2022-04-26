@@ -1,16 +1,6 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
-  position: relative;
-  margin: 0 auto;
-  max-width: 37.5rem;
-  padding: 0 2rem;
-
-  // 임시 방편 -> Global Style로 옮겨야됨
-  font-family: 'NanumSquareR';
-  font-size: 1.4rem;
-  color: #808080;
-
   & input,
   textarea {
     width: 100%;

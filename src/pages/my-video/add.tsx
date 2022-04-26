@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react';
 
+import Layout from '@components/Layout/Layout';
 import * as MyVideoStyled from '@components/MyVideo/MyVideoStyle';
 
 type FileType = 'video' | 'image';
@@ -128,7 +129,7 @@ const MyVideoAdd: NextPage<MyVideoAddProps> = (prop) => {
   };
 
   return (
-    <>
+    <Layout hasNavigation={false}>
       <MyVideoStyled.Form onSubmit={submitVideo}>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
 
@@ -194,7 +195,7 @@ const MyVideoAdd: NextPage<MyVideoAddProps> = (prop) => {
           영상 업로드 하기
         </MyVideoStyled.Submit>
       </MyVideoStyled.Form>
-    </>
+    </Layout>
   );
 };
 
