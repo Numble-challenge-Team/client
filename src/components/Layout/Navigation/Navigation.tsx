@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import * as NavigationStyled from './NavigationStyle';
 import { Icon } from '@components/Common';
 
 interface NavigationProps {}
@@ -7,7 +8,7 @@ interface NavigationProps {}
 function Navigation(prop: NavigationProps) {
   return (
     <>
-      <nav>
+      <NavigationStyled.Nav>
         <ul>
           <li>
             <Link href="/">
@@ -38,7 +39,7 @@ function Navigation(prop: NavigationProps) {
             </Link>
           </li>
         </ul>
-      </nav>
+      </NavigationStyled.Nav>
     </>
   );
 }
