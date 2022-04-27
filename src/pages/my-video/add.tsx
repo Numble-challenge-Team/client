@@ -11,6 +11,7 @@ import {
 
 import Layout from '@components/Layout/Layout';
 import * as MyVideoStyled from '@components/MyVideo/MyVideoStyle';
+import axios from 'axios';
 
 type FileType = 'video' | 'image';
 
@@ -28,14 +29,14 @@ interface MouseEventWithFileType {
 
 interface MyVideoAddProps {}
 
-function MyVideoAdd (prop: MyVideoAddProps) {
+function MyVideoAdd(prop: MyVideoAddProps) {
   const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
   const [isVideoDragging, setIsVideoDragging] = useState<boolean>(false);
-  const [videoURL, setVideoURL] = useState<string | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
 
   const [isValidThumbnail, setIsValidThumbnail] = useState<boolean>(false);
   const [isThumbnailDragging, setIsThumbnailDragging] = useState<boolean>(false);
-  const [thumbnailURL, setThumbnailURL] = useState<string | null>(null);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
 
   const [isValidTitle, setIsValidTitle] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
@@ -44,6 +45,26 @@ function MyVideoAdd (prop: MyVideoAddProps) {
 
   const submitVideo: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('video', videoFile as File);
+    formData.append('thumbnail', thumbnailFile as File);
+
+    console.log({
+      title: formData.get('title'),
+      description: formData.get('description'),
+      video: formData.get('video'),
+      thumbnail: formData.get('thumbnail'),
+    });
+
+    axios({
+      method: 'post',
+      url: '',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   };
 
   const initEvent: ReactEventHandler<HTMLElement> = (e) => {
@@ -78,8 +99,8 @@ function MyVideoAdd (prop: MyVideoAddProps) {
   const uploadFile = (file: File, type: FileType) => {
     const fileURL = URL.createObjectURL(file);
 
-    const setFileURL = type === 'video' ? setVideoURL : setThumbnailURL;
-    setFileURL(fileURL);
+    const setFile = type === 'video' ? setVideoFile : setThumbnailFile;
+    setFile(file);
 
     const setIsValidFile = type === 'video' ? setIsValidVideo : setIsValidThumbnail;
     setIsValidFile(true);
@@ -109,8 +130,8 @@ function MyVideoAdd (prop: MyVideoAddProps) {
   };
 
   const deleteFile: MouseEventWithFileType = (type) => (e) => {
-    const setFileURL = type === 'video' ? setVideoURL : setThumbnailURL;
-    setFileURL(null);
+    const setFile = type === 'video' ? setVideoFile : setThumbnailFile;
+    setFile(null);
 
     const setIsDragging = type === 'video' ? setIsVideoDragging : setIsThumbnailDragging;
     setIsDragging(false);
@@ -134,9 +155,9 @@ function MyVideoAdd (prop: MyVideoAddProps) {
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
 
         <MyVideoStyled.VideoContainer>
-          {videoURL ? (
+          {videoFile ? (
             <>
-              <MyVideoStyled.Video src={videoURL} controls />
+              <MyVideoStyled.Video src={URL.createObjectURL(videoFile)} controls />
               <MyVideoStyled.DeleteFileButton type="button" onClick={deleteFile('video')}>
                 ×
               </MyVideoStyled.DeleteFileButton>
@@ -161,9 +182,9 @@ function MyVideoAdd (prop: MyVideoAddProps) {
         <MyVideoStyled.FormTitle>썸네일 이미지</MyVideoStyled.FormTitle>
 
         <MyVideoStyled.ImgContainer>
-          {thumbnailURL ? (
+          {thumbnailFile ? (
             <>
-              <MyVideoStyled.Image src={thumbnailURL} width={320} height={180} />
+              <MyVideoStyled.Image src={URL.createObjectURL(thumbnailFile)} width={320} height={180} />
               <MyVideoStyled.DeleteFileButton type="button" onClick={deleteFile('image')}>
                 ×
               </MyVideoStyled.DeleteFileButton>
@@ -197,6 +218,6 @@ function MyVideoAdd (prop: MyVideoAddProps) {
       </MyVideoStyled.Form>
     </Layout>
   );
-};
+}
 
 export default MyVideoAdd;
