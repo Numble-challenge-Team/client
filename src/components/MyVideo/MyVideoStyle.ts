@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
+  padding-bottom: 10rem;
+
   & input,
-  textarea {
+  p[contenteditable='true'] {
     width: 100%;
     padding: 1.4rem 1rem;
     border: 1px solid #e3e3e3;
@@ -11,10 +13,20 @@ export const Form = styled.form`
     font-family: 'NanumSquareR';
     font-size: 1.4rem;
     color: #808080;
+    outline: none;
+
+    &:focus {
+      border-color: #808080;
+    }
   }
 
-  & textarea {
-    height: 20rem;
+  & p[contenteditable='true'] {
+    min-height: 12.2rem;
+
+    &:empty:before {
+      display: block;
+      content: attr(placeholder);
+    }
   }
 `;
 
@@ -127,11 +139,31 @@ export const UploadLabel = styled.label<{ isDragging: boolean }>`
   }
 `;
 
-export const Submit = styled.button`
-  position: sticky;
-  bottom: 2rem;
+export const SubmitFixContainer = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 8.4rem;
+  background-color: ${({ theme }) => theme.color.white};
+`;
+
+export const SubmitWrapper = styled.div`
   display: block;
   width: 100%;
+  max-width: 37.5rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+`;
+
+export const Submit = styled.button`
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 37.5rem;
   padding: 1.4rem 1rem;
   border: 1px solid #e3e3e3;
   border-radius: 8px;
