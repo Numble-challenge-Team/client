@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
-import { Input } from '@components/Common';
+import { Button, Input } from '@components/Common';
+import Layout from '@components/Layout/Layout';
 
 import { FormRegisterType, SignupInfoType } from '@/types/signup';
 
@@ -40,7 +41,7 @@ function SignupPasswordPage() {
   };
 
   return (
-    <>
+    <Layout hasHeader={false}>
       <p>가입을 진행해 볼까요?</p>
       <p>비밀번호를 입력해 주세요.</p>
       <form onSubmit={handleSubmit(handlePasswordSubmit)}>
@@ -58,9 +59,11 @@ function SignupPasswordPage() {
         />
         {errors && errors.repeatPassword?.type === 'validate' && <p>비밀번호가 일치하지 않습니다.</p>}
 
-        <button type="submit">다음</button>
+        <Button type="submit" margin="3.6rem 0 0 0">
+          다음
+        </Button>
       </form>
-    </>
+    </Layout>
   );
 }
 
