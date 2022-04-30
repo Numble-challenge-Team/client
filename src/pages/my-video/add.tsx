@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { FileInput, MyVideoStyled } from '@components/MyVideo';
+import { FileInput, TagInput, MyVideoStyled } from '@components/MyVideo';
 
 import axios from 'axios';
 
@@ -20,6 +20,8 @@ function MyVideoAdd(prop: MyVideoAddProps) {
     setIsValidTitle(!!e.target.value);
     setTitle(e.target.value);
   };
+
+  const [tags, setTags] = useState<string[]>([]);
 
   const [description, setDescription] = useState<string>('');
   const changeDescription: FormEventHandler<HTMLDivElement> = (e) => {
@@ -83,6 +85,9 @@ function MyVideoAdd(prop: MyVideoAddProps) {
 
         <MyVideoStyled.FormTitle>제목</MyVideoStyled.FormTitle>
         <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} />
+
+        <MyVideoStyled.FormTitle>태그</MyVideoStyled.FormTitle>
+        <TagInput tags={tags} setTags={setTags} />
 
         <MyVideoStyled.FormTitle>설명</MyVideoStyled.FormTitle>
         <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
