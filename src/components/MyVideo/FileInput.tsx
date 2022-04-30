@@ -11,6 +11,7 @@ import {
 } from 'react';
 
 import * as MyVideoStyled from '@components/MyVideo/MyVideoStyle';
+import ReactPlayer from 'react-player';
 
 interface FileInputProps {
   type: 'video' | 'image';
@@ -58,6 +59,11 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
       return;
     }
 
+    const { size } = e.target.files[0];
+    const MB = size / 1024 / 1024;
+
+    console.log({ fileSize: MB });
+
     uploadFile(e.target.files[0]);
   };
 
@@ -87,7 +93,24 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
       {file ? (
         <>
           {type === 'video' ? (
-            <MyVideoStyled.Video src={URL.createObjectURL(file)} controls />
+            <MyVideoStyled.PlayerWrapper>
+              <ReactPlayer
+                url={URL.createObjectURL(file)}
+                width="100%"
+                height="100%"
+                onReady={(player) => {
+                  console.log('ready');
+                }}
+                onError={(err) => {
+                  console.log('error');
+                  setIsValid(false);
+                }}
+                onDuration={(duration) => {
+                  console.log({ duration });
+                }}
+                controls
+              />
+            </MyVideoStyled.PlayerWrapper>
           ) : (
             <MyVideoStyled.Image src={URL.createObjectURL(file)} width={320} height={180} />
           )}
