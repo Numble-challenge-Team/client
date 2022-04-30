@@ -28,7 +28,7 @@ interface MouseEventWithFileType {
 
 interface MyVideoAddProps {}
 
-function MyVideoAdd (prop: MyVideoAddProps) {
+function MyVideoAdd(prop: MyVideoAddProps) {
   const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
   const [isVideoDragging, setIsVideoDragging] = useState<boolean>(false);
   const [videoURL, setVideoURL] = useState<string | null>(null);
@@ -101,7 +101,7 @@ function MyVideoAdd (prop: MyVideoAddProps) {
       return;
     }
 
-    if (!new RegExp(`${type}\/*`).test(e.dataTransfer.files[0].type)) {
+    if (!new RegExp(`${type}/*`).test(e.dataTransfer.files[0].type)) {
       return;
     }
 
@@ -197,6 +197,6 @@ function MyVideoAdd (prop: MyVideoAddProps) {
       </MyVideoStyled.Form>
     </Layout>
   );
-};
+}
 
 export default MyVideoAdd;
