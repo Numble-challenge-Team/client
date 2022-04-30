@@ -1,7 +1,16 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  FormEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  MutableRefObject,
+  useState,
+} from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { FileInput, MyVideoStyled } from '@components/MyVideo';
+import { FileInput, TagInput, MyVideoStyled } from '@components/MyVideo';
+
+import ReactPlayer from 'react-player/lazy';
 
 import axios from 'axios';
 
@@ -11,11 +20,14 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
   const [isValidEmbedLink, setIsValidEmbedLink] = useState<boolean>(false);
   const [embedLink, setEmbedLink] = useState<string | null>(null);
   const changeEmbedLink: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const isEmbedLink = /^https\:\/\/youtu.be\/.+/;
-    setIsValidEmbedLink(isEmbedLink.test(e.target.value));
+    setEmbedLink(e.target.value);
+  };
+  const validateEmbedLink = () => {
+    setIsValidEmbedLink(true);
+  };
 
-    const parseEmbedLink = `https://www.youtube.com/embed/${e.target.value.replace('https://youtu.be/', '')}`;
-    setEmbedLink(parseEmbedLink);
+  const inValidateEmbedLink = () => {
+    setIsValidEmbedLink(false);
   };
 
   const [isValidThumbnail, setIsValidThumbnail] = useState<boolean>(false);
@@ -27,6 +39,8 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     setIsValidTitle(!!e.target.value);
     setTitle(e.target.value);
   };
+
+  const [tags, setTags] = useState<string[]>([]);
 
   const [description, setDescription] = useState<string>('');
   const changeDescription: FormEventHandler<HTMLDivElement> = (e) => {
@@ -43,29 +57,51 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     formData.append('description', description);
     formData.append('embedLink', embedLink as string);
     formData.append('thumbnail', thumbnail as File);
+    tags.forEach((tag) => {
+      formData.append('tags', tag);
+    });
 
     console.log({
       title: formData.get('title'),
       description: formData.get('description'),
       embedLink: formData.get('embedLink'),
       thumbnail: formData.get('thumbnail'),
+      tags: formData.getAll('tags'),
     });
 
     // axios({
     //   method: 'post',
-    //   url: '',
+    //   url: 'http://3.34.240.178:8081/api/v1/users/formTest',
     //   data: formData,
     //   headers: { 'Content-Type': 'multipart/form-data' },
-    // });
+    // })
+    //   .then(({ data }) => {
+    //     console.log({ data });
+    //   })
+    //   .catch((err) => {
+    //     console.log({ err });
+    //   });
   };
 
   return (
     <Layout hasHeader={false}>
       <MyVideoStyled.Form onSubmit={submitVideo} noValidate>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
-        {isValidEmbedLink && embedLink && <iframe src={embedLink} />}
+        {embedLink && (
+          <MyVideoStyled.EmbedPlayerWrapper>
+            <ReactPlayer
+              url={embedLink}
+              width="100%"
+              height="100%"
+              onReady={validateEmbedLink}
+              onError={inValidateEmbedLink}
+              onDuration={(duration) => {
+                console.log({ duration });
+              }}
+            />
+          </MyVideoStyled.EmbedPlayerWrapper>
+        )}
         <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
-
         <MyVideoStyled.FormTitle>썸네일 이미지</MyVideoStyled.FormTitle>
         <MyVideoStyled.ImgContainer>
           <FileInput
@@ -78,13 +114,14 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
             setIsValid={setIsValidThumbnail}
           />
         </MyVideoStyled.ImgContainer>
-
         <MyVideoStyled.FormTitle>제목</MyVideoStyled.FormTitle>
         <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} />
 
+        <MyVideoStyled.FormTitle>태그</MyVideoStyled.FormTitle>
+        <TagInput tags={tags} setTags={setTags} />
+
         <MyVideoStyled.FormTitle>설명</MyVideoStyled.FormTitle>
         <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
-
         <MyVideoStyled.SubmitFixContainer>
           <MyVideoStyled.SubmitWrapper>
             <MyVideoStyled.Submit type="submit" disabled={!(isValidEmbedLink && isValidThumbnail && isValidTitle)}>
