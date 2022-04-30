@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import * as NavigationStyled from './NavigationStyle';
 import { Icon } from '@components/Common';
+import * as NavigationStyled from './NavigationStyle';
 
 interface NavigationProps {}
 
