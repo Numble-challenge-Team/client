@@ -1,22 +1,21 @@
 import styled, { css } from 'styled-components';
 
-export const InputStyle = styled.input<{ sizeType: string; radius: string }>`
-  ${({ theme, sizeType, radius }) => {
-    const { lightblue, gray } = theme.color;
+export const InputStyle = styled.input<{ inputSize: string; radius: string; hasErrorDisplay?: boolean }>`
+  ${({ theme, inputSize, radius, hasErrorDisplay }) => {
+    const { primary, gray, error } = theme.color;
 
     return css`
-      ${handleSizeType(sizeType)};
-      height: 4rem;
+      ${handleInputSize(inputSize)};
       padding: 1rem 1.6rem;
-      color: ${gray};
-      border: 1px solid ${lightblue};
+      color: ${gray['500']};
+      border: 1px solid ${hasErrorDisplay ? error : primary['200']};
       border-radius: ${radius}px;
     `;
   }}
 `;
 
-const handleSizeType = (sizeType: string) => {
-  switch (sizeType) {
+const handleInputSize = (inputSize: string) => {
+  switch (inputSize) {
     case 'S':
       return css`
         width: 25rem;
@@ -24,6 +23,7 @@ const handleSizeType = (sizeType: string) => {
     case 'M':
       return css`
         width: 33.5rem;
+        height: 4rem;
       `;
     default:
       return css``;

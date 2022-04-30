@@ -9,10 +9,11 @@ export interface InputPropsType {
   register: UseFormRegister<FormRegisterType>;
   pattern?: ValidationRule<RegExp>;
   validate?: (value: string) => boolean;
-  sizeType: string;
+  inputSize: string;
   placeholderText?: string;
   radius: string;
   required?: boolean;
+  hasErrorDisplay?: boolean;
   changeEvent?: (e: ChangeEvent<HTMLInputElement>) => void;
   keyEvent?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
@@ -35,7 +36,7 @@ function Input(props: InputPropsType) {
 
 Input.defaultProps = {
   type: 'text',
-  sizeType: 'M',
+  inputSize: 'M',
   radius: '50',
 };
 
