@@ -10,15 +10,28 @@ import {
 import Layout from '@components/Layout/Layout';
 import { FileInput, TagInput, MyVideoStyled } from '@components/MyVideo';
 
+import CommonForm from '@components/MyVideo/CommonForm';
+
 import ReactPlayer from 'react-player/lazy';
 
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import {
+  isValidMyVideoEmbedLink,
+  myVideoEmbedLink,
+  isValidMyVideoThumbnail,
+  myVideoThumbnail,
+  isValidMyVideoTitle,
+  myVideoTitle,
+  myVideoTags,
+  myVideoDescription,
+} from '@store/myVideo';
 
 interface MyVideoEmbedProps {}
 
 function MyVideoEmbed(prop: MyVideoEmbedProps) {
-  const [isValidEmbedLink, setIsValidEmbedLink] = useState<boolean>(false);
-  const [embedLink, setEmbedLink] = useState<string | null>(null);
+  const [isValidEmbedLink, setIsValidEmbedLink] = useRecoilState(isValidMyVideoEmbedLink);
+  const [embedLink, setEmbedLink] = useRecoilState(myVideoEmbedLink);
   const changeEmbedLink: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEmbedLink(e.target.value);
   };
@@ -30,22 +43,15 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     setIsValidEmbedLink(false);
   };
 
-  const [isValidThumbnail, setIsValidThumbnail] = useState<boolean>(false);
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [isValidThumbnail] = useRecoilState(isValidMyVideoThumbnail);
+  const [thumbnail] = useRecoilState(myVideoThumbnail);
 
-  const [isValidTitle, setIsValidTitle] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>('');
-  const changeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setIsValidTitle(!!e.target.value);
-    setTitle(e.target.value);
-  };
+  const [isValidTitle] = useRecoilState(isValidMyVideoTitle);
+  const [title] = useRecoilState(myVideoTitle);
 
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags] = useRecoilState(myVideoTags);
 
-  const [description, setDescription] = useState<string>('');
-  const changeDescription: FormEventHandler<HTMLDivElement> = (e) => {
-    setDescription('' + (e.target as HTMLDivElement).innerText);
-  };
+  const [description] = useRecoilState(myVideoDescription);
 
   const submitVideo: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -53,27 +59,31 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     if (!(isValidEmbedLink && isValidThumbnail && isValidTitle)) return;
 
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('embedLink', embedLink as string);
-    formData.append('thumbnail', thumbnail as File);
+    formData.append('title', title as string);
+    formData.append('context', description);
+    formData.append('videoUrl', embedLink as string);
+    formData.append('thumbNail', thumbnail as File);
     tags.forEach((tag) => {
       formData.append('tags', tag);
     });
 
     console.log({
       title: formData.get('title'),
-      description: formData.get('description'),
-      embedLink: formData.get('embedLink'),
-      thumbnail: formData.get('thumbnail'),
+      context: formData.get('context'),
+      videoUrl: formData.get('videoUrl'),
+      thumbNail: formData.get('thumbNail'),
       tags: formData.getAll('tags'),
     });
 
     // axios({
     //   method: 'post',
-    //   url: 'http://3.34.240.178:8081/api/v1/users/formTest',
+    //   url: 'http://3.34.240.178:8081/api/v1/videos/upload/embedded',
     //   data: formData,
-    //   headers: { 'Content-Type': 'multipart/form-data' },
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //     Authorization:
+    //       'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxQDEuY29tIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY1MTMwMTc5MX0.jrfKCceMgtSg2hs3ohoaZoimpoVYpg4l8ovD1wUeUKE',
+    //   },
     // })
     //   .then(({ data }) => {
     //     console.log({ data });
@@ -81,6 +91,17 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     //   .catch((err) => {
     //     console.log({ err });
     //   });
+
+    axios({
+      method: 'get',
+      url: 'http://3.34.240.178:8081/api/v1/videos/retrieve/all',
+    })
+      .then(({ data }) => {
+        console.log({ data });
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
   };
 
   return (
@@ -102,33 +123,8 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
           </MyVideoStyled.EmbedPlayerWrapper>
         )}
         <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
-        <MyVideoStyled.FormTitle>썸네일 이미지</MyVideoStyled.FormTitle>
-        <MyVideoStyled.ImgContainer>
-          <FileInput
-            type="image"
-            id="thumbnail"
-            placeholder="썸네일 업로드"
-            file={thumbnail}
-            setFile={setThumbnail}
-            isValid={isValidThumbnail}
-            setIsValid={setIsValidThumbnail}
-          />
-        </MyVideoStyled.ImgContainer>
-        <MyVideoStyled.FormTitle>제목</MyVideoStyled.FormTitle>
-        <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} />
 
-        <MyVideoStyled.FormTitle>태그</MyVideoStyled.FormTitle>
-        <TagInput tags={tags} setTags={setTags} />
-
-        <MyVideoStyled.FormTitle>설명</MyVideoStyled.FormTitle>
-        <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
-        <MyVideoStyled.SubmitFixContainer>
-          <MyVideoStyled.SubmitWrapper>
-            <MyVideoStyled.Submit type="submit" disabled={!(isValidEmbedLink && isValidThumbnail && isValidTitle)}>
-              영상 업로드 하기
-            </MyVideoStyled.Submit>
-          </MyVideoStyled.SubmitWrapper>
-        </MyVideoStyled.SubmitFixContainer>
+        <CommonForm isValid={isValidEmbedLink && isValidThumbnail && isValidTitle} />
       </MyVideoStyled.Form>
     </Layout>
   );
