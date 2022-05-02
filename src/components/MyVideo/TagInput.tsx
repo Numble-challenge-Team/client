@@ -1,21 +1,15 @@
-import {
-  ChangeEventHandler,
-  Dispatch,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  PropsWithChildren,
-  SetStateAction,
-  useState,
-} from 'react';
+import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, PropsWithChildren, useState } from 'react';
+
+import { useRecoilState } from 'recoil';
+import { myVideoTags } from '@store/myVideo';
 
 import { MyVideoStyled } from '@components/MyVideo';
 
-interface TagInputProps {
-  tags: string[];
-  setTags: Dispatch<SetStateAction<string[]>>;
-}
+interface TagInputProps {}
 
-function TagInput({ tags, setTags }: PropsWithChildren<TagInputProps>) {
+function TagInput({}: PropsWithChildren<TagInputProps>) {
+  const [tags, setTags] = useRecoilState(myVideoTags);
+
   const [tag, setTag] = useState<string>('');
   const changeTag: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTag(e.target.value);
