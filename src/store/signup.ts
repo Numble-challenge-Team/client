@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 export const userSingupState = atom({
-  key: 'userSingupState',
+  key: 'userSignup',
   default: {
     email: '',
     password: '',
