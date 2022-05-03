@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
@@ -13,6 +13,12 @@ import { NICKNAME_VALIDATION } from '@constants/validation';
 import { useSignupQuery, useValidationSignupQuery } from '@api/queries/signup';
 
 import * as Styled from '@components/Signup/SignupPageStyle';
+import { AlertColor, Snackbar } from '@mui/material';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function SignupNicknamePage() {
   const router = useRouter();
@@ -22,8 +28,11 @@ function SignupNicknamePage() {
     formState: { errors },
     handleSubmit,
   } = useForm<FormRegisterType>();
-  const [formErrorState, setFormErrorState] = useState<boolean>(false);
-  const [NincknameErrorMessage, setNincknameErrorMessage] = useState<string>('');
+  const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
+  const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
+  const [isShowSignupAlert, setIsShowSignupAlert] = useState<boolean>(false);
+  const [alertState, setAlertState] = useState<AlertColor | undefined>('success');
+
   const [userNicknameData, setUserNicknameData] = useState<Pick<SignupInfoType, 'nickname'>>({ nickname: '' });
   const [signupInfo, setSignupInfo] = useRecoilState<SignupInfoType>(userSingupState);
 
@@ -40,13 +49,24 @@ function SignupNicknamePage() {
     retry: 0,
     onSuccess: () => {
       // 회원가입 성공 시
-      router.push('/');
+      setIsShowSignupAlert(true);
+      setAlertState('success');
     },
   });
 
   const handleNicknameSubmit = useCallback((userNickname: FormRegisterType) => {
     setUserNicknameData({ nickname: userNickname.nickname });
   }, []);
+
+  const handleCloseAlert = () => {
+    setIsShowSignupAlert(false);
+
+    if (alertState === 'success') {
+      router.push('/');
+    } else {
+      router.push('/signup/email');
+    }
+  };
 
   useEffect(() => {
     // 회원가입 하는 도중에 새로고침할 경우
@@ -57,23 +77,23 @@ function SignupNicknamePage() {
         nickname: '',
       });
 
-      alert('죄송합니다. 처음부터 다시 진행부탁드립니다.');
-      router.push('/signup/email');
+      setIsShowSignupAlert(true);
+      setAlertState('error');
     }
   }, [fetchSignup.error]);
 
   useEffect(() => {
     // 중복처리
     if (error && error.response !== undefined) {
-      setFormErrorState(true);
-      setNincknameErrorMessage(error.response.data.message);
+      setIsFormErrorState(true);
+      setNicknameErrorMessage(error.response.data.message);
     }
   }, [userNicknameData, error]);
 
   useEffect(() => {
     // 닉네임 규칙 예외처리
     if (errors.nickname?.message) {
-      setFormErrorState(false);
+      setIsFormErrorState(false);
     }
   }, [errors.nickname?.message]);
 
@@ -89,16 +109,31 @@ function SignupNicknamePage() {
           register={register}
           pattern={NICKNAME_VALIDATION}
           placeholderText="별명"
-          hasErrorDisplay={formErrorState || !!errors.nickname?.message}
+          hasErrorDisplay={isFormErrorState || !!errors.nickname?.message}
           required
         />
         {errors && <Styled.ErrorMessage>{errors.nickname?.message}</Styled.ErrorMessage>}
-        {formErrorState && <Styled.ErrorMessage>{NincknameErrorMessage}</Styled.ErrorMessage>}
+        {isFormErrorState && <Styled.ErrorMessage>{nicknameErrorMessage}</Styled.ErrorMessage>}
 
         <Button type="submit" margin="3.6rem 0 0 0">
           완료
         </Button>
       </form>
+
+      <Snackbar
+        open={isShowSignupAlert}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        onClick={handleCloseAlert}
+      >
+        <Alert severity={alertState}>
+          <Styled.AlertMessage>
+            {alertState === 'success'
+              ? '회원가입이 완료되었습니다. 가입하신 아이디로 로그인을 해 주세요.'
+              : '죄송합니다. 다시 회원가입 해 주세요.'}
+          </Styled.AlertMessage>
+        </Alert>
+      </Snackbar>
     </Layout>
   );
 }
