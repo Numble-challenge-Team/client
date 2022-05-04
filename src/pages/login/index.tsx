@@ -7,7 +7,7 @@ import { Button, Input } from '@components/Common';
 import Layout from '@components/Layout/Layout';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
-import { useLoginQuery } from '@api/queries/login';
+import { useLoginMutation } from '@api/queries/login';
 import { LoginRequestDataType } from '@/types/login';
 
 function LoginPage() {
@@ -22,7 +22,7 @@ function LoginPage() {
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
   const [userLoginData, setUserLoginData] = useState<LoginRequestDataType>({ email: '', password: '' });
 
-  const { data } = useLoginQuery(userLoginData);
+  const { data } = useLoginMutation(userLoginData);
 
   const handleLoginSubmit = (data: any) => {
     const userData = data;
