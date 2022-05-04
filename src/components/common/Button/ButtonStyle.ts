@@ -44,6 +44,10 @@ const handleColor = (color: any, backColor: any) => {
       return css`
         background-color: ${primary['500']};
       `;
+    case 'none':
+      return css`
+        background-color: transparent;
+      `;
     default:
       return css`
         background-color: ${gray['200']};
