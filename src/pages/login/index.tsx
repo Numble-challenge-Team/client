@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/router';
@@ -10,6 +10,8 @@ import { EMAIL_VALIDATION } from '@constants/validation';
 import { useLoginMutation } from '@api/queries/login';
 import { LoginRequestDataType } from '@/types/login';
 
+import * as Styled from '@components/Signup/SignupPageStyle';
+
 function LoginPage() {
   const router = useRouter();
 
@@ -20,13 +22,38 @@ function LoginPage() {
   } = useForm<any>();
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
-  const [userLoginData, setUserLoginData] = useState<LoginRequestDataType>({ email: '', password: '' });
 
-  const { data } = useLoginMutation(userLoginData);
+  const loginMutation = useLoginMutation({
+    onSuccess: () => {
+      setIsFormErrorState(false);
+      router.push('/');
+    },
+    onError: (error) => {
+      if (error.response) {
+        const { code, status, detail } = error.response.data;
 
-  const handleLoginSubmit = (data: any) => {
-    const userData = data;
-    setUserLoginData(userData);
+        setIsFormErrorState(true);
+        if (status === 404) {
+          setEmailErrorMessage(detail);
+        }
+
+        if (code === 400) {
+          setEmailErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
+        }
+      }
+    },
+  });
+
+  const handleLoginSubmit = (data: LoginRequestDataType) => {
+    setEmailErrorMessage('');
+
+    if (data.email === '' || data.password === '') {
+      setIsFormErrorState(true);
+      setEmailErrorMessage('이메일 또는 비밀번호를 입력해 주세요.');
+      return;
+    }
+
+    loginMutation.mutate(data);
   };
 
   const handleSignupButton = () => {
@@ -45,7 +72,6 @@ function LoginPage() {
           pattern={EMAIL_VALIDATION}
           placeholderText="이메일을 입력해 주세요."
           hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-          required
         />
         <label>Password</label>
         <Input
@@ -54,10 +80,9 @@ function LoginPage() {
           register={register}
           placeholderText="비밀번호를 입력해 주세요."
           hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-          required
         />
         {errors && <p>{errors.email?.message}</p>}
-        {isFormErrorState && <p>{emailErrorMessage}</p>}
+        {isFormErrorState && <Styled.ErrorMessage>{emailErrorMessage}</Styled.ErrorMessage>}
 
         <Button type="submit" margin="3.6rem 0 0 0">
           로그인
