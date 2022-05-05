@@ -1,5 +1,5 @@
 export interface FetchDataType {
-  code: string;
+  code: number;
   detail: string;
   error: string;
   message: string;
