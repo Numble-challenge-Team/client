@@ -1,7 +1,13 @@
 import styled, { css } from 'styled-components';
 
-export const ButtonStyle = styled.button<{ size: string; margin?: string; backColor: string; radius: string }>`
-  ${({ theme, size, margin, backColor, radius }) => {
+export const ButtonStyle = styled.button<{
+  size: string;
+  margin?: string;
+  hasBold?: boolean;
+  backColor: string;
+  radius: string;
+}>`
+  ${({ theme, size, margin, hasBold, backColor, radius }) => {
     const { color } = theme;
 
     return css`
@@ -9,6 +15,7 @@ export const ButtonStyle = styled.button<{ size: string; margin?: string; backCo
       ${handleColor(color, backColor)}
       margin: ${margin};
       color: ${color.gray['700']};
+      font-family: ${hasBold ? 'NanumSquareB' : null};
       border-radius: ${radius}px;
     `;
   }}
