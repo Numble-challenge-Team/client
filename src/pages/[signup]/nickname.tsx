@@ -1,18 +1,20 @@
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
 import { Button, Input } from '@components/Common';
 import Layout from '@components/Layout/Layout';
+import Text from '@components/Common/Text/Text';
+import Title from '@components/Common/Title/Title';
+import * as Styled from '@components/Signup/SignupPageStyle';
 
+import { NICKNAME_VALIDATION } from '@constants/validation';
 import { FormRegisterType, SignupInfoType } from '@/types/signup';
 
 import { userSingupState } from '@store/signup';
-import { NICKNAME_VALIDATION } from '@constants/validation';
 import { useSignupQuery, useValidationSignupQuery } from '@api/queries/signup';
 
-import * as Styled from '@components/Signup/SignupPageStyle';
 import { AlertColor, Snackbar } from '@mui/material';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
@@ -22,6 +24,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) 
 
 function SignupNicknamePage() {
   const router = useRouter();
+  const alertRef = useRef<HTMLDivElement>(null);
 
   const {
     register,
@@ -51,6 +54,10 @@ function SignupNicknamePage() {
       // 회원가입 성공 시
       setIsShowSignupAlert(true);
       setAlertState('success');
+
+      setTimeout(() => {
+        router.push('/');
+      }, 3000);
     },
   });
 
@@ -99,8 +106,8 @@ function SignupNicknamePage() {
 
   return (
     <Layout hasHeader={false}>
-      <p>거의 다 왔어요!</p>
-      <p>나만의 닉네임으로 시작해요.</p>
+      <Text margin="0 0 0.8rem 0">거의 다 왔어요!</Text>
+      <Title margin="0 0 2.8rem 0">나만의 닉네임으로 시작해요.</Title>
       <form onSubmit={handleSubmit(handleNicknameSubmit)}>
         <label>Nickname</label>
         <Input
@@ -121,16 +128,16 @@ function SignupNicknamePage() {
       </form>
 
       <Snackbar
+        ref={alertRef}
         open={isShowSignupAlert}
-        autoHideDuration={4000}
+        autoHideDuration={2000}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         onClick={handleCloseAlert}
+        test-id="test"
       >
         <Alert severity={alertState}>
           <Styled.AlertMessage>
-            {alertState === 'success'
-              ? '회원가입이 완료되었습니다. 가입하신 아이디로 로그인을 해 주세요.'
-              : '죄송합니다. 다시 회원가입 해 주세요.'}
+            {alertState === 'success' ? '회원가입이 완료되었습니다.' : '죄송합니다. 다시 회원가입 해 주세요.'}
           </Styled.AlertMessage>
         </Alert>
       </Snackbar>

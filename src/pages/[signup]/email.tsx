@@ -5,14 +5,14 @@ import { useRouter } from 'next/router';
 
 import { Button, Input } from '@components/Common';
 import Layout from '@components/Layout/Layout';
+import Title from '@components/Common/Title/Title';
+import Text from '@components/Common/Text/Text';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
 import { FormRegisterType, SignupInfoType } from '@/types/signup';
 
 import { userSingupState } from '@store/signup';
 import { useValidationSignupQuery } from '@api/queries/signup';
-
-import * as Styled from '@components/Signup/SignupPageStyle';
 
 function SingupEmailPage() {
   const router = useRouter();
@@ -22,7 +22,7 @@ function SingupEmailPage() {
     formState: { errors },
     handleSubmit,
   } = useForm<FormRegisterType>();
-  const [formErrorState, setFormErrorState] = useState<boolean>(false);
+  const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
   const [userEmailData, setUserEmailData] = useState<Pick<SignupInfoType, 'email'>>({ email: '' });
   const [signupInfo, setSignupInfo] = useRecoilState<SignupInfoType>(userSingupState);
@@ -45,21 +45,21 @@ function SingupEmailPage() {
 
   useEffect(() => {
     if (error && error.response !== undefined) {
-      setFormErrorState(true);
+      setIsFormErrorState(true);
       setEmailErrorMessage(error.response.data.message);
     }
   }, [userEmailData, error]);
 
   useEffect(() => {
     if (errors.email?.message) {
-      setFormErrorState(false);
+      setIsFormErrorState(false);
     }
   }, [errors.email?.message]);
 
   return (
     <Layout hasHeader={false}>
-      <p>안녕하세요. 오즈가 처음이신가요?</p>
-      <p>먼저 이메일을 확인해 주세요!</p>
+      <Text margin="0 0 0.8rem 0">안녕하세요. 오즈가 처음이신가요?</Text>
+      <Title margin="0 0 2.8rem 0">먼저 이메일을 확인해 주세요!</Title>
       <form onSubmit={handleSubmit(handleEmailSubmit)}>
         <label>E-mail</label>
         <Input
@@ -67,11 +67,11 @@ function SingupEmailPage() {
           register={register}
           pattern={EMAIL_VALIDATION}
           placeholderText="이메일을 입력해 주세요."
-          hasErrorDisplay={formErrorState || !!errors.email?.message}
+          hasErrorDisplay={isFormErrorState || !!errors.email?.message}
           required
         />
-        {errors && <Styled.ErrorMessage>{errors.email?.message}</Styled.ErrorMessage>}
-        {formErrorState && <Styled.ErrorMessage>{emailErrorMessage}</Styled.ErrorMessage>}
+        {errors && <Text hasError={!!errors}>{errors.email?.message}</Text>}
+        {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
         <Button type="submit" margin="3.6rem 0 0 0">
           다음
