@@ -5,12 +5,13 @@ import { useRouter } from 'next/router';
 
 import { Button, Input } from '@components/Common';
 import Layout from '@components/Layout/Layout';
+import Title from '@components/Common/Title/Title';
+import Text from '@components/Common/Text/Text';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
-import { useLoginMutation } from '@api/queries/login';
 import { LoginRequestDataType } from '@/types/login';
 
-import * as Styled from '@components/Signup/SignupPageStyle';
+import { useLoginMutation } from '@api/queries/login';
 
 function LoginPage() {
   const router = useRouter();
@@ -62,8 +63,8 @@ function LoginPage() {
 
   return (
     <Layout hasHeader={false}>
-      <p>환영해요!</p>
-      <p>귀여운 친구들을 만나러 가 볼까요?</p>
+      <Title margin="0 0 1.2rem 0">환영해요!</Title>
+      <Text margin="0 0 6rem 0">귀여운 친구들을 만나러 가 볼까요?</Text>
       <form onSubmit={handleSubmit(handleLoginSubmit)}>
         <label>E-mail</label>
         <Input
@@ -72,6 +73,7 @@ function LoginPage() {
           pattern={EMAIL_VALIDATION}
           placeholderText="이메일을 입력해 주세요."
           hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+          margin="0 0 1.2rem 0"
         />
         <label>Password</label>
         <Input
@@ -81,8 +83,8 @@ function LoginPage() {
           placeholderText="비밀번호를 입력해 주세요."
           hasErrorDisplay={isFormErrorState || !!errors.email?.message}
         />
-        {errors && <p>{errors.email?.message}</p>}
-        {isFormErrorState && <Styled.ErrorMessage>{emailErrorMessage}</Styled.ErrorMessage>}
+        {errors && <Text hasError={errors}>{errors.email?.message}</Text>}
+        {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
         <Button type="submit" margin="3.6rem 0 0 0">
           로그인

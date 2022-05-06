@@ -32,7 +32,7 @@ const handleSize = (size: string) => {
         height: 4.8rem;
       `;
     default:
-      return css``;
+      break;
   }
 };
 
@@ -47,6 +47,11 @@ const handleColor = (color: any, backColor: any) => {
     case 'none':
       return css`
         background-color: transparent;
+      `;
+    case 'inactive':
+      return css`
+        color: ${gray['500']};
+        background-color: ${primary['100']};
       `;
     default:
       return css`

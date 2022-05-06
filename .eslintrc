@@ -50,7 +50,8 @@
     "@typescript-eslint/no-var-requires": 0,
     "no-shadow": "off",
     "no-empty-pattern": 0,
-    "no-alert": 0
+    "no-alert": 0,
+    "consistent-return": "off"
   },
   "settings": {
     "import/parsers": {
