@@ -73,7 +73,7 @@ function LoginPage() {
           pattern={EMAIL_VALIDATION}
           placeholderText="이메일을 입력해 주세요."
           hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-          margin="0 0 1.2rem 0"
+          margin="1.2rem"
         />
         <label>Password</label>
         <Input
@@ -89,7 +89,7 @@ function LoginPage() {
         <Button type="submit" margin="3.6rem 0 0 0">
           로그인
         </Button>
-        <Button backColor="none" clickEvent={handleSignupButton}>
+        <Button backColor="none" hasBold={false} clickEvent={handleSignupButton}>
           회원가입
         </Button>
       </form>
