@@ -1,5 +1,5 @@
 interface IconProps {
-  type: 'home' | 'video' | 'heart' | 'user';
+  type: 'home' | 'video' | 'heart' | 'user' | 'warning';
   fill?: string;
   width?: number;
   height?: number;
