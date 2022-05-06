@@ -11,6 +11,7 @@ export interface InputPropsType {
   validate?: (value: string) => boolean;
   inputSize: string;
   placeholderText?: string;
+  margin?: string;
   radius: string;
   required?: boolean;
   hasErrorDisplay?: boolean;
