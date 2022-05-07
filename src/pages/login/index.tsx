@@ -25,7 +25,11 @@ function LoginPage() {
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
 
   const loginMutation = useLoginMutation({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const { accessToken, refreshToken } = data.data.data;
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
       setIsFormErrorState(false);
       router.push('/');
     },
