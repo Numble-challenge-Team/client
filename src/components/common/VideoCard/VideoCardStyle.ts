@@ -38,7 +38,7 @@ export const TextCaptionWrapper = styled.div``;
 export const CaptionInfoBox = styled.div`
   margin-top: 0.8rem;
   font-size: 1.1rem;
-  color: ${({ theme }) => theme.color.gray[300]};
+  color: ${({ theme }) => theme.color.gray[500]};
 
   & > span {
     position: relative;
@@ -56,7 +56,7 @@ export const CaptionInfoBox = styled.div`
       display: inline-block;
       width: 0.1rem;
       height: 100%;
-      background-color: ${({ theme }) => theme.color.gray[300]};
+      background-color: ${({ theme }) => theme.color.gray[500]};
     }
   }
 `;

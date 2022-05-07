@@ -53,7 +53,7 @@ export const UploadNavigation = styled.ul`
         display: block;
         width: 100%;
         height: 0.1rem;
-        background-color: ${({ theme }) => theme.color.gray[100]};
+        background-color: ${({ theme }) => theme.color.gray[200]};
       }
     }
   }
