@@ -25,7 +25,7 @@ import {
   myVideoTitle,
   myVideoTags,
   myVideoDescription,
-} from '@store/myVideo';
+} from '@store/myVideoUpload';
 
 interface MyVideoEmbedProps {}
 
@@ -105,7 +105,7 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
   };
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton={true}>
       <MyVideoStyled.Form onSubmit={submitVideo} noValidate>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
         {embedLink && (

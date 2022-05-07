@@ -9,7 +9,7 @@ import {
   isValidMyVideoTitle,
   myVideoTitle,
   myVideoDescription,
-} from '@store/myVideo';
+} from '@store/myVideoUpload';
 
 interface CommonFormProps {
   isValid: boolean;

@@ -16,7 +16,7 @@ import {
   myVideoTitle,
   myVideoTags,
   myVideoDescription,
-} from '@store/myVideo';
+} from '@store/myVideoUpload';
 
 interface MyVideoAddProps {}
 
@@ -65,7 +65,7 @@ function MyVideoAdd(prop: MyVideoAddProps) {
   };
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false} title="직접 영상 업로드" hasBackButton={true}>
       <MyVideoStyled.Form onSubmit={submitVideo} noValidate>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
         <MyVideoStyled.VideoContainer>
