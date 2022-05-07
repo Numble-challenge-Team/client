@@ -1,5 +1,22 @@
 interface IconProps {
-  type: 'home' | 'video' | 'heart' | 'user' | 'warning';
+  type:
+    | 'chevron-up'
+    | 'cancle'
+    | 'circle-arrow-left'
+    | 'fill-heart'
+    | 'chevron-down'
+    | 'flag'
+    | 'clear-circle'
+    | 'dial-pad'
+    | 'home'
+    | 'heart'
+    | 'send'
+    | 'help-question'
+    | 'search'
+    | 'thumbs-up'
+    | 'plus-circle'
+    | 'video'
+    | 'user';
   fill?: string;
   width?: number;
   height?: number;

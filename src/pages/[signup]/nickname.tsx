@@ -105,7 +105,7 @@ function SignupNicknamePage() {
   }, [errors.nickname?.message]);
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false}>
       <Text margin="0 0 0.8rem 0">거의 다 왔어요!</Text>
       <Title margin="0 0 2.8rem 0">나만의 닉네임으로 시작해요.</Title>
       <form onSubmit={handleSubmit(handleNicknameSubmit)}>

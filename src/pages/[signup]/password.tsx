@@ -60,7 +60,7 @@ function SignupPasswordPage() {
   }, [passwordErrorMessage]);
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false}>
       <Text margin="0 0 0.8rem 0">가입을 진행해 볼까요?</Text>
       <Title margin="0 0 2.8rem 0">비밀번호를 입력해 주세요.</Title>
       <form onSubmit={handleSubmit(handlePasswordSubmit)}>
