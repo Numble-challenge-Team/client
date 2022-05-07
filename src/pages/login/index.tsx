@@ -66,7 +66,7 @@ function LoginPage() {
   };
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false}>
       <Title margin="0 0 1.2rem 0">환영해요!</Title>
       <Text margin="0 0 6rem 0">귀여운 친구들을 만나러 가 볼까요?</Text>
       <form onSubmit={handleSubmit(handleLoginSubmit)}>

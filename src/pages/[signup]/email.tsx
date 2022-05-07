@@ -57,7 +57,7 @@ function SingupEmailPage() {
   }, [errors.email?.message]);
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false}>
       <Text margin="0 0 0.8rem 0">안녕하세요. 오즈가 처음이신가요?</Text>
       <Title margin="0 0 2.8rem 0">먼저 이메일을 확인해 주세요!</Title>
       <form onSubmit={handleSubmit(handleEmailSubmit)}>
