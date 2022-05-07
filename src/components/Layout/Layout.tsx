@@ -1,6 +1,4 @@
-import { PropsWithChildren } from 'react';
-
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import HeaderTitle from './HeaderTitle/HeaderTitle';
 import Navigation from './Navigation/Navigation';

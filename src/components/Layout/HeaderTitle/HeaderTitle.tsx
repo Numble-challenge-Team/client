@@ -1,10 +1,10 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { PropsWithChildren } from 'react';
 
 import { Icon } from '@components/Common';
 import * as HeaderTitleStyled from './HeaderTitleStyle';
-import { useRouter } from 'next/router';
 
 interface HeaderTitleProps {
   hasBackButton: boolean;

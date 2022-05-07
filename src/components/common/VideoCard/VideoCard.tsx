@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 import { PropsWithChildren } from 'react';
+import Icon from '../Icon/Icon';
 
 import * as VideoCardStyle from './VideoCardStyle';
-import { Icon } from '@components/Common';
 
 interface VideoCardProps {
   cardInfo: {
