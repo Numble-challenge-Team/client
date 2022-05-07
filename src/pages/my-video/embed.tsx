@@ -105,7 +105,7 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
   };
 
   return (
-    <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton={true}>
+    <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>
       <MyVideoStyled.Form onSubmit={submitVideo} noValidate>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
         {embedLink && (

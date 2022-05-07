@@ -28,7 +28,7 @@ function CommonForm({ isValid }: CommonFormProps) {
 
   const [description, setDescription] = useRecoilState(myVideoDescription);
   const changeDescription: FormEventHandler<HTMLDivElement> = (e) => {
-    setDescription('' + (e.target as HTMLDivElement).innerText);
+    setDescription(`${(e.target as HTMLDivElement).innerText}`);
   };
 
   return (

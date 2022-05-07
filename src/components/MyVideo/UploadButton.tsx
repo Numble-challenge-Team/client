@@ -7,6 +7,7 @@ import { showMyVideoUploadNav } from '@store/myVideo';
 
 import { MyVideoStyled } from '@components/MyVideo';
 import { Icon } from '@components/Common';
+
 interface UploadButtonProps {}
 
 function UploadButton(prop: PropsWithChildren<UploadButtonProps>) {

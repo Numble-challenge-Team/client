@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Link from 'next/link';
 
 import { PropsWithChildren } from 'react';

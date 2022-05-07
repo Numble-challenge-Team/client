@@ -75,7 +75,7 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
       return;
     }
 
-    if (!new RegExp(`${type}\/*`).test(e.dataTransfer.files[0].type)) {
+    if (!new RegExp(`${type}/*`).test(e.dataTransfer.files[0].type)) {
       return;
     }
 

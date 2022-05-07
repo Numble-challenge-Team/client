@@ -60,7 +60,9 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
           {tags.map((tag) => (
             <li key={tag}>
               <span>#{tag}</span>
-              <button onClick={deleteTag}>×</button>
+              <button type="button" onClick={deleteTag}>
+                ×
+              </button>
             </li>
           ))}
         </MyVideoStyled.Tags>

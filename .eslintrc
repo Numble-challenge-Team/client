@@ -51,8 +51,7 @@
     "no-shadow": "off",
     "no-empty-pattern": 0,
     "no-alert": 0,
-    "consistent-return": "off",
-    "properties": "always"
+    "consistent-return": "off"
   },
   "settings": {
     "import/parsers": {
