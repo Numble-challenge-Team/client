@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  position: fixed;
+  position: sticky;
   z-index: 1000;
-  bottom: 0;
+  top: 0;
   width: 100%;
-  height: 5.6rem;
-  background-color: ${({ theme }) => theme.color.white};
-  box-shadow: 0 -0.1rem 0.4rem ${({ theme }) => theme.color.gray[100]};
 `;
 
 export const Main = styled.main`

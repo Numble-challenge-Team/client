@@ -4,29 +4,35 @@ import Layout from '@components/Layout/Layout';
 import { FileInput, TagInput, MyVideoStyled } from '@components/MyVideo';
 
 import axios from 'axios';
+import CommonForm from '@components/MyVideo/CommonForm';
+
+import { useRecoilState } from 'recoil';
+import {
+  isValidMyVideoFile,
+  myVideoFile,
+  isValidMyVideoThumbnail,
+  myVideoThumbnail,
+  isValidMyVideoTitle,
+  myVideoTitle,
+  myVideoTags,
+  myVideoDescription,
+} from '@store/myVideoUpload';
 
 interface MyVideoAddProps {}
 
 function MyVideoAdd(prop: MyVideoAddProps) {
-  const [isValidVideo, setIsValidVideo] = useState<boolean>(false);
-  const [video, setVideo] = useState<File | null>(null);
+  const [isValidVideo, setIsValidVideo] = useRecoilState(isValidMyVideoFile);
+  const [video, setVideo] = useRecoilState(myVideoFile);
 
-  const [isValidThumbnail, setIsValidThumbnail] = useState<boolean>(false);
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [isValidThumbnail] = useRecoilState(isValidMyVideoThumbnail);
+  const [thumbnail] = useRecoilState(myVideoThumbnail);
 
-  const [isValidTitle, setIsValidTitle] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>('');
-  const changeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setIsValidTitle(!!e.target.value);
-    setTitle(e.target.value);
-  };
+  const [isValidTitle] = useRecoilState(isValidMyVideoTitle);
+  const [title] = useRecoilState(myVideoTitle);
 
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags] = useRecoilState(myVideoTags);
 
-  const [description, setDescription] = useState<string>('');
-  const changeDescription: FormEventHandler<HTMLDivElement> = (e) => {
-    setDescription('' + (e.target as HTMLDivElement).innerText);
-  };
+  const [description] = useRecoilState(myVideoDescription);
 
   const submitVideo: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -34,17 +40,21 @@ function MyVideoAdd(prop: MyVideoAddProps) {
     if (!(isValidVideo && isValidThumbnail && isValidTitle)) return;
 
     const formData = new FormData();
-    formData.append('title', title);
+    formData.append('title', title as string);
     formData.append('description', description);
     formData.append('video', video as File);
     formData.append('thumbnail', thumbnail as File);
-
-    console.log({
-      title: formData.get('title'),
-      description: formData.get('description'),
-      video: formData.get('video'),
-      thumbnail: formData.get('thumbnail'),
+    tags.forEach((tag) => {
+      formData.append('tags', tag);
     });
+
+    // console.log({
+    //   title: formData.get('title'),
+    //   description: formData.get('description'),
+    //   video: formData.get('video'),
+    //   thumbnail: formData.get('thumbnail'),
+    //   tags: formData.getAll('tags'),
+    // });
 
     // axios({
     //   method: 'post',
@@ -55,7 +65,7 @@ function MyVideoAdd(prop: MyVideoAddProps) {
   };
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false} title="직접 영상 업로드" hasBackButton={true}>
       <MyVideoStyled.Form onSubmit={submitVideo} noValidate>
         <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
         <MyVideoStyled.VideoContainer>
@@ -70,35 +80,7 @@ function MyVideoAdd(prop: MyVideoAddProps) {
           />
         </MyVideoStyled.VideoContainer>
 
-        <MyVideoStyled.FormTitle>썸네일 이미지</MyVideoStyled.FormTitle>
-        <MyVideoStyled.ImgContainer>
-          <FileInput
-            type="image"
-            id="thumbnail"
-            placeholder="썸네일 업로드"
-            file={thumbnail}
-            setFile={setThumbnail}
-            isValid={isValidThumbnail}
-            setIsValid={setIsValidThumbnail}
-          />
-        </MyVideoStyled.ImgContainer>
-
-        <MyVideoStyled.FormTitle>제목</MyVideoStyled.FormTitle>
-        <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} />
-
-        <MyVideoStyled.FormTitle>태그</MyVideoStyled.FormTitle>
-        <TagInput tags={tags} setTags={setTags} />
-
-        <MyVideoStyled.FormTitle>설명</MyVideoStyled.FormTitle>
-        <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
-
-        <MyVideoStyled.SubmitFixContainer>
-          <MyVideoStyled.SubmitWrapper>
-            <MyVideoStyled.Submit type="submit" disabled={!(isValidVideo && isValidThumbnail && isValidTitle)}>
-              영상 업로드 하기
-            </MyVideoStyled.Submit>
-          </MyVideoStyled.SubmitWrapper>
-        </MyVideoStyled.SubmitFixContainer>
+        <CommonForm isValid={isValidVideo && isValidThumbnail && isValidTitle} />
       </MyVideoStyled.Form>
     </Layout>
   );

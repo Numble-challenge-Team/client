@@ -7,7 +7,7 @@ interface NavigationProps {}
 
 function Navigation(prop: NavigationProps) {
   return (
-    <>
+    <NavigationStyled.NavContainer>
       <NavigationStyled.Nav>
         <ul>
           <li>
@@ -40,7 +40,7 @@ function Navigation(prop: NavigationProps) {
           </li>
         </ul>
       </NavigationStyled.Nav>
-    </>
+    </NavigationStyled.NavContainer>
   );
 }
 
