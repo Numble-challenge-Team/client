@@ -102,8 +102,8 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
               <FormStyled.EmptyPlayerWrapper>임베드된 영상 없음</FormStyled.EmptyPlayerWrapper>
             )}
           </FormStyled.EmbedPlayerWrapper>
+          <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
         </InputWithTitle>
-        <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
 
         <CommonForm isValid={isValidEmbedLink && isValidThumbnail && isValidTitle} />
       </FormStyled.Form>

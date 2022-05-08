@@ -6,6 +6,7 @@ import { FileInput, FormStyled, CommonForm, InputWithTitle } from '@components/M
 import { useRecoilState } from 'recoil';
 import {
   isValidMyVideoFile,
+  inValidMessageMyVideoFile,
   myVideoFile,
   isValidMyVideoThumbnail,
   myVideoThumbnail,
@@ -20,6 +21,7 @@ interface MyVideoAddProps {}
 
 function MyVideoAdd(prop: MyVideoAddProps) {
   const [isValidVideo, setIsValidVideo] = useRecoilState(isValidMyVideoFile);
+  const [inValidMessageVideo, setInValidMessageVideo] = useRecoilState(inValidMessageMyVideoFile);
   const [video, setVideo] = useRecoilState(myVideoFile);
 
   const [isValidThumbnail] = useRecoilState(isValidMyVideoThumbnail);
@@ -50,7 +52,7 @@ function MyVideoAdd(prop: MyVideoAddProps) {
   return (
     <Layout hasNav={false} title="직접 영상 업로드" hasBackButton>
       <FormStyled.Form onSubmit={submitVideo} noValidate>
-        <InputWithTitle title="영상">
+        <InputWithTitle title="영상" inValidateMessage={inValidMessageVideo}>
           <FormStyled.VideoContainer>
             <FileInput
               type="video"
@@ -60,6 +62,7 @@ function MyVideoAdd(prop: MyVideoAddProps) {
               setFile={setVideo}
               isValid={isValidVideo}
               setIsValid={setIsValidVideo}
+              setInValidMessage={setInValidMessageVideo}
             />
           </FormStyled.VideoContainer>
         </InputWithTitle>

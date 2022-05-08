@@ -4,6 +4,10 @@ export const isValidMyVideoEmbedLink = atom<boolean>({
   key: 'isValidMyVideoEmbedLink',
   default: false,
 });
+export const inValidMessageMyVideoEmbedLink = atom<string>({
+  key: 'inValidMessageMyVideoEmbedLink',
+  default: '',
+});
 export const myVideoEmbedLink = atom<string>({
   key: 'myVideoEmbedLink',
   default: '',
@@ -21,6 +25,10 @@ export const isValidMyVideoFile = atom<boolean>({
   key: 'isValidMyVideoFile',
   default: false,
 });
+export const inValidMessageMyVideoFile = atom<string>({
+  key: 'inValidMessageMyVideoFile',
+  default: '',
+});
 export const myVideoFile = atom<File | null>({
   key: 'myVideoFile',
   default: null,
@@ -33,6 +41,10 @@ export const myVideoFileErrorMessage = atom<string | null>({
 export const isValidMyVideoThumbnail = atom<boolean>({
   key: 'isValidMyVideoThumbnail',
   default: false,
+});
+export const inValidMessageMyVideoThumbnail = atom<string>({
+  key: 'inValidMessageMyVideoThumbnail',
+  default: '',
 });
 export const myVideoThumbnail = atom<File | null>({
   key: 'myVideoThumbnail',

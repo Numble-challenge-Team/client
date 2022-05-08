@@ -30,6 +30,22 @@ export const Form = styled.form`
   }
 `;
 
+export const InputWithTitleContainer = styled.div`
+  position: relative;
+`;
+
+export const ErrorMessage = styled.span`
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  color: ${({ theme }) => theme.color.error};
+
+  & ~ input,
+  & ~ p {
+    border-color: ${({ theme }) => theme.color.error} !important;
+  }
+`;
+
 export const FileContainer = styled.div`
   position: relative;
   width: 100%;

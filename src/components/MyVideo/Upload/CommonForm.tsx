@@ -5,6 +5,7 @@ import { FileInput, TagInput, InputWithTitle } from '@components/MyVideo';
 import { useRecoilState } from 'recoil';
 import {
   isValidMyVideoThumbnail,
+  inValidMessageMyVideoThumbnail,
   myVideoThumbnail,
   isValidMyVideoTitle,
   myVideoTitle,
@@ -19,6 +20,7 @@ interface CommonFormProps {
 
 function CommonForm({ isValid }: CommonFormProps) {
   const [isValidThumbnail, setIsValidThumbnail] = useRecoilState(isValidMyVideoThumbnail);
+  const [inValidMessageThumbnail, setInValidMessageThumbnail] = useRecoilState(inValidMessageMyVideoThumbnail);
   const [thumbnail, setThumbnail] = useRecoilState(myVideoThumbnail);
 
   const [isValidTitle, setIsValidTitle] = useRecoilState(isValidMyVideoTitle);
@@ -45,6 +47,7 @@ function CommonForm({ isValid }: CommonFormProps) {
             setFile={setThumbnail}
             isValid={isValidThumbnail}
             setIsValid={setIsValidThumbnail}
+            setInValidMessage={setInValidMessageThumbnail}
           />
         </FormStyled.ImgContainer>
       </InputWithTitle>
