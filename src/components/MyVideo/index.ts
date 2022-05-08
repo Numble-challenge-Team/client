@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-export { default as FileInput } from './FileInput';
-export { default as TagInput } from './TagInput';
+export { CommonForm, FileInput, TagInput, FormStyled } from './Upload';
 export { default as UploadButton } from './UploadButton';
 export * as MyVideoStyled from './MyVideoStyle';

@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FormEventHandler } from 'react';
 
-import { FileInput, TagInput, MyVideoStyled } from '@components/MyVideo';
+import { FileInput, TagInput } from '@components/MyVideo';
 
 import { useRecoilState } from 'recoil';
 import {
@@ -10,6 +10,8 @@ import {
   myVideoTitle,
   myVideoDescription,
 } from '@store/myVideoUpload';
+
+import * as FormStyled from './FormStyle';
 
 interface CommonFormProps {
   isValid: boolean;
@@ -33,8 +35,8 @@ function CommonForm({ isValid }: CommonFormProps) {
 
   return (
     <>
-      <MyVideoStyled.FormTitle>썸네일 이미지</MyVideoStyled.FormTitle>
-      <MyVideoStyled.ImgContainer>
+      <FormStyled.FormTitle>썸네일 이미지</FormStyled.FormTitle>
+      <FormStyled.ImgContainer>
         <FileInput
           type="image"
           id="thumbnail"
@@ -44,23 +46,23 @@ function CommonForm({ isValid }: CommonFormProps) {
           isValid={isValidThumbnail}
           setIsValid={setIsValidThumbnail}
         />
-      </MyVideoStyled.ImgContainer>
-      <MyVideoStyled.FormTitle>제목</MyVideoStyled.FormTitle>
+      </FormStyled.ImgContainer>
+      <FormStyled.FormTitle>제목</FormStyled.FormTitle>
       <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} value={title as string} />
 
-      <MyVideoStyled.FormTitle>태그</MyVideoStyled.FormTitle>
+      <FormStyled.FormTitle>태그</FormStyled.FormTitle>
       <TagInput />
 
-      <MyVideoStyled.FormTitle>설명</MyVideoStyled.FormTitle>
+      <FormStyled.FormTitle>설명</FormStyled.FormTitle>
       <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
 
-      <MyVideoStyled.SubmitFixContainer>
-        <MyVideoStyled.SubmitWrapper>
-          <MyVideoStyled.Submit type="submit" disabled={!isValid}>
+      <FormStyled.SubmitFixContainer>
+        <FormStyled.SubmitWrapper>
+          <FormStyled.Submit type="submit" disabled={!isValid}>
             영상 업로드 하기
-          </MyVideoStyled.Submit>
-        </MyVideoStyled.SubmitWrapper>
-      </MyVideoStyled.SubmitFixContainer>
+          </FormStyled.Submit>
+        </FormStyled.SubmitWrapper>
+      </FormStyled.SubmitFixContainer>
     </>
   );
 }

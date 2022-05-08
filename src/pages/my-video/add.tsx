@@ -1,10 +1,7 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { FormEventHandler } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { FileInput, TagInput, MyVideoStyled } from '@components/MyVideo';
-
-import axios from 'axios';
-import CommonForm from '@components/MyVideo/CommonForm';
+import { FileInput, FormStyled, CommonForm } from '@components/MyVideo';
 
 import { useRecoilState } from 'recoil';
 import {
@@ -47,28 +44,13 @@ function MyVideoAdd(prop: MyVideoAddProps) {
     tags.forEach((tag) => {
       formData.append('tags', tag);
     });
-
-    // console.log({
-    //   title: formData.get('title'),
-    //   description: formData.get('description'),
-    //   video: formData.get('video'),
-    //   thumbnail: formData.get('thumbnail'),
-    //   tags: formData.getAll('tags'),
-    // });
-
-    // axios({
-    //   method: 'post',
-    //   url: '',
-    //   data: formData,
-    //   headers: { 'Content-Type': 'multipart/form-data' },
-    // });
   };
 
   return (
     <Layout hasNav={false} title="직접 영상 업로드" hasBackButton>
-      <MyVideoStyled.Form onSubmit={submitVideo} noValidate>
-        <MyVideoStyled.FormTitle>영상</MyVideoStyled.FormTitle>
-        <MyVideoStyled.VideoContainer>
+      <FormStyled.Form onSubmit={submitVideo} noValidate>
+        <FormStyled.FormTitle>영상</FormStyled.FormTitle>
+        <FormStyled.VideoContainer>
           <FileInput
             type="video"
             id="video"
@@ -78,10 +60,10 @@ function MyVideoAdd(prop: MyVideoAddProps) {
             isValid={isValidVideo}
             setIsValid={setIsValidVideo}
           />
-        </MyVideoStyled.VideoContainer>
+        </FormStyled.VideoContainer>
 
         <CommonForm isValid={isValidVideo && isValidThumbnail && isValidTitle} />
-      </MyVideoStyled.Form>
+      </FormStyled.Form>
     </Layout>
   );
 }

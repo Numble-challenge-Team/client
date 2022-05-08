@@ -3,7 +3,7 @@ import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, PropsWithC
 import { useRecoilState } from 'recoil';
 import { myVideoTags } from '@store/myVideoUpload';
 
-import { MyVideoStyled } from '@components/MyVideo';
+import * as FormStyled from './FormStyle';
 
 interface TagInputProps {}
 
@@ -56,7 +56,7 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
         onKeyUp={addTags}
       />
       {!!tags.length && (
-        <MyVideoStyled.Tags>
+        <FormStyled.Tags>
           {tags.map((tag) => (
             <li key={tag}>
               <span>#{tag}</span>
@@ -65,7 +65,7 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
               </button>
             </li>
           ))}
-        </MyVideoStyled.Tags>
+        </FormStyled.Tags>
       )}
     </>
   );

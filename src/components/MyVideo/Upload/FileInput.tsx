@@ -2,7 +2,6 @@ import {
   ChangeEventHandler,
   Dispatch,
   DragEventHandler,
-  memo,
   MouseEventHandler,
   PropsWithChildren,
   ReactEventHandler,
@@ -10,8 +9,9 @@ import {
   useState,
 } from 'react';
 
-import * as MyVideoStyled from '@components/MyVideo/MyVideoStyle';
 import ReactPlayer from 'react-player';
+
+import * as FormStyled from './FormStyle';
 
 interface FileInputProps {
   type: 'video' | 'image';
@@ -93,7 +93,7 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
       {file ? (
         <>
           {type === 'video' ? (
-            <MyVideoStyled.PlayerWrapper>
+            <FormStyled.PlayerWrapper>
               <ReactPlayer
                 url={URL.createObjectURL(file)}
                 width="100%"
@@ -110,18 +110,18 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
                 }}
                 controls
               />
-            </MyVideoStyled.PlayerWrapper>
+            </FormStyled.PlayerWrapper>
           ) : (
-            <MyVideoStyled.Image src={URL.createObjectURL(file)} width={320} height={180} />
+            <FormStyled.Image src={URL.createObjectURL(file)} width={320} height={180} />
           )}
-          <MyVideoStyled.DeleteFileButton type="button" onClick={deleteFile}>
+          <FormStyled.DeleteFileButton type="button" onClick={deleteFile}>
             ×
-          </MyVideoStyled.DeleteFileButton>
+          </FormStyled.DeleteFileButton>
         </>
       ) : (
         <>
           <input required hidden id={`${id}Upload`} type="file" accept={`${type}/*`} onChange={changeFile} />
-          <MyVideoStyled.UploadLabel
+          <FormStyled.UploadLabel
             isDragging={isDragging}
             onDragEnter={enterDrag}
             onDragLeave={leaveDrag}
@@ -130,11 +130,11 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
             htmlFor={`${id}Upload`}
           >
             <span>{placeholder}</span>
-          </MyVideoStyled.UploadLabel>
+          </FormStyled.UploadLabel>
         </>
       )}
     </>
   );
 }
 
-export default memo(FileInput);
+export default FileInput;
