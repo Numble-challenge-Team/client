@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import type { Videos } from '@types/videos';
+import type { Videos } from '@/types/videos';
 
 import Link from 'next/link';
 
