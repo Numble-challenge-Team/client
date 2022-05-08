@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const TitleStyle = styled.h1<{ size: string; margin?: string; hasBold?: boolean }>`
-  ${({ size, margin, hasBold }) => {
+export const TitleStyle = styled.h1<{ size: string; margin?: string; lineHeight?: string; hasBold?: boolean }>`
+  ${({ size, margin, lineHeight, hasBold }) => {
     return css`
       ${handleSize(size)}
       margin: ${margin};
+      line-height: ${lineHeight};
       font-family: ${hasBold ? 'NanumSquareB' : null};
     `;
   }}

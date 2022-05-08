@@ -2,8 +2,9 @@ import React, { PropsWithChildren } from 'react';
 import * as Styled from './TitleStyle';
 
 interface TitlePropsType {
-  size: string;
+  size: 'title1' | 'title2' | 'title3' | 'title4';
   margin?: string;
+  lineHeight?: string;
   hasBold?: boolean;
 }
 
