@@ -30,14 +30,6 @@ export const Form = styled.form`
   }
 `;
 
-export const FormTitle = styled.h3`
-  font-family: 'NanumSquareB';
-  font-size: 1.4rem;
-  color: #000000;
-  margin-top: 3.2rem;
-  margin-bottom: 0.8rem;
-`;
-
 export const FileContainer = styled.div`
   position: relative;
   width: 100%;

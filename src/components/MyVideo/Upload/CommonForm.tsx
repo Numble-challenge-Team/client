@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FormEventHandler } from 'react';
 
-import { FileInput, TagInput } from '@components/MyVideo';
+import { FileInput, TagInput, InputWithTitle } from '@components/MyVideo';
 
 import { useRecoilState } from 'recoil';
 import {
@@ -35,26 +35,30 @@ function CommonForm({ isValid }: CommonFormProps) {
 
   return (
     <>
-      <FormStyled.FormTitle>썸네일 이미지</FormStyled.FormTitle>
-      <FormStyled.ImgContainer>
-        <FileInput
-          type="image"
-          id="thumbnail"
-          placeholder="썸네일 업로드"
-          file={thumbnail}
-          setFile={setThumbnail}
-          isValid={isValidThumbnail}
-          setIsValid={setIsValidThumbnail}
-        />
-      </FormStyled.ImgContainer>
-      <FormStyled.FormTitle>제목</FormStyled.FormTitle>
-      <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} value={title as string} />
+      <InputWithTitle title="썸네일 이미지">
+        <FormStyled.ImgContainer>
+          <FileInput
+            type="image"
+            id="thumbnail"
+            placeholder="썸네일 업로드"
+            file={thumbnail}
+            setFile={setThumbnail}
+            isValid={isValidThumbnail}
+            setIsValid={setIsValidThumbnail}
+          />
+        </FormStyled.ImgContainer>
+      </InputWithTitle>
+      <InputWithTitle title="제목">
+        <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} value={title as string} />
+      </InputWithTitle>
 
-      <FormStyled.FormTitle>태그</FormStyled.FormTitle>
-      <TagInput />
+      <InputWithTitle title="태그">
+        <TagInput />
+      </InputWithTitle>
 
-      <FormStyled.FormTitle>설명</FormStyled.FormTitle>
-      <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
+      <InputWithTitle title="설명">
+        <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
+      </InputWithTitle>
 
       <FormStyled.SubmitFixContainer>
         <FormStyled.SubmitWrapper>
