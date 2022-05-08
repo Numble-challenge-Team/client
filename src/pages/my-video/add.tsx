@@ -1,11 +1,12 @@
 import { FormEventHandler } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { FileInput, FormStyled, CommonForm } from '@components/MyVideo';
+import { FileInput, FormStyled, CommonForm, InputWithTitle } from '@components/MyVideo';
 
 import { useRecoilState } from 'recoil';
 import {
   isValidMyVideoFile,
+  inValidMessageMyVideoFile,
   myVideoFile,
   isValidMyVideoThumbnail,
   myVideoThumbnail,
@@ -14,11 +15,13 @@ import {
   myVideoTags,
   myVideoDescription,
 } from '@store/myVideoUpload';
+import { Title } from '@components/Common';
 
 interface MyVideoAddProps {}
 
 function MyVideoAdd(prop: MyVideoAddProps) {
   const [isValidVideo, setIsValidVideo] = useRecoilState(isValidMyVideoFile);
+  const [inValidMessageVideo, setInValidMessageVideo] = useRecoilState(inValidMessageMyVideoFile);
   const [video, setVideo] = useRecoilState(myVideoFile);
 
   const [isValidThumbnail] = useRecoilState(isValidMyVideoThumbnail);
@@ -49,18 +52,20 @@ function MyVideoAdd(prop: MyVideoAddProps) {
   return (
     <Layout hasNav={false} title="직접 영상 업로드" hasBackButton>
       <FormStyled.Form onSubmit={submitVideo} noValidate>
-        <FormStyled.FormTitle>영상</FormStyled.FormTitle>
-        <FormStyled.VideoContainer>
-          <FileInput
-            type="video"
-            id="video"
-            placeholder="탭 하여 업로드할 영상을 선택해주세요."
-            file={video}
-            setFile={setVideo}
-            isValid={isValidVideo}
-            setIsValid={setIsValidVideo}
-          />
-        </FormStyled.VideoContainer>
+        <InputWithTitle title="영상" inValidateMessage={inValidMessageVideo}>
+          <FormStyled.VideoContainer>
+            <FileInput
+              type="video"
+              id="video"
+              placeholder="탭 하여 업로드할 영상을 선택해주세요."
+              file={video}
+              setFile={setVideo}
+              isValid={isValidVideo}
+              setIsValid={setIsValidVideo}
+              setInValidMessage={setInValidMessageVideo}
+            />
+          </FormStyled.VideoContainer>
+        </InputWithTitle>
 
         <CommonForm isValid={isValidVideo && isValidThumbnail && isValidTitle} />
       </FormStyled.Form>

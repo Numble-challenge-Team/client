@@ -21,9 +21,19 @@ interface FileInputProps {
   setFile: Dispatch<SetStateAction<File | null>>;
   isValid: boolean;
   setIsValid: Dispatch<SetStateAction<boolean>>;
+  setInValidMessage: Dispatch<SetStateAction<string>>;
 }
 
-function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }: PropsWithChildren<FileInputProps>) {
+function FileInput({
+  type,
+  id,
+  placeholder,
+  file,
+  setFile,
+  isValid,
+  setIsValid,
+  setInValidMessage,
+}: PropsWithChildren<FileInputProps>) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const initEvent: ReactEventHandler<HTMLElement> = (e) => {
@@ -50,19 +60,24 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
   };
 
   const uploadFile = (file: File) => {
+    const { size } = file;
+    const MB = size / 1024 / 1024;
+
+    if (type === 'video' && MB > 50) {
+      setIsValid(false);
+      setInValidMessage('용량이 너무 큽니다.');
+      return;
+    }
+
     setFile(file);
     setIsValid(true);
+    setInValidMessage('');
   };
 
   const changeFile: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!e.target.files) {
       return;
     }
-
-    const { size } = e.target.files[0];
-    const MB = size / 1024 / 1024;
-
-    console.log({ fileSize: MB });
 
     uploadFile(e.target.files[0]);
   };

@@ -8,8 +8,7 @@ import {
 } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { CommonForm, FormStyled } from '@components/MyVideo';
-import { Title } from '@components/Common';
+import { CommonForm, FormStyled, InputWithTitle } from '@components/MyVideo';
 
 import ReactPlayer from 'react-player/lazy';
 
@@ -87,23 +86,24 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
   return (
     <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>
       <FormStyled.Form onSubmit={handleSubmitVideo} noValidate>
-        <Title size="title3" margin="2rem 0 0.8rem">
-          영상
-        </Title>
-        {embedLink && (
+        <InputWithTitle title="영상">
           <FormStyled.EmbedPlayerWrapper>
-            <ReactPlayer
-              url={embedLink}
-              width="100%"
-              height="100%"
-              onReady={validateEmbedLink}
-              onError={inValidateEmbedLink}
-              onDuration={changeDuration}
-              controls
-            />
+            {embedLink ? (
+              <ReactPlayer
+                url={embedLink}
+                width="100%"
+                height="100%"
+                onReady={validateEmbedLink}
+                onError={inValidateEmbedLink}
+                onDuration={changeDuration}
+                controls
+              />
+            ) : (
+              <FormStyled.EmptyPlayerWrapper>임베드된 영상 없음</FormStyled.EmptyPlayerWrapper>
+            )}
           </FormStyled.EmbedPlayerWrapper>
-        )}
-        <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
+          <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
+        </InputWithTitle>
 
         <CommonForm isValid={isValidEmbedLink && isValidThumbnail && isValidTitle} />
       </FormStyled.Form>
