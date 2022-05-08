@@ -34,7 +34,7 @@ export const FormTitle = styled.h3`
   font-family: 'NanumSquareB';
   font-size: 1.4rem;
   color: #000000;
-  margin-top: 2rem;
+  margin-top: 3.2rem;
   margin-bottom: 0.8rem;
 `;
 
@@ -64,10 +64,30 @@ export const ImgContainer = styled(FileContainer)`
 `;
 
 export const EmbedPlayerWrapper = styled.div`
+  position: relative;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 0;
+  margin-bottom: 0.8rem;
+  padding-top: 56.25%;
   overflow: hidden;
   border-radius: 0.8rem;
+
+  & > * {
+    position: absolute;
+    top: 0;
+  }
+`;
+
+export const EmptyPlayerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 0.1rem solid ${({ theme }) => theme.color.gray[300]};
+  border-radius: 0.8rem;
+  color: ${({ theme }) => theme.color.gray[300]};
 `;
 
 export const PlayerWrapper = styled.div`

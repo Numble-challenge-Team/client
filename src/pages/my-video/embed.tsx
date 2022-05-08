@@ -87,11 +87,11 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
   return (
     <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>
       <FormStyled.Form onSubmit={handleSubmitVideo} noValidate>
-        <Title size="title3" margin="2rem 0 0.8rem">
+        <Title size="title3" margin="3.2rem 0 0.8rem">
           영상
         </Title>
-        {embedLink && (
-          <FormStyled.EmbedPlayerWrapper>
+        <FormStyled.EmbedPlayerWrapper>
+          {embedLink ? (
             <ReactPlayer
               url={embedLink}
               width="100%"
@@ -101,8 +101,10 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
               onDuration={changeDuration}
               controls
             />
-          </FormStyled.EmbedPlayerWrapper>
-        )}
+          ) : (
+            <FormStyled.EmptyPlayerWrapper>임베드된 영상 없음</FormStyled.EmptyPlayerWrapper>
+          )}
+        </FormStyled.EmbedPlayerWrapper>
         <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
 
         <CommonForm isValid={isValidEmbedLink && isValidThumbnail && isValidTitle} />
