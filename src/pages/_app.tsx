@@ -15,9 +15,10 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const pageParameter = router.pathname.split('/')[1];
+  const notTokenPage = ['', 'login', '[signup]', 'watch'];
 
   useEffect(() => {
-    if (pageParameter === 'login' || pageParameter === '[signup]' || pageParameter === '') {
+    if (notTokenPage.includes(pageParameter)) {
       return;
     }
 
