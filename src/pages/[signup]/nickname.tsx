@@ -56,7 +56,7 @@ function SignupNicknamePage() {
       setAlertState('success');
 
       setTimeout(() => {
-        router.push('/');
+        router.push('/login');
       }, 3000);
     },
   });
