@@ -1,4 +1,7 @@
 /* eslint-disable camelcase */
+
+import type { Videos } from '@/types/videos';
+
 import Link from 'next/link';
 
 import { PropsWithChildren } from 'react';
@@ -7,25 +10,13 @@ import Icon from '../Icon/Icon';
 import * as VideoCardStyle from './VideoCardStyle';
 
 interface VideoCardProps {
-  cardInfo: {
-    videoId: string;
-    uploadThumbNail: {
-      storeThumbName: string;
-      uploadThumbUrl: string;
-    };
-    title: string;
-    duration: number;
-    nickname: string;
-    view: number;
-    likes: number;
-    created_at: string;
-  };
+  cardInfo: Videos;
 }
 
 function VideoCard({
   cardInfo: {
     videoId,
-    uploadThumbNail: { uploadThumbUrl, storeThumbName },
+    thumbnail: { url, name },
     title,
     duration,
     nickname,
@@ -38,7 +29,7 @@ function VideoCard({
     <VideoCardStyle.Card>
       <Link href={`/${videoId}`} passHref>
         <VideoCardStyle.LinkThumbnail>
-          <VideoCardStyle.Thumbnail src={uploadThumbUrl} alt={storeThumbName} />
+          <VideoCardStyle.Thumbnail src={url} alt={name} />
         </VideoCardStyle.LinkThumbnail>
       </Link>
       <VideoCardStyle.CaptionContainer>

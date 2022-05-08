@@ -8,6 +8,10 @@ export const myVideoEmbedLink = atom<string>({
   key: 'myVideoEmbedLink',
   default: '',
 });
+export const myVideoEmbedLinkDuration = atom<number>({
+  key: 'myVideoEmbedLinkDuration',
+  default: 0,
+});
 export const myVideoEmbedLinkErrorMessage = atom<string | null>({
   key: 'myVideoEmbedLinkErrorMessage',
   default: null,
