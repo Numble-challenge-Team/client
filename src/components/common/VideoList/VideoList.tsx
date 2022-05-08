@@ -33,7 +33,7 @@ function VideoList({ useVideosQueryResult: { data, fetchNextPage, hasNextPage } 
       {data?.pages.map(({ contents, nextPage }) => (
         <Fragment key={nextPage}>
           {contents.map((cardInfo) => (
-            <VideoCard cardInfo={cardInfo} />
+            <VideoCard key={cardInfo.videoId} cardInfo={cardInfo} />
           ))}
         </Fragment>
       ))}
