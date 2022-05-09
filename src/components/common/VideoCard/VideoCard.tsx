@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import type { resVideos, Videos } from '@/types/videos';
-import axios from 'axios';
 
 import { PropsWithChildren } from 'react';
 import { useQueryClient } from 'react-query';
