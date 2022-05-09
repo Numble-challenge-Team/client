@@ -23,8 +23,12 @@ export function interceptors(requestHTTP: AxiosInstance) {
       return response;
     },
     async (error) => {
+      console.log({ error });
       const accessToken = localStorage.getItem('accessToken');
       const refreshToken = localStorage.getItem('refreshToken');
+
+      console.log(accessToken);
+      console.log(refreshToken);
 
       if (error.response.status === 401) {
         try {
@@ -34,12 +38,12 @@ export function interceptors(requestHTTP: AxiosInstance) {
           });
 
           localStorage.setItem('accessToken', response.data.data.accessToken);
-          localStorage.setItem('accessToken', response.data.data.refeshToken);
+          localStorage.setItem('refeshToken', response.data.data.refeshToken);
 
           error.config.headers.Authorization = `Bearer ${accessToken}`;
           return requestHTTP(error.config);
         } catch (error) {
-          console.log('토큰 만료 후 재요청 실패', error);
+          console.log('토큰 만료 후 재요청 실패', { error });
         }
       }
 
