@@ -18,16 +18,18 @@ function VideoCard({
     videoId,
     thumbnail: { url, name },
     title,
+    owner,
     duration,
     nickname,
     view,
     likes,
+    liked,
     created_at,
   },
 }: PropsWithChildren<VideoCardProps>) {
   return (
     <VideoCardStyle.Card>
-      <Link href={`/${videoId}`} passHref>
+      <Link href={`/watch?v=${videoId}`} passHref>
         <VideoCardStyle.LinkThumbnail>
           <VideoCardStyle.Thumbnail src={url} alt={name} />
         </VideoCardStyle.LinkThumbnail>
@@ -46,8 +48,16 @@ function VideoCard({
           </VideoCardStyle.CaptionInfoBox>
         </VideoCardStyle.TextCaptionWrapper>
 
+        {/* {owner ? (
+          <>더보기 버튼</>
+        ) : (
+          <VideoCardStyle.LikeButton>
+            <Icon type="heart" width={20} height={20} />
+            <span>{likes}</span>
+          </VideoCardStyle.LikeButton>
+        )} */}
         <VideoCardStyle.LikeButton>
-          <Icon type="heart" width={20} height={20} />
+          <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
           <span>{likes}</span>
         </VideoCardStyle.LikeButton>
       </VideoCardStyle.CaptionContainer>

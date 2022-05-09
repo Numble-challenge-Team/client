@@ -4,7 +4,7 @@ import { ServerResponse } from 'http';
 import { axiosService, axiosWithToken } from '@api';
 import { SignupInfoType, ValidationResponseType } from '@/types/signup';
 import { FetchDataType } from '@/types/fetchData';
-import type { resVideos } from '@types/videos';
+import type { resVideos } from '@/types/videos';
 
 // Infinity Option
 const InfinityOption = {
