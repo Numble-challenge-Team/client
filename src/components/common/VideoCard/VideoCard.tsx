@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import { PropsWithChildren } from 'react';
 import { useQueryClient } from 'react-query';
+import { useLikeMutation } from '@api/queries/like';
 import Icon from '../Icon/Icon';
 
 import * as VideoCardStyle from './VideoCardStyle';
@@ -34,7 +35,31 @@ function VideoCard({
   },
 }: PropsWithChildren<VideoCardProps>) {
   const queryClient = useQueryClient();
+  const likeMutation = useLikeMutation({
+    onSuccess: ({ data }) => {
+      const previousUserVideos = queryClient.getQueryData<{ pages: resVideos[] }>('userVideos');
+
+      if (previousUserVideos) {
+        previousUserVideos.pages[curPage].contents[videoIdx].liked = data.likeIncreased;
+        previousUserVideos.pages[curPage].contents[videoIdx].likes += data.likeIncreased ? 1 : -1;
+        queryClient.setQueryData<{ pages: resVideos[] }>('userVideos', previousUserVideos);
+      }
+    },
+    onError: (err) => {
+      console.log({ err });
+    },
+  });
   const router = useRouter();
+
+  const handleLike = () => {
+    if (!localStorage.getItem('accessToken')) {
+      alert('로그인 후 이용해 주세요.');
+      router.push('/login');
+      return;
+    }
+
+    likeMutation.mutate(videoId);
+  };
 
   return (
     <VideoCardStyle.Card>
@@ -65,35 +90,7 @@ function VideoCard({
             <span>{likes}</span>
           </VideoCardStyle.LikeButton>
         )} */}
-        <VideoCardStyle.LikeButton
-          onClick={() => {
-            if (!localStorage.getItem('accessToken')) {
-              alert('로그인 후 이용해 주세요.');
-              router.push('/login');
-              return;
-            }
-
-            axios({
-              method: 'post',
-              url: `http://3.34.240.178:8081/api/v1/videos/like/${videoId}`,
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              },
-            })
-              .then(({ data }) => {
-                const previousUserVideos = queryClient.getQueryData<{ pages: resVideos[] }>('userVideos');
-
-                if (previousUserVideos) {
-                  previousUserVideos.pages[curPage].contents[videoIdx].liked = data.likeIncreased;
-                  previousUserVideos.pages[curPage].contents[videoIdx].likes += data.likeIncreased ? 1 : -1;
-                  queryClient.setQueryData<{ pages: resVideos[] }>('userVideos', previousUserVideos);
-                }
-              })
-              .catch((err) => {
-                console.log({ err });
-              });
-          }}
-        >
+        <VideoCardStyle.LikeButton onClick={handleLike}>
           <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
           <span>{likes}</span>
         </VideoCardStyle.LikeButton>
