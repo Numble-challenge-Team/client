@@ -70,6 +70,7 @@ function VideoCard({
             if (!localStorage.getItem('accessToken')) {
               alert('로그인 후 이용해 주세요.');
               router.push('/login');
+              return;
             }
 
             axios({
