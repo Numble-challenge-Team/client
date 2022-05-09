@@ -3,6 +3,7 @@ export interface Videos {
   created_at: string;
   description: string | null;
   duration: number;
+  owner: boolean;
   liked: boolean;
   likes: number;
   nickname: string;

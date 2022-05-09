@@ -30,10 +30,10 @@ function VideoList({ useVideosQueryResult: { data, fetchNextPage, hasNextPage } 
 
   return (
     <VideoListStyled.Videos>
-      {data?.pages.map(({ contents, nextPage }) => (
+      {data?.pages.map(({ contents, nextPage }, curPage) => (
         <Fragment key={nextPage}>
-          {contents.map((cardInfo) => (
-            <VideoCard key={cardInfo.videoId} cardInfo={cardInfo} />
+          {contents.map((cardInfo, videoIdx) => (
+            <VideoCard key={cardInfo.videoId} cardInfo={cardInfo} curPage={curPage} videoIdx={videoIdx} />
           ))}
         </Fragment>
       ))}
