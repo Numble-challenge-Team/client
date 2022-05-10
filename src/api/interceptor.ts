@@ -34,12 +34,12 @@ export function interceptors(requestHTTP: AxiosInstance) {
           });
 
           localStorage.setItem('accessToken', response.data.data.accessToken);
-          localStorage.setItem('refeshToken', response.data.data.refeshToken);
+          localStorage.setItem('refreshToken', response.data.data.refreshToken);
 
           error.config.headers.Authorization = `Bearer ${accessToken}`;
           return requestHTTP(error.config);
         } catch (error) {
-          console.log('토큰 만료 후 재요청 실패', error);
+          console.log('토큰 만료 후 재요청 실패', { error });
         }
       }
 
