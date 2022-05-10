@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { useInfiniteQuery } from 'react-query';
 import { axiosService, axiosWithToken } from '@api';
 import type { resVideos } from '@/types/videos';
@@ -12,20 +13,26 @@ const InfinityOption = {
 };
 
 // 전체 비디오 조회
-// 검색은 따로 추가 예정 -> 전체 비디오 로직에서 분기 처리하는게 나을듯
-const fetchAllVideos = async ({ pageParam = 0 }) => {
-  const {
-    data: { contents, hasMore },
-  } = await axiosWithToken.get<resVideos>(`/videos/main?page=${pageParam}`);
+const fetchAllVideos =
+  (search: string | string[] | undefined) =>
+  async ({ pageParam = 0 }) => {
+    let res: AxiosResponse<resVideos, any>;
 
-  return {
-    contents,
-    nextPage: pageParam + 1,
-    hasMore,
+    if (search) {
+      res = await axiosWithToken.get<resVideos>(`/videos/search?page=${pageParam}&query=${search}`);
+    } else {
+      res = await axiosWithToken.get<resVideos>(`/videos/main?page=${pageParam}`);
+    }
+
+    const { contents, hasMore } = res.data;
+    return {
+      contents,
+      nextPage: pageParam + 1,
+      hasMore,
+    };
   };
-};
-export const useAllVideosQuery = () => {
-  return useInfiniteQuery('allVideos', fetchAllVideos, InfinityOption);
+export const useAllVideosQuery = (search: string | string[] | undefined) => {
+  return useInfiniteQuery(['allVideos', search], fetchAllVideos(search), InfinityOption);
 };
 
 // 마이 비디오 조회
