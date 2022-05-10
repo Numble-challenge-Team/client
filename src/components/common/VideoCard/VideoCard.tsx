@@ -5,8 +5,10 @@ import { useRouter } from 'next/router';
 import type { resVideos, Videos } from '@/types/videos';
 
 import { PropsWithChildren } from 'react';
-import { useQueryClient } from 'react-query';
+import { QueryKey, useQueryClient } from 'react-query';
 import { useLikeMutation } from '@api/queries/like';
+import { useRecoilState } from 'recoil';
+import { searchState } from '@store/search';
 import Icon from '../Icon/Icon';
 
 import * as VideoCardStyle from './VideoCardStyle';
@@ -14,11 +16,13 @@ import * as VideoCardStyle from './VideoCardStyle';
 interface VideoCardProps {
   curPage: number;
   videoIdx: number;
+  queryKey: QueryKey;
   cardInfo: Videos;
 }
 
 function VideoCard({
   curPage,
+  queryKey,
   videoIdx,
   cardInfo: {
     videoId,
@@ -33,15 +37,17 @@ function VideoCard({
     created_at,
   },
 }: PropsWithChildren<VideoCardProps>) {
+  const [search] = useRecoilState(searchState);
   const queryClient = useQueryClient();
   const likeMutation = useLikeMutation({
     onSuccess: ({ data }) => {
-      const previousUserVideos = queryClient.getQueryData<{ pages: resVideos[] }>('userVideos');
+      console.log({ data });
+      const previousUserVideos = queryClient.getQueryData<{ pages: resVideos[] }>(queryKey);
 
       if (previousUserVideos) {
         previousUserVideos.pages[curPage].contents[videoIdx].liked = data.likeIncreased;
         previousUserVideos.pages[curPage].contents[videoIdx].likes += data.likeIncreased ? 1 : -1;
-        queryClient.setQueryData<{ pages: resVideos[] }>('userVideos', previousUserVideos);
+        queryClient.setQueryData<{ pages: resVideos[] }>(queryKey, previousUserVideos);
       }
     },
     onError: (err) => {

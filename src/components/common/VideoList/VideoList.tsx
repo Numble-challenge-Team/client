@@ -2,7 +2,7 @@ import type { Videos } from '@/types/videos';
 
 import { Fragment, PropsWithChildren, useEffect } from 'react';
 
-import { UseInfiniteQueryResult } from 'react-query';
+import { QueryKey, UseInfiniteQueryResult } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 
 import { VideoCard } from '@components/Common';
@@ -14,12 +14,14 @@ interface VideoListProps {
       contents: Videos[];
       nextPage: number;
       hasMore: boolean;
+      queryKey: QueryKey;
     },
     unknown
   >;
 }
 
-function VideoList({ useVideosQueryResult: { data, fetchNextPage, hasNextPage } }: PropsWithChildren<VideoListProps>) {
+function VideoList({ useVideosQueryResult }: PropsWithChildren<VideoListProps>) {
+  const { data, fetchNextPage, hasNextPage } = useVideosQueryResult;
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -30,10 +32,16 @@ function VideoList({ useVideosQueryResult: { data, fetchNextPage, hasNextPage } 
 
   return (
     <VideoListStyled.Videos>
-      {data?.pages.map(({ contents, nextPage }, curPage) => (
+      {data?.pages.map(({ contents, nextPage, queryKey }, curPage) => (
         <Fragment key={nextPage}>
           {contents.map((cardInfo, videoIdx) => (
-            <VideoCard key={cardInfo.videoId} cardInfo={cardInfo} curPage={curPage} videoIdx={videoIdx} />
+            <VideoCard
+              key={cardInfo.videoId}
+              queryKey={queryKey}
+              cardInfo={cardInfo}
+              curPage={curPage}
+              videoIdx={videoIdx}
+            />
           ))}
         </Fragment>
       ))}
