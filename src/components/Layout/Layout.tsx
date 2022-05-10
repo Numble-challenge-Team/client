@@ -1,6 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { isFirstAccessState } from '@store/home';
+
+import FirstAccess from './FirstAccess/FirstAccess';
 import HomeHeaderContents from './HomeHeaderContents/HomeHeaderContents';
 import HeaderTitle from './HeaderTitle/HeaderTitle';
 import Navigation from './Navigation/Navigation';
@@ -15,19 +19,26 @@ interface LayoutProps {
 
 function Layout({ children, hasNav = true, hasBackButton = false, title }: PropsWithChildren<LayoutProps>) {
   const { pathname } = useRouter();
+  const [isFirstAccess] = useRecoilState(isFirstAccessState);
 
   // console.log(router);
   return (
     <>
-      <LayoutStyled.Header>
-        {pathname === '/' ? (
-          <HomeHeaderContents />
-        ) : (
-          title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>
-        )}
-        {hasNav && <Navigation />}
-      </LayoutStyled.Header>
-      <LayoutStyled.Main>{children}</LayoutStyled.Main>
+      {isFirstAccess ? (
+        <FirstAccess />
+      ) : (
+        <>
+          <LayoutStyled.Header>
+            {pathname === '/' ? (
+              <HomeHeaderContents />
+            ) : (
+              title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>
+            )}
+            {hasNav && <Navigation />}
+          </LayoutStyled.Header>
+          <LayoutStyled.Main>{children}</LayoutStyled.Main>
+        </>
+      )}
     </>
   );
 }
