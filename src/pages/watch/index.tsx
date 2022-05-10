@@ -3,13 +3,12 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Layout from '@components/Layout/Layout';
-import Tag from '@components/Common/Tag/Tag';
+
 import * as Styled from '@components/Watch/WatchStyle';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
-import Text from '@components/Common/Text/Text';
-import Title from '@components/Common/Title/Title';
-import TapPanel from '@components/Layout/TapPanel/TapPanel';
+import TapPanel from '@components/Watch/TapPanel/TapPanel';
+import { Icon, Tag, Text, Title } from '@components/Common';
 
 function VideoWatchPage() {
   const router = useRouter();
@@ -22,7 +21,7 @@ function VideoWatchPage() {
   }, []);
 
   return (
-    <Layout hasHeader={false}>
+    <Layout hasNav={false} hasHeader={false}>
       {/* 영상 */}
       <Styled.VideoContainer>
         <iframe
@@ -43,14 +42,19 @@ function VideoWatchPage() {
             <div>프로필</div>
           </div>
           <div>
-            <Text fontColor="600" margin="0 0 0.8rem">
+            <Text fontColor="600" margin="0 0 1.2rem">
               {data?.videoDetail.usersId}
             </Text>
             <Text size="text4" fontColor="500">
               조회수 {data?.videoDetail.view} | {data?.videoDetail.created_at}
             </Text>
           </div>
-          <div>좋아요 버튼</div>
+
+          {/* 좋아요 버튼 */}
+          <div>
+            <Icon type="heart" width={20} height={20} />
+            <p>{data?.videoDetail.likes}</p>
+          </div>
         </Styled.UserInfoWrapper>
 
         {/* 비디오 제목 */}
@@ -59,9 +63,12 @@ function VideoWatchPage() {
             <Title size="title2" hasBold={false}>
               {data?.videoDetail.title}
             </Title>
-            <button type="button" onClick={handleDescriptionOpen}>
-              더보기
-            </button>
+            <Icon
+              type={isOpenDescription ? 'chevron-down' : 'chevron-up'}
+              width={20}
+              height={20}
+              clickEvent={handleDescriptionOpen}
+            />
           </div>
 
           {/* 비디오 설명 */}
