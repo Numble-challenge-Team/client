@@ -1,22 +1,26 @@
 interface IconProps {
   type:
-    | 'chevron-up'
-    | 'cancle'
-    | 'circle-arrow-left'
-    | 'fill-heart'
     | 'chevron-down'
-    | 'flag'
+    | 'chevron-up'
     | 'clear-circle'
+    | 'circle-arrow-left'
+    | 'header-logo'
     | 'dial-pad'
-    | 'home'
+    | 'flag'
+    | 'fill-heart'
     | 'heart'
-    | 'send'
-    | 'help-question'
     | 'search'
-    | 'thumbs-up'
     | 'plus-circle'
+    | 'help-question'
+    | 'home'
+    | 'video-off'
+    | 'send'
+    | 'app-logo'
+    | 'thumbs-up'
+    | 'user'
     | 'video'
-    | 'user';
+    | 'cancle';
+
   fill?: string;
   width?: number;
   height?: number;

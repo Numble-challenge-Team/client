@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
+import { useRouter } from 'next/router';
+import HomeHeaderContents from './HomeHeaderContents/HomeHeaderContents';
 import HeaderTitle from './HeaderTitle/HeaderTitle';
 import Navigation from './Navigation/Navigation';
 
@@ -12,10 +14,17 @@ interface LayoutProps {
 }
 
 function Layout({ children, hasNav = true, hasBackButton = false, title }: PropsWithChildren<LayoutProps>) {
+  const { pathname } = useRouter();
+
+  // console.log(router);
   return (
     <>
       <LayoutStyled.Header>
-        {title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>}
+        {pathname === '/' ? (
+          <HomeHeaderContents />
+        ) : (
+          title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>
+        )}
         {hasNav && <Navigation />}
       </LayoutStyled.Header>
       <LayoutStyled.Main>{children}</LayoutStyled.Main>

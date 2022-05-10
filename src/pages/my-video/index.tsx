@@ -1,5 +1,3 @@
-import { Fragment, useEffect } from 'react';
-
 import Layout from '@components/Layout/Layout';
 import { UploadButton } from '@components/MyVideo';
 import { VideoList } from '@components/Common';
