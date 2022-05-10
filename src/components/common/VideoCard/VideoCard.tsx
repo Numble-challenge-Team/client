@@ -82,7 +82,9 @@ function VideoCard({
         </VideoCardStyle.TextCaptionWrapper>
 
         {owner ? (
-          <>더보기 버튼</>
+          <button type="button">
+            <Icon type="dial-pad" />
+          </button>
         ) : (
           <VideoCardStyle.LikeButton onClick={handleLike}>
             <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
