@@ -69,7 +69,7 @@ function VideoCard({
       </Link>
       <VideoCardStyle.CaptionContainer>
         <VideoCardStyle.TextCaptionWrapper>
-          <Link href={`/${videoId}`}>
+          <Link href={`/watch?v=${videoId}`}>
             <a>
               <VideoCardStyle.CardTitle>{title}</VideoCardStyle.CardTitle>
             </a>
@@ -81,18 +81,14 @@ function VideoCard({
           </VideoCardStyle.CaptionInfoBox>
         </VideoCardStyle.TextCaptionWrapper>
 
-        {/* {owner ? (
+        {owner ? (
           <>더보기 버튼</>
         ) : (
-          <VideoCardStyle.LikeButton>
-            <Icon type="heart" width={20} height={20} />
+          <VideoCardStyle.LikeButton onClick={handleLike}>
+            <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
             <span>{likes}</span>
           </VideoCardStyle.LikeButton>
-        )} */}
-        <VideoCardStyle.LikeButton onClick={handleLike}>
-          <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
-          <span>{likes}</span>
-        </VideoCardStyle.LikeButton>
+        )}
       </VideoCardStyle.CaptionContainer>
     </VideoCardStyle.Card>
   );
