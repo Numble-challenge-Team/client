@@ -1,7 +1,5 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-
 import { PropsWithChildren } from 'react';
+import { useRouter } from 'next/router';
 
 import { Icon } from '@components/Common';
 import * as HeaderTitleStyled from './HeaderTitleStyle';

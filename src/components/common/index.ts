@@ -4,3 +4,7 @@ export { default as SVGSprite } from './SVGSprite/SVGSprite';
 export { default as Icon } from './Icon/Icon';
 export { default as VideoCard } from './VideoCard/VideoCard';
 export { default as Input } from './Input/Input';
+export { default as Tag } from './Tag/Tag';
+export { default as Text } from './Text/Text';
+export { default as Textarea } from './Textarea/Textarea';
+export { default as Title } from './Title/Title';

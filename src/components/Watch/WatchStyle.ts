@@ -12,17 +12,26 @@ export const VideoDetailInfoContainer = styled.section`
 export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 1.2rem;
   margin-bottom: 1.2rem;
 
   div:nth-child(1) {
-    flex: 1;
+    flex: 2;
   }
   div:nth-child(2) {
-    flex: 4;
-    padding-left: 1.2rem;
+    flex: 12;
   }
   div:nth-child(3) {
-    flex: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    & > svg,
+    p {
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 

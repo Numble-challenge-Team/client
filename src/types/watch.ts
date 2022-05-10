@@ -37,7 +37,7 @@ export interface VideoDetailType {
   nickname: string;
   showId: null;
   tags: string[];
-  thumbnail: VideoThumbnail | null;
+  thumbnail: VideoThumbnail;
   title: string;
   usersId: number;
   videoId: number;
