@@ -1,3 +1,5 @@
+import { QueryKey } from 'react-query';
+
 export interface Videos {
   block: boolean;
   created_at: string;
@@ -22,4 +24,5 @@ export interface Videos {
 export interface resVideos {
   contents: Videos[];
   hasMore: boolean;
+  queryKey: QueryKey;
 }

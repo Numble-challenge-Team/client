@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { useInfiniteQuery } from 'react-query';
+import { QueryKey, useInfiniteQuery } from 'react-query';
 import { axiosService, axiosWithToken } from '@api';
 import type { resVideos } from '@/types/videos';
 
@@ -14,7 +14,7 @@ const InfinityOption = {
 
 // 전체 비디오 조회
 const fetchAllVideos =
-  (search: string | string[] | undefined) =>
+  (queryKey: QueryKey, search: string | string[] | undefined) =>
   async ({ pageParam = 0 }) => {
     let res: AxiosResponse<resVideos, any>;
 
@@ -29,25 +29,31 @@ const fetchAllVideos =
       contents,
       nextPage: pageParam + 1,
       hasMore,
+      queryKey,
     };
   };
 export const useAllVideosQuery = (search: string | string[] | undefined) => {
-  return useInfiniteQuery(['allVideos', search], fetchAllVideos(search), InfinityOption);
+  const queryKey = ['allVideos', search];
+  return useInfiniteQuery(queryKey, fetchAllVideos(queryKey, search), InfinityOption);
 };
 
 // 마이 비디오 조회
-const fetchUserVideos = async ({ pageParam = 0 }) => {
-  const {
-    data: { contents, hasMore },
-  } = await axiosWithToken.get<resVideos>(`/videos/retrieve/myVideo?page=${pageParam}`);
+const fetchUserVideos =
+  (queryKey: QueryKey) =>
+  async ({ pageParam = 0 }) => {
+    const {
+      data: { contents, hasMore },
+    } = await axiosWithToken.get<resVideos>(`/videos/retrieve/myVideo?page=${pageParam}`);
 
-  return {
-    contents,
-    nextPage: pageParam + 1,
-    hasMore,
+    return {
+      contents,
+      nextPage: pageParam + 1,
+      hasMore,
+      queryKey,
+    };
   };
-};
 
 export const useUserVideosQuery = () => {
-  return useInfiniteQuery('userVideos', fetchUserVideos, InfinityOption);
+  const queryKey = 'userVideos';
+  return useInfiniteQuery(queryKey, fetchUserVideos(queryKey), InfinityOption);
 };
