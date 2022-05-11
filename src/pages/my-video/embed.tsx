@@ -1,12 +1,6 @@
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  MutableRefObject,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FormEventHandler } from 'react';
 
+import * as LayoutStyled from '@components/Layout/LayoutStyle';
 import Layout from '@components/Layout/Layout';
 import { CommonForm, FormStyled, InputWithTitle } from '@components/MyVideo';
 
@@ -25,7 +19,8 @@ import {
   myVideoDescription,
 } from '@store/myVideoUpload';
 
-import { useUploadMutation } from '@api/queries/upload';
+import { useEmbedUploadMutation } from '@api/queries/upload';
+import { Icon } from '@components/Common';
 
 interface MyVideoEmbedProps {}
 
@@ -56,7 +51,7 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
 
   const [description] = useRecoilState(myVideoDescription);
 
-  const uploadMutation = useUploadMutation({
+  const uploadMutation = useEmbedUploadMutation({
     onSuccess: (data) => {
       console.log({ data });
     },
@@ -75,13 +70,22 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     formData.append('duration', `${duration}`);
     formData.append('description', description);
     formData.append('videoUrl', embedLink as string);
-    formData.append('thumbNail', thumbnail as File);
+    formData.append('thumbnail', thumbnail as File);
     tags.forEach((tag) => {
       formData.append('tags', tag);
     });
 
     uploadMutation.mutate(formData);
   };
+
+  if (uploadMutation.isLoading) {
+    return (
+      <LayoutStyled.EmptyContainer>
+        <Icon width={100} height={100} type="loading" />
+        영상 업로드 중입니다...
+      </LayoutStyled.EmptyContainer>
+    );
+  }
 
   return (
     <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>

@@ -14,20 +14,28 @@ import * as LayoutStyled from './LayoutStyle';
 interface LayoutProps {
   hasNav?: boolean;
   hasBackButton?: boolean;
+  hasHeader?: boolean;
   title?: '마이 비디오' | '임베드 영상 업로드' | '직접 영상 업로드' | '관심 영상' | '로그인' | '회원가입';
 }
 
-function Layout({ children, hasNav = true, hasBackButton = false, title }: PropsWithChildren<LayoutProps>) {
+function Layout({
+  children,
+  hasNav = true,
+  hasBackButton = false,
+  hasHeader = true,
+  title,
+}: PropsWithChildren<LayoutProps>) {
   const { pathname } = useRouter();
   const [isFirstAccess] = useRecoilState(isFirstAccessState);
 
-  // console.log(router);
+  if (isFirstAccess) {
+    return <FirstAccess />;
+  }
+
   return (
     <>
-      {isFirstAccess ? (
-        <FirstAccess />
-      ) : (
-        <>
+      <>
+        {hasHeader && (
           <LayoutStyled.Header>
             {pathname === '/' ? (
               <HomeHeaderContents />
@@ -36,9 +44,9 @@ function Layout({ children, hasNav = true, hasBackButton = false, title }: Props
             )}
             {hasNav && <Navigation />}
           </LayoutStyled.Header>
-          <LayoutStyled.Main>{children}</LayoutStyled.Main>
-        </>
-      )}
+        )}
+        <LayoutStyled.Main>{children}</LayoutStyled.Main>
+      </>
     </>
   );
 }

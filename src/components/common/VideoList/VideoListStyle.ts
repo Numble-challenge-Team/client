@@ -5,5 +5,10 @@ export const Videos = styled.ul`
 `;
 
 export const Observer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 5.6rem;
+  margin-top: 1.6rem;
 `;

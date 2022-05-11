@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Form = styled.form`
+  padding: 0 2rem;
   padding-bottom: 10rem;
 
   & input,
