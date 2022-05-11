@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const VideoContainer = styled.section`
+  position: sticky;
+  z-index: 100;
+  top: 0;
   width: 100%;
   height: 21rem;
 `;
