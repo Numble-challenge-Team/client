@@ -1,10 +1,170 @@
 import { createPortal } from 'react-dom';
+import { DefaultTheme } from 'styled-components';
 
-interface SVGSpriteProps {}
+interface SVGSpriteProps {
+  color: string;
+}
 
 function SVGSprite(prop: SVGSpriteProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" display="none">
+      <symbol id="loading" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" r="0" fill="none" stroke="#333333" strokeWidth="7">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="1s"
+            values="0;40"
+            keyTimes="0;1"
+            keySplines="0 0.2 0.8 1"
+            calcMode="spline"
+            begin="0s"
+          />
+          <animate
+            attributeName="opacity"
+            repeatCount="indefinite"
+            dur="1s"
+            values="1;0"
+            keyTimes="0;1"
+            keySplines="0.2 0 0.8 1"
+            calcMode="spline"
+            begin="0s"
+          />
+        </circle>
+        <circle cx="50" cy="50" r="0" fill="none" stroke="#00cddb" strokeWidth="7">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="1s"
+            values="0;40"
+            keyTimes="0;1"
+            keySplines="0 0.2 0.8 1"
+            calcMode="spline"
+            begin="-0.5s"
+          />
+          <animate
+            attributeName="opacity"
+            repeatCount="indefinite"
+            dur="1s"
+            values="1;0"
+            keyTimes="0;1"
+            keySplines="0.2 0 0.8 1"
+            calcMode="spline"
+            begin="-0.5s"
+          />
+        </circle>
+      </symbol>
+      <symbol id="fetching" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="84" cy="50" r="10" fill="#00cddb">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="0.25s"
+            calcMode="spline"
+            keyTimes="0;1"
+            values="10;0"
+            keySplines="0 0.5 0.5 1"
+            begin="0s"
+          />
+          <animate
+            attributeName="fill"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="discrete"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="#00cddb;#333333;#00cddb;#333333;#00cddb"
+            begin="0s"
+          />
+        </circle>
+        <circle cx="16" cy="50" r="10" fill="#00cddb">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="0;0;10;10;10"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="0s"
+          />
+          <animate
+            attributeName="cx"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="16;16;16;50;84"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="0s"
+          />
+        </circle>
+        <circle cx="50" cy="50" r="10" fill="#333333">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="0;0;10;10;10"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="-0.25s"
+          />
+          <animate
+            attributeName="cx"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="16;16;16;50;84"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="-0.25s"
+          />
+        </circle>
+        <circle cx="84" cy="50" r="10" fill="#00cddb">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="0;0;10;10;10"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="-0.5s"
+          />
+          <animate
+            attributeName="cx"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="16;16;16;50;84"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="-0.5s"
+          />
+        </circle>
+        <circle cx="16" cy="50" r="10" fill="#333333">
+          <animate
+            attributeName="r"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="0;0;10;10;10"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="-0.75s"
+          />
+          <animate
+            attributeName="cx"
+            repeatCount="indefinite"
+            dur="1s"
+            calcMode="spline"
+            keyTimes="0;0.25;0.5;0.75;1"
+            values="16;16;16;50;84"
+            keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1"
+            begin="-0.75s"
+          />
+        </circle>
+      </symbol>
       <symbol id="chevron-down" viewBox="0 0 24 24">
         <path
           fill="#333"
@@ -79,14 +239,10 @@ function SVGSprite(prop: SVGSpriteProps) {
         />
       </symbol>
       <symbol id="fill-heart" viewBox="0 0 24 24">
-        <path
-          fill="#333"
-          d="M2.89 3.922a6.381 6.381 0 0 1 9.11-.02 6.381 6.381 0 0 1 9.11.02c2.52 2.563 2.52 6.718 0 9.281l-8.332 8.47a1.091 1.091 0 0 1-1.556 0l-8.331-8.47C.37 10.64.37 6.485 2.89 3.923z"
-        />
+        <path d="M2.89 3.922a6.381 6.381 0 0 1 9.11-.02 6.381 6.381 0 0 1 9.11.02c2.52 2.563 2.52 6.718 0 9.281l-8.332 8.47a1.091 1.091 0 0 1-1.556 0l-8.331-8.47C.37 10.64.37 6.485 2.89 3.923z" />
       </symbol>
       <symbol id="heart" viewBox="0 0 24 24">
         <path
-          fill="#333"
           fillRule="evenodd"
           d="M10.409 5.64a4.074 4.074 0 0 0-5.824 0 4.228 4.228 0 0 0 0 5.914L12 19.084l7.415-7.53a4.228 4.228 0 0 0 0-5.914 4.074 4.074 0 0 0-5.823 0l-.751.762a1.176 1.176 0 0 1-1.682 0l-.75-.762zM12 3.842a6.426 6.426 0 0 0-9.097.09c-2.537 2.577-2.537 6.754 0 9.33l8.256 8.384a1.18 1.18 0 0 0 1.682 0l8.256-8.384c2.537-2.576 2.537-6.753 0-9.33A6.426 6.426 0 0 0 12 3.842z"
           clipRule="evenodd"
@@ -131,7 +287,6 @@ function SVGSprite(prop: SVGSpriteProps) {
       </symbol>
       <symbol id="home" viewBox="0 0 24 24">
         <path
-          fill="#333"
           fillRule="evenodd"
           d="M10.271 1.733a2.405 2.405 0 0 1 3.457 0l3.772 3.86V4.235c0-.691.547-1.251 1.222-1.251.675 0 1.222.56 1.222 1.25v3.861l2.698 2.761a1.274 1.274 0 0 1 0 1.77 1.202 1.202 0 0 1-1.729 0l-.086-.089v6.71c0 2.073-1.642 3.753-3.667 3.753H6.84c-2.026 0-3.667-1.68-3.667-3.753v-6.71l-.087.088a1.202 1.202 0 0 1-1.728 0 1.272 1.272 0 0 1 0-1.769l8.913-9.123zm-4.654 8.302v9.212c0 .69.547 1.251 1.223 1.251h3.938v-5.004c0-.691.547-1.251 1.222-1.251.675 0 1.222.56 1.222 1.25v5.005h3.938c.675 0 1.223-.56 1.223-1.251v-9.212L12 3.502l-6.383 6.533z"
           clipRule="evenodd"
@@ -199,7 +354,6 @@ function SVGSprite(prop: SVGSpriteProps) {
       </symbol>
       <symbol id="user" viewBox="0 0 24 24">
         <path
-          fill="#333"
           fillRule="evenodd"
           d="M12 4.21c-1.864 0-3.375 1.485-3.375 3.316 0 1.832 1.511 3.316 3.375 3.316s3.375-1.484 3.375-3.316c0-1.83-1.511-3.315-3.375-3.315zM6.375 7.527C6.375 4.474 8.893 2 12 2s5.625 2.474 5.625 5.526c0 3.052-2.518 5.527-5.625 5.527s-5.625-2.475-5.625-5.527zm3.375 8.842c-2.485 0-4.5 1.98-4.5 4.422v1.105c0 .61-.504 1.105-1.125 1.105A1.115 1.115 0 0 1 3 21.895V20.79c0-3.663 3.022-6.632 6.75-6.632h4.5c3.728 0 6.75 2.969 6.75 6.632v1.105c0 .61-.504 1.105-1.125 1.105a1.115 1.115 0 0 1-1.125-1.105V20.79c0-2.442-2.015-4.422-4.5-4.422h-4.5z"
           clipRule="evenodd"
@@ -207,7 +361,6 @@ function SVGSprite(prop: SVGSpriteProps) {
       </symbol>
       <symbol id="video" viewBox="0 0 24 24">
         <path
-          fill="#333"
           fillRule="evenodd"
           d="M3.444 7.482c0-.844.684-1.528 1.528-1.528h7.945c.843 0 1.527.684 1.527 1.528v7.945c0 .843-.684 1.527-1.527 1.527H4.972a1.528 1.528 0 0 1-1.528-1.527V7.482zm13.444 8.02a3.972 3.972 0 0 1-3.971 3.897H4.972A3.972 3.972 0 0 1 1 15.427V7.482A3.972 3.972 0 0 1 4.972 3.51h7.945a3.972 3.972 0 0 1 3.971 3.897l1.799-1.583C20.365 4.348 23 5.539 23 7.774v7.361c0 2.235-2.635 3.426-4.313 1.95l-1.799-1.583zm0-3.324c.001.044.02.085.053.114l3.36 2.958a.14.14 0 0 0 .078.04c.022.002.053 0 .087-.016a.165.165 0 0 0 .068-.055.14.14 0 0 0 .021-.084V7.774a.14.14 0 0 0-.02-.085.166.166 0 0 0-.07-.054.165.165 0 0 0-.086-.016.14.14 0 0 0-.077.04l-3.361 2.958a.153.153 0 0 0-.052.114v1.447z"
           clipRule="evenodd"
