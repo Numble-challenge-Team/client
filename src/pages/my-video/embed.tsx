@@ -1,12 +1,6 @@
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  MutableRefObject,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FormEventHandler } from 'react';
 
+import * as LayoutStyled from '@components/Layout/LayoutStyle';
 import Layout from '@components/Layout/Layout';
 import { CommonForm, FormStyled, InputWithTitle } from '@components/MyVideo';
 
@@ -26,6 +20,7 @@ import {
 } from '@store/myVideoUpload';
 
 import { useUploadMutation } from '@api/queries/upload';
+import { Icon } from '@components/Common';
 
 interface MyVideoEmbedProps {}
 
@@ -82,6 +77,15 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
 
     uploadMutation.mutate(formData);
   };
+
+  if (uploadMutation.isLoading) {
+    return (
+      <LayoutStyled.EmptyContainer>
+        <Icon width={100} height={100} type="loading" />
+        영상 업로드 중입니다...
+      </LayoutStyled.EmptyContainer>
+    );
+  }
 
   return (
     <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>
