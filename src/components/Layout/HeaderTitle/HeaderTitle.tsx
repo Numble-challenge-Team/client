@@ -12,7 +12,10 @@ function HeaderTitle({ hasBackButton, children }: PropsWithChildren<HeaderTitleP
   const router = useRouter();
 
   const handleLinkBack = () => {
-    router.back();
+    const queries = router.pathname.split('/');
+    queries.pop();
+    const newQuery = queries.join('/');
+    router.push(newQuery || '/');
   };
 
   return (
