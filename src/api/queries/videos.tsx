@@ -57,3 +57,23 @@ export const useUserVideosQuery = () => {
   const queryKey = 'userVideos';
   return useInfiniteQuery(queryKey, fetchUserVideos(queryKey), InfinityOption);
 };
+
+// 좋아요 누른 비디오 조회
+const fetchLikeVideos =
+  (queryKey: QueryKey) =>
+  async ({ pageParam = 0 }) => {
+    const {
+      data: { contents, hasMore },
+    } = await axiosWithToken.get<resVideos>(`/videos/likesVideos?page=${pageParam}`);
+
+    return {
+      contents,
+      nextPage: pageParam + 1,
+      hasMore,
+      queryKey,
+    };
+  };
+export const useLikeVideos = () => {
+  const queryKey = 'likeVideos';
+  return useInfiniteQuery(queryKey, fetchLikeVideos(queryKey), InfinityOption);
+};
