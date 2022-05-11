@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import { VideoCard, Icon } from '@components/Common';
 import * as LayoutStyled from '@components/Layout/LayoutStyle';
 import * as VideoListStyled from './VideoListStyle';
+import SkeletonCard from '../VideoCard/SkeletonCard';
 
 interface VideoListProps {
   useVideosQueryResult: UseInfiniteQueryResult<
@@ -35,10 +36,11 @@ function VideoList({ useVideosQueryResult }: PropsWithChildren<VideoListProps>) 
 
   if (isLoading) {
     return (
-      <LayoutStyled.EmptyContainer>
-        <Icon type="loading" width={100} height={100} />
-        비디오 불러오는 중...
-      </LayoutStyled.EmptyContainer>
+      <VideoListStyled.Videos>
+        {Array.from({ length: 20 }, (_, idx) => idx).map((idx) => (
+          <SkeletonCard key={idx} />
+        ))}
+      </VideoListStyled.Videos>
     );
   }
 

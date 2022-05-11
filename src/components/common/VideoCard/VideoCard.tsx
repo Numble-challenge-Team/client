@@ -9,7 +9,7 @@ import { QueryKey, useQueryClient } from 'react-query';
 import { useLikeMutation } from '@api/queries/like';
 import Icon from '../Icon/Icon';
 
-import * as VideoCardStyle from './VideoCardStyle';
+import * as VideoCardStyled from './VideoCardStyle';
 
 interface VideoCardProps {
   curPage: number;
@@ -68,38 +68,38 @@ function VideoCard({
   };
 
   return (
-    <VideoCardStyle.Card>
+    <VideoCardStyled.Card>
       <Link href={`/watch?v=${videoId}`} passHref>
-        <VideoCardStyle.LinkThumbnail>
-          <VideoCardStyle.Thumbnail src={url} alt={name} />
-        </VideoCardStyle.LinkThumbnail>
+        <VideoCardStyled.LinkThumbnail>
+          <VideoCardStyled.Thumbnail src={url} alt={name} />
+        </VideoCardStyled.LinkThumbnail>
       </Link>
-      <VideoCardStyle.CaptionContainer>
-        <VideoCardStyle.TextCaptionWrapper>
+      <VideoCardStyled.CaptionContainer>
+        <VideoCardStyled.TextCaptionWrapper>
           <Link href={`/watch?v=${videoId}`}>
             <a>
-              <VideoCardStyle.CardTitle>{title}</VideoCardStyle.CardTitle>
+              <VideoCardStyled.CardTitle>{title}</VideoCardStyled.CardTitle>
             </a>
           </Link>
-          <VideoCardStyle.CaptionInfoBox>
+          <VideoCardStyled.CaptionInfoBox>
             <span>{nickname}</span>
             <span>조회수 {view}</span>
             <span>{created_at}</span>
-          </VideoCardStyle.CaptionInfoBox>
-        </VideoCardStyle.TextCaptionWrapper>
+          </VideoCardStyled.CaptionInfoBox>
+        </VideoCardStyled.TextCaptionWrapper>
 
         {owner ? (
           <button type="button">
             <Icon type="dial-pad" />
           </button>
         ) : (
-          <VideoCardStyle.LikeButton onClick={handleLike}>
+          <VideoCardStyled.LikeButton onClick={handleLike}>
             <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
             <span>{likes}</span>
-          </VideoCardStyle.LikeButton>
+          </VideoCardStyled.LikeButton>
         )}
-      </VideoCardStyle.CaptionContainer>
-    </VideoCardStyle.Card>
+      </VideoCardStyled.CaptionContainer>
+    </VideoCardStyled.Card>
   );
 }
 
