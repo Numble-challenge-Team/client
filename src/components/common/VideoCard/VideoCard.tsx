@@ -7,8 +7,6 @@ import type { resVideos, Videos } from '@/types/videos';
 import { PropsWithChildren } from 'react';
 import { QueryKey, useQueryClient } from 'react-query';
 import { useLikeMutation } from '@api/queries/like';
-import { useRecoilState } from 'recoil';
-import { searchState } from '@store/search';
 import Icon from '../Icon/Icon';
 
 import * as VideoCardStyle from './VideoCardStyle';
@@ -37,7 +35,6 @@ function VideoCard({
     created_at,
   },
 }: PropsWithChildren<VideoCardProps>) {
-  const [search] = useRecoilState(searchState);
   const queryClient = useQueryClient();
   const likeMutation = useLikeMutation({
     onSuccess: ({ data }) => {
@@ -47,6 +44,10 @@ function VideoCard({
       if (previousUserVideos) {
         previousUserVideos.pages[curPage].contents[videoIdx].liked = data.likeIncreased;
         previousUserVideos.pages[curPage].contents[videoIdx].likes += data.likeIncreased ? 1 : -1;
+        if (queryKey === 'likeVideos') {
+          delete previousUserVideos.pages[curPage].contents[videoIdx];
+        }
+
         queryClient.setQueryData<{ pages: resVideos[] }>(queryKey, previousUserVideos);
       }
     },

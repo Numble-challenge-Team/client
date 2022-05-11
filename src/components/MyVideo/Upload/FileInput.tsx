@@ -1,7 +1,9 @@
+import { isValidMyVideoFile, myVideoDuration } from '@store/myVideoUpload';
 import {
   ChangeEventHandler,
   Dispatch,
   DragEventHandler,
+  memo,
   MouseEventHandler,
   PropsWithChildren,
   ReactEventHandler,
@@ -10,6 +12,7 @@ import {
 } from 'react';
 
 import ReactPlayer from 'react-player';
+import { useRecoilState } from 'recoil';
 
 import * as FormStyled from './FormStyle';
 
@@ -35,6 +38,18 @@ function FileInput({
   setInValidMessage,
 }: PropsWithChildren<FileInputProps>) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const [isValidVideo, setIsValidVideo] = useRecoilState(isValidMyVideoFile);
+  const [duration, setDuration] = useRecoilState(myVideoDuration);
+  const validateVideo = () => {
+    setIsValidVideo(true);
+  };
+  const inValidateVideo = () => {
+    setIsValidVideo(false);
+  };
+  const changeDuration = (duration: number) => {
+    setDuration(duration);
+  };
 
   const initEvent: ReactEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
@@ -113,16 +128,9 @@ function FileInput({
                 url={URL.createObjectURL(file)}
                 width="100%"
                 height="100%"
-                onReady={(player) => {
-                  console.log('ready');
-                }}
-                onError={(err) => {
-                  console.log('error');
-                  setIsValid(false);
-                }}
-                onDuration={(duration) => {
-                  console.log({ duration });
-                }}
+                onReady={validateVideo}
+                onError={inValidateVideo}
+                onDuration={changeDuration}
                 controls
               />
             </FormStyled.PlayerWrapper>
@@ -152,4 +160,4 @@ function FileInput({
   );
 }
 
-export default FileInput;
+export default memo(FileInput);

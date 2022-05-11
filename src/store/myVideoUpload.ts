@@ -33,6 +33,10 @@ export const myVideoFile = atom<File | null>({
   key: 'myVideoFile',
   default: null,
 });
+export const myVideoDuration = atom<number>({
+  key: 'myVideoDuration',
+  default: 0,
+});
 export const myVideoFileErrorMessage = atom<string | null>({
   key: 'myVideoFileErrorMessage',
   default: null,

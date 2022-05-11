@@ -19,7 +19,7 @@ import {
   myVideoDescription,
 } from '@store/myVideoUpload';
 
-import { useUploadMutation } from '@api/queries/upload';
+import { useEmbedUploadMutation } from '@api/queries/upload';
 import { Icon } from '@components/Common';
 
 interface MyVideoEmbedProps {}
@@ -51,7 +51,7 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
 
   const [description] = useRecoilState(myVideoDescription);
 
-  const uploadMutation = useUploadMutation({
+  const uploadMutation = useEmbedUploadMutation({
     onSuccess: (data) => {
       console.log({ data });
     },
@@ -70,7 +70,7 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
     formData.append('duration', `${duration}`);
     formData.append('description', description);
     formData.append('videoUrl', embedLink as string);
-    formData.append('thumbNail', thumbnail as File);
+    formData.append('thumbnail', thumbnail as File);
     tags.forEach((tag) => {
       formData.append('tags', tag);
     });
