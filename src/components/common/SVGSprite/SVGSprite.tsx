@@ -262,6 +262,14 @@ function SVGSprite(prop: SVGSpriteProps) {
           clipRule="evenodd"
         />
       </symbol>
+      <symbol id="send-inactive" viewBox="0 0 24 24">
+        <path
+          fill="#808080"
+          fillRule="evenodd"
+          d="M22.665 1.343c.304.308.412.76.279 1.171l-6.369 19.684a1.158 1.158 0 0 1-2.123.189l-4.471-8.384-8.387-4.681a1.158 1.158 0 0 1 .218-2.117l19.685-6.152c.413-.13.863-.017 1.168.29zM12.268 13.37l2.944 5.52L19.26 6.378l-6.993 6.992zm5.427-8.703L5.074 8.612l5.568 3.108 7.053-7.053z"
+          clipRule="evenodd"
+        />
+      </symbol>
       <symbol id="plus-circle" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="12" fill="#0C364E" />
         <path

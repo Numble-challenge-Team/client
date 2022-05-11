@@ -1,13 +1,19 @@
 import styled, { css } from 'styled-components';
 
-export const TextStyle = styled.p<{ size: string; margin?: string; hasBold?: boolean; hasError?: boolean }>`
-  ${({ theme, size, margin, hasBold, hasError }) => {
+export const TextStyle = styled.p<{
+  size: string;
+  fontColor: string;
+  margin?: string;
+  hasBold?: boolean;
+  hasError?: boolean;
+}>`
+  ${({ theme, size, fontColor, margin, hasBold, hasError }) => {
     const { color } = theme;
 
     return css`
       ${handleSize(size)}
       margin: ${hasError ? '0.5rem 0 0 0' : margin};
-      color: ${hasError ? color.error : color.gray['700']};
+      color: ${hasError ? color.error : handleColor(color, fontColor)};
       font-family: ${hasBold ? 'NanumSquareB' : null};
     `;
   }}
@@ -33,5 +39,28 @@ const handleSize = (size: string) => {
       `;
     default:
       break;
+  }
+};
+
+const handleColor = (color: any, fontColor: string) => {
+  const { primary, gray } = color;
+
+  switch (fontColor) {
+    case 'primary':
+      return css`
+        color: ${primary['700']};
+      `;
+    case '500':
+      return css`
+        color: ${gray['500']};
+      `;
+    case '600':
+      return css`
+        color: ${gray['600']};
+      `;
+    default:
+      return css`
+        color: ${gray['700']};
+      `;
   }
 };

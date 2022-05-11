@@ -9,6 +9,9 @@ interface IconProps {
     | 'flag'
     | 'fill-heart'
     | 'heart'
+    | 'send'
+    | 'send-inactive'
+    | 'help-question'
     | 'search'
     | 'plus-circle'
     | 'help-question'
@@ -25,11 +28,12 @@ interface IconProps {
   fill?: string;
   width?: number;
   height?: number;
+  clickEvent?: () => void;
 }
 
-function Icon({ type, fill = '#808080', width = 24, height = 24 }: IconProps) {
+function Icon({ type, fill = '#808080', width = 24, height = 24, clickEvent }: IconProps) {
   return (
-    <svg width={width} height={height}>
+    <svg width={width} height={height} onClick={clickEvent}>
       <use href={`#${type}`} fill={fill} />
     </svg>
   );
