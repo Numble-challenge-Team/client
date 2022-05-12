@@ -1,28 +1,19 @@
 import { ChangeEventHandler, FormEventHandler } from 'react';
 
-import { FileInput, TagInput, InputWithTitle } from '@components/MyVideo';
-
 import { useRecoilState } from 'recoil';
-import {
-  isValidMyVideoThumbnail,
-  inValidMessageMyVideoThumbnail,
-  myVideoThumbnail,
-  isValidMyVideoTitle,
-  myVideoTitle,
-  myVideoDescription,
-} from '@store/myVideoUpload';
+import { isValidMyVideoTitle } from '@store/uploadVideo/valid';
+import { myVideoTitle, myVideoDescription } from '@store/uploadVideo/common';
 
 import * as FormStyled from './FormStyle';
+import ImgInput from './ImgInput';
+import TagInput from './TagInput';
+import InputWithTitle from './InputWithTitle';
 
 interface CommonFormProps {
   isValid: boolean;
 }
 
 function CommonForm({ isValid }: CommonFormProps) {
-  const [isValidThumbnail, setIsValidThumbnail] = useRecoilState(isValidMyVideoThumbnail);
-  const [inValidMessageThumbnail, setInValidMessageThumbnail] = useRecoilState(inValidMessageMyVideoThumbnail);
-  const [thumbnail, setThumbnail] = useRecoilState(myVideoThumbnail);
-
   const [isValidTitle, setIsValidTitle] = useRecoilState(isValidMyVideoTitle);
   const [title, setTitle] = useRecoilState(myVideoTitle);
   const changeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -38,19 +29,9 @@ function CommonForm({ isValid }: CommonFormProps) {
   return (
     <>
       <InputWithTitle title="썸네일 이미지">
-        <FormStyled.ImgContainer>
-          <FileInput
-            type="image"
-            id="thumbnail"
-            placeholder="썸네일 업로드"
-            file={thumbnail}
-            setFile={setThumbnail}
-            isValid={isValidThumbnail}
-            setIsValid={setIsValidThumbnail}
-            setInValidMessage={setInValidMessageThumbnail}
-          />
-        </FormStyled.ImgContainer>
+        <ImgInput />
       </InputWithTitle>
+
       <InputWithTitle title="제목">
         <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} value={title as string} />
       </InputWithTitle>

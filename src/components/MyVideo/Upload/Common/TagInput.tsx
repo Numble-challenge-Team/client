@@ -1,7 +1,7 @@
 import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, PropsWithChildren, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
-import { myVideoTags } from '@store/myVideoUpload';
+import { myVideoTags } from '@store/uploadVideo/common';
 
 import * as FormStyled from './FormStyle';
 

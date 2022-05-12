@@ -38,7 +38,6 @@ function VideoCard({
   const queryClient = useQueryClient();
   const likeMutation = useLikeMutation({
     onSuccess: ({ data }) => {
-      console.log({ data });
       const previousUserVideos = queryClient.getQueryData<{ pages: resVideos[] }>(queryKey);
 
       if (previousUserVideos) {

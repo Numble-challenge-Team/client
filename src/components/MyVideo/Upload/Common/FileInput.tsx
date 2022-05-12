@@ -1,4 +1,3 @@
-import { isValidMyVideoFile, myVideoDuration } from '@store/myVideoUpload';
 import {
   ChangeEventHandler,
   Dispatch,
@@ -10,6 +9,9 @@ import {
   SetStateAction,
   useState,
 } from 'react';
+
+import { isValidMyVideoFile } from '@store/uploadVideo/valid';
+import { myVideoDuration } from '@store/uploadVideo/common';
 
 import ReactPlayer from 'react-player';
 import { useRecoilState } from 'recoil';
