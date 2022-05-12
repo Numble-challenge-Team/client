@@ -20,8 +20,20 @@ const createAxiosWithToken = (): AxiosInstance => {
   return interceptors(requestHTTP);
 };
 
+const createAxiosWithTokenInUpload = (): AxiosInstance => {
+  const requestHTTP = axios.create({
+    baseURL: `${BASE_URL}/api/v1`,
+    headers: { ...HEADERS, 'Content-Type': 'multipart/form-data; boundary=something' },
+  });
+
+  return interceptors(requestHTTP);
+};
+
 // No token
 export const axiosService = createAxios();
 
 // With token
 export const axiosWithToken = createAxiosWithToken();
+
+// With token
+export const axiosWithTokenInUpload = createAxiosWithTokenInUpload();

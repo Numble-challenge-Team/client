@@ -5,8 +5,10 @@ import { PropsWithChildren } from 'react';
 import { useRecoilState } from 'recoil';
 import { showMyVideoUploadNav } from '@store/myVideo';
 
-import { MyVideoStyled } from '@components/MyVideo';
+// import { MyVideoStyled } from '@components/MyVideo';
+
 import { Icon } from '@components/Common';
+import * as MyVideoStyled from './MyVideoStyle';
 
 interface UploadButtonProps {}
 

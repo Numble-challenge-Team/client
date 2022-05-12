@@ -1,3 +1,4 @@
+import { isValidMyVideoFile, myVideoDuration } from '@store/myVideoUpload';
 import {
   ChangeEventHandler,
   Dispatch,
@@ -10,8 +11,10 @@ import {
   useState,
 } from 'react';
 
-import * as MyVideoStyled from '@components/MyVideo/MyVideoStyle';
 import ReactPlayer from 'react-player';
+import { useRecoilState } from 'recoil';
+
+import * as FormStyled from './FormStyle';
 
 interface FileInputProps {
   type: 'video' | 'image';
@@ -21,10 +24,32 @@ interface FileInputProps {
   setFile: Dispatch<SetStateAction<File | null>>;
   isValid: boolean;
   setIsValid: Dispatch<SetStateAction<boolean>>;
+  setInValidMessage: Dispatch<SetStateAction<string>>;
 }
 
-function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }: PropsWithChildren<FileInputProps>) {
+function FileInput({
+  type,
+  id,
+  placeholder,
+  file,
+  setFile,
+  isValid,
+  setIsValid,
+  setInValidMessage,
+}: PropsWithChildren<FileInputProps>) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
+
+  const [isValidVideo, setIsValidVideo] = useRecoilState(isValidMyVideoFile);
+  const [duration, setDuration] = useRecoilState(myVideoDuration);
+  const validateVideo = () => {
+    setIsValidVideo(true);
+  };
+  const inValidateVideo = () => {
+    setIsValidVideo(false);
+  };
+  const changeDuration = (duration: number) => {
+    setDuration(duration);
+  };
 
   const initEvent: ReactEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
@@ -50,19 +75,24 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
   };
 
   const uploadFile = (file: File) => {
+    const { size } = file;
+    const MB = size / 1024 / 1024;
+
+    if (type === 'video' && MB > 50) {
+      setIsValid(false);
+      setInValidMessage('용량이 너무 큽니다.');
+      return;
+    }
+
     setFile(file);
     setIsValid(true);
+    setInValidMessage('');
   };
 
   const changeFile: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!e.target.files) {
       return;
     }
-
-    const { size } = e.target.files[0];
-    const MB = size / 1024 / 1024;
-
-    console.log({ fileSize: MB });
 
     uploadFile(e.target.files[0]);
   };
@@ -93,35 +123,28 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
       {file ? (
         <>
           {type === 'video' ? (
-            <MyVideoStyled.PlayerWrapper>
+            <FormStyled.PlayerWrapper>
               <ReactPlayer
                 url={URL.createObjectURL(file)}
                 width="100%"
                 height="100%"
-                onReady={(player) => {
-                  console.log('ready');
-                }}
-                onError={(err) => {
-                  console.log('error');
-                  setIsValid(false);
-                }}
-                onDuration={(duration) => {
-                  console.log({ duration });
-                }}
+                onReady={validateVideo}
+                onError={inValidateVideo}
+                onDuration={changeDuration}
                 controls
               />
-            </MyVideoStyled.PlayerWrapper>
+            </FormStyled.PlayerWrapper>
           ) : (
-            <MyVideoStyled.Image src={URL.createObjectURL(file)} width={320} height={180} />
+            <FormStyled.Image src={URL.createObjectURL(file)} width={320} height={180} />
           )}
-          <MyVideoStyled.DeleteFileButton type="button" onClick={deleteFile}>
+          <FormStyled.DeleteFileButton type="button" onClick={deleteFile}>
             ×
-          </MyVideoStyled.DeleteFileButton>
+          </FormStyled.DeleteFileButton>
         </>
       ) : (
         <>
           <input required hidden id={`${id}Upload`} type="file" accept={`${type}/*`} onChange={changeFile} />
-          <MyVideoStyled.UploadLabel
+          <FormStyled.UploadLabel
             isDragging={isDragging}
             onDragEnter={enterDrag}
             onDragLeave={leaveDrag}
@@ -130,7 +153,7 @@ function FileInput({ type, id, placeholder, file, setFile, isValid, setIsValid }
             htmlFor={`${id}Upload`}
           >
             <span>{placeholder}</span>
-          </MyVideoStyled.UploadLabel>
+          </FormStyled.UploadLabel>
         </>
       )}
     </>
