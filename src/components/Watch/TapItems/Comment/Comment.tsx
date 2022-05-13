@@ -3,9 +3,10 @@ import { useState } from 'react';
 
 import Drawer from '@components/Common/Drawer/Drawer';
 import Recomment from '@components/Watch/TapItems/Recomment/Recomment';
+import { Icon, Profile, Text } from '@components/Common';
 
 import { VideoDetailCommentsType } from '@/types/watch';
-import { Icon, Profile, Text } from '@components/Common';
+import { useCommentsMutation } from '@api/queries/comment';
 import * as Styled from './CommentStyle';
 
 interface CommentPropsType {
@@ -18,8 +19,16 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
 
   const [isOpenRecomment, setIsOpenRecomment] = useState<boolean>(false);
 
+  const fetchLikeComment = useCommentsMutation<any>(`/like/${comment.id}`);
+
   const handleOpenRecomment = (newOpen: boolean) => {
     setIsOpenRecomment(newOpen);
+  };
+
+  const handleLikeComment = () => {
+    fetchLikeComment.mutate({
+      commentId: comment.id,
+    });
   };
 
   return (
@@ -32,8 +41,8 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
           </Text>
         </Styled.CommentUser>
         <div>
-          <Styled.CommentLikeButtonWrapper type="button">
-            <Icon type="thumbs-up" width={18} height={18} />
+          <Styled.CommentLikeButtonWrapper type="button" onClick={handleLikeComment}>
+            <Icon type={comment.liked ? 'thumbs-up-fill' : 'thumbs-up'} width={18} height={18} />
             <span>{likesCount}</span>
           </Styled.CommentLikeButtonWrapper>
         </div>
