@@ -15,6 +15,7 @@ interface LayoutProps {
   hasNav?: boolean;
   hasBackButton?: boolean;
   hasHeader?: boolean;
+  hasWhitespace?: boolean;
   title?: '마이 비디오' | '임베드 영상 업로드' | '직접 영상 업로드' | '관심 영상' | '로그인' | '회원가입';
 }
 
@@ -23,6 +24,7 @@ function Layout({
   hasNav = true,
   hasBackButton = false,
   hasHeader = true,
+  hasWhitespace = false,
   title,
 }: PropsWithChildren<LayoutProps>) {
   const { pathname } = useRouter();
@@ -34,19 +36,19 @@ function Layout({
 
   return (
     <>
-      <>
-        {hasHeader && (
-          <LayoutStyled.Header>
-            {pathname === '/' ? (
-              <HomeHeaderContents />
-            ) : (
-              title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>
-            )}
-            {hasNav && <Navigation />}
-          </LayoutStyled.Header>
-        )}
-        <LayoutStyled.Main>{children}</LayoutStyled.Main>
-      </>
+      {hasHeader && (
+        <LayoutStyled.Header>
+          {pathname === '/' ? (
+            <HomeHeaderContents />
+          ) : (
+            title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>
+          )}
+          {hasNav && <Navigation />}
+        </LayoutStyled.Header>
+      )}
+      <LayoutStyled.Main hasHeader={hasHeader} hasWhitespace={hasWhitespace}>
+        {children}
+      </LayoutStyled.Main>
     </>
   );
 }

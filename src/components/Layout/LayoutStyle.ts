@@ -9,9 +9,10 @@ export const Header = styled.header`
   background-color: ${({ theme }) => theme.color.white};
 `;
 
-export const Main = styled.main`
+export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean }>`
   position: relative;
-  margin: 6.4rem auto 0;
+  margin: ${({ hasHeader }) => (hasHeader ? '6.4rem auto 0' : null)};
+  padding: ${({ hasWhitespace }) => (hasWhitespace ? '0 2rem' : null)};
   max-width: 37.5rem;
   min-height: calc(100vh - 6.4rem);
   font-family: 'NanumSquareR';
