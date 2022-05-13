@@ -24,7 +24,11 @@ interface IconProps {
     | 'video'
     | 'cancle'
     | 'loading'
-    | 'fetching';
+    | 'fetching'
+    | 'history'
+    | 'edit'
+    | 'delete'
+    | 'user-delete';
   fill?: string;
   width?: number;
   height?: number;
