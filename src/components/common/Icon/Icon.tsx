@@ -20,6 +20,7 @@ export interface IconProps {
     | 'send'
     | 'app-logo'
     | 'thumbs-up'
+    | 'thumbs-up-fill'
     | 'user'
     | 'video'
     | 'cancle'
