@@ -1,12 +1,25 @@
-import { MutationFunction, useMutation, UseMutationOptions } from 'react-query';
+import { MutationFunction, useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { axiosWithToken } from '@api';
+import { axiosService, axiosWithToken } from '@api';
 import { FetchDataType } from '@/types/fetchData';
-import { CommentType } from '@/types/comment';
 
-// 댓글 작성 요청
-export const useCommentCreateMutation = (
-  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, CommentType, MutationFunction>
+const fetchComments = async (pathname: string) => {
+  const response = await axiosService.get(`comments/${pathname}`);
+  return response.data;
+};
+
+// 댓글 관련 Query
+export const useCommentsQuery = <ResponseData,>(
+  pathname: string,
+  options?: UseQueryOptions<ResponseData, AxiosError<FetchDataType>, ResponseData, string[]>
 ) => {
-  return useMutation((reqData: CommentType) => axiosWithToken.post(`/comments/create`, reqData), options);
+  return useQuery(['comments', pathname], () => fetchComments(pathname), options);
+};
+
+// 댓글 관련 mutation
+export const useCommentsMutation = <BodyDataType,>(
+  url: string,
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
+) => {
+  return useMutation((bodyData: BodyDataType) => axiosWithToken.post(`/comments/${url}`, bodyData), options);
 };
