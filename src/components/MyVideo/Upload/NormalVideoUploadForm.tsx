@@ -5,7 +5,7 @@ import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/
 
 import { useNormalUploadMutation } from '@api/queries/upload';
 
-import { NormalVideoForm } from '@components/MyVideo';
+import { NormalVideoForm } from '@components/myVideo';
 
 interface NormalVideoUploadFormProps {}
 

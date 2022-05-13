@@ -4,7 +4,7 @@ import { updateVideoIdState } from '@store/videoId';
 import { showAlertModalState, showBottomUpModalState } from '@store/modal';
 import { useRecoilState } from 'recoil';
 
-import { BottomUp, Icon } from '@components/Common';
+import { BottomUp, Icon } from '@components/common';
 
 interface DeleteButtonProps {}
 

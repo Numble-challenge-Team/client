@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { useRouter } from 'next/router';
 import { VideoDetailType } from '@/types/watch';
-import { Text, Title } from '@components/Common';
+import { Text, Title } from '@components/common';
 
 import * as Styled from './ConcernVideoCardStyle';
 

@@ -1,5 +1,5 @@
-import CommentsList from '@components/Watch/TapItems/CommentsList/Comments';
-import ConcernVideosList from '@components/Watch/TapItems/ConcernVideosList/ConcernVideosList';
+import CommentsList from '@components/watch/TapItems/CommentsList/Comments';
+import ConcernVideosList from '@components/watch/TapItems/ConcernVideosList/ConcernVideosList';
 
 import { ConcernVideoListType } from '@/types/watch';
 

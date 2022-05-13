@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { PropsWithChildren, useState } from 'react';
 
-import { Icon } from '@components/Common';
+import { Icon } from '@components/common';
 import * as MyVideoStyled from './MyVideoStyle';
 
 interface UploadButtonProps {}

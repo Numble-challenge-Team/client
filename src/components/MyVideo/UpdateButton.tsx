@@ -9,7 +9,7 @@ import { useRecoilState } from 'recoil';
 
 import { useDeleteVideoMutation } from '@api/queries/delete';
 
-import { Alert, BottomUp, Icon } from '@components/Common';
+import { Alert, BottomUp, Icon } from '@components/common';
 import DeleteButton from './DeleteButton';
 
 interface UpdateButtonProps {}

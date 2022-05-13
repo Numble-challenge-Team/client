@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FormEvent, useCallback, useState } from 'react';
 
-import Comment from '@components/Watch/TapItems/Comment/Comment';
-import { Text, Textarea } from '@components/Common';
+import Comment from '@components/watch/TapItems/Comment/Comment';
+import { Text, Textarea } from '@components/common';
 
 import { VideoDetailCommentsType } from '@/types/watch';
 

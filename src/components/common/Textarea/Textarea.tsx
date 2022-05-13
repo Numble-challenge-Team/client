@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FormEvent } from 'react';
-import Icon from '../Icon/Icon';
+import Icon from '../icon/Icon';
 import * as Styled from './TextareaStyle';
 
 interface TextareaPropsType {

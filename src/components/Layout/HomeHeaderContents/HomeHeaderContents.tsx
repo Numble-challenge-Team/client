@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 import { PropsWithChildren } from 'react';
 
-import { Icon } from '@components/Common';
+import { Icon } from '@components/common';
 import { searchState, searchStackState } from '@store/search';
 import { useRecoilState } from 'recoil';
-import Search from '../Search/Search';
+import Search from '../search/Search';
 
 import * as HomeHeaderContentsStyled from './HomeHeaderContentsStyle';
 

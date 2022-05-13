@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import { Title } from '@components/Common';
+import { Title } from '@components/common';
 
 import * as FormStyled from './FormStyle';
 

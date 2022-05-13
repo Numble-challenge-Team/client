@@ -5,7 +5,7 @@ import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/
 import { isValidEmbedVideoUploadForm, embedVideoUploadFormData } from '@store/uploadVideo/embedVideo';
 import { useRecoilState } from 'recoil';
 
-import { Icon } from '@components/Common';
+import { Icon } from '@components/common';
 import { updateVideoIdState } from '@store/videoId';
 import * as HeaderTitleStyled from './HeaderTitleStyle';
 

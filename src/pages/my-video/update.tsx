@@ -1,17 +1,17 @@
-import Layout from '@components/Layout/Layout';
-import { Icon } from '@components/Common';
+import Layout from '@components/layout/Layout';
+import { Icon } from '@components/common';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
 
 import { updateVideoIdState } from '@store/videoId';
 import { useRecoilState } from 'recoil';
 
-import * as LayoutStyled from '@components/Layout/LayoutStyle';
+import * as LayoutStyled from '@components/layout/LayoutStyle';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { normalVideoUploadFormData } from '@store/uploadVideo/normalVideo';
 import { embedVideoUploadFormData } from '@store/uploadVideo/embedVideo';
-import { EmbedVideoUpdateForm, NormalVideoUpdateForm } from '@components/MyVideo/Upload';
+import { EmbedVideoUpdateForm, NormalVideoUpdateForm } from '@components/myVideo/upload';
 
 interface UpdateMyVideoProps {}
 

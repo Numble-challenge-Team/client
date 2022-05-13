@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 
-import TapItems from '@components/Watch/TapItems/TapItems';
+import TapItems from '@components/watch/TapItems/TapItems';
 
 import { ConcernVideoListType, VideoDetailCommentsType } from '@/types/watch';
 

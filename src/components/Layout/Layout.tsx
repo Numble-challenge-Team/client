@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { isFirstAccessState } from '@store/home';
 
-import FirstAccess from './FirstAccess/FirstAccess';
-import HomeHeaderContents from './HomeHeaderContents/HomeHeaderContents';
-import HeaderTitle from './HeaderTitle/HeaderTitle';
-import Navigation from './Navigation/Navigation';
+import FirstAccess from './firstAccess/FirstAccess';
+import HomeHeaderContents from './homeHeaderContents/HomeHeaderContents';
+import HeaderTitle from './headerTitle/HeaderTitle';
+import Navigation from './navigation/Navigation';
 
 import * as LayoutStyled from './LayoutStyle';
 

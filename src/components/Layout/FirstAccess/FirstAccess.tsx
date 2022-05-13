@@ -1,4 +1,4 @@
-import { Icon } from '@components/Common';
+import { Icon } from '@components/common';
 import { PropsWithChildren } from 'react';
 
 import * as FirstAccessStyled from './FirstAccessStyle';

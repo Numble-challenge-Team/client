@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
 import { useState } from 'react';
 
-import Drawer from '@components/Common/Drawer/Drawer';
-import Recomment from '@components/Watch/TapItems/Recomment/Recomment';
-import { Icon, Profile, Text } from '@components/Common';
+import Drawer from '@components/common/drawer/Drawer';
+import Recomment from '@components/watch/TapItems/Recomment/Recomment';
+import { Icon, Profile, Text } from '@components/common';
 
 import { VideoDetailCommentsType } from '@/types/watch';
 import { useCommentsMutation } from '@api/queries/comment';

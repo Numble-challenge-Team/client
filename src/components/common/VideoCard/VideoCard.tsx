@@ -11,7 +11,7 @@ import { useLikeMutation } from '@api/queries/like';
 import { useRecoilState } from 'recoil';
 import { updateVideoIdState } from '@store/videoId';
 import { showBottomUpModalState } from '@store/modal';
-import Icon from '../Icon/Icon';
+import Icon from '../icon/Icon';
 
 import * as VideoCardStyled from './VideoCardStyle';
 

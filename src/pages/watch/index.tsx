@@ -2,11 +2,11 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import Layout from '@components/Layout/Layout';
-import TapPanel from '@components/Watch/TapPanel/TapPanel';
-import { Icon, Tag, Text, Title } from '@components/Common';
+import Layout from '@components/layout/Layout';
+import TapPanel from '@components/watch/TapPanel/TapPanel';
+import { Icon, Tag, Text, Title } from '@components/common';
 
-import * as Styled from '@components/Watch/WatchStyle';
+import * as Styled from '@components/watch/WatchStyle';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
 

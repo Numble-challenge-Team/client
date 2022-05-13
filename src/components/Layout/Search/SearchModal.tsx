@@ -13,7 +13,7 @@ import { searchState, showSearchState, searchStackState } from '@store/search';
 import { useRecoilState } from 'recoil';
 
 import Theme from '@styles/theme';
-import { Icon, Input } from '@components/Common';
+import { Icon, Input } from '@components/common';
 import { useRouter } from 'next/router';
 import * as SearchStyled from './SearchStyle';
 

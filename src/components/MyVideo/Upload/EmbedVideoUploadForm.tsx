@@ -5,7 +5,7 @@ import { embedVideoUploadFormData, isValidEmbedVideoUploadForm } from '@store/up
 
 import { useEmbedUploadMutation } from '@api/queries/upload';
 
-import { EmbedVideoForm } from '@components/MyVideo';
+import { EmbedVideoForm } from '@components/myVideo';
 
 interface EmbedVideoUploadFormProps {}
 

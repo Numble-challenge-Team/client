@@ -1,5 +1,5 @@
-import Layout from '@components/Layout/Layout';
-import { VideoList } from '@components/Common';
+import Layout from '@components/layout/Layout';
+import { VideoList } from '@components/common';
 
 import { useLikeVideos } from '@api/queries/videos';
 

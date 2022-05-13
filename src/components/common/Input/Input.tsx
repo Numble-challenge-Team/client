@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from 'react';
 import { Path, UseFormRegister, ValidationRule } from 'react-hook-form';
 
-import Icon from '@components/Common/Icon/Icon';
+import Icon from '@components/common/icon/Icon';
 import { FormRegisterType } from '@/types/signup';
 import * as Styled from './InputStyle';
 

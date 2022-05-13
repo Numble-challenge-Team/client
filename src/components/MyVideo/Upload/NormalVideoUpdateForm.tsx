@@ -1,5 +1,5 @@
 import { PropsWithChildren, FormEventHandler } from 'react';
-import { NormalVideoForm } from '@components/MyVideo';
+import { NormalVideoForm } from '@components/myVideo';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
 import { useUpdateVideoMutation } from '@api/queries/update';

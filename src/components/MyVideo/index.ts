@@ -10,7 +10,7 @@ export {
   EmbedVideoForm,
   EmbedVideoUploadForm,
   NormalVideoUploadForm,
-} from './Upload';
+} from './upload';
 export { default as UploadButton } from './UploadButton';
 export { default as UpdateButton } from './UpdateButton';
 export * as MyVideoStyled from './MyVideoStyle';

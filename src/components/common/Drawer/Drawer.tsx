@@ -5,8 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Skeleton from '@mui/material/Skeleton';
 
-import { Icon } from '@components/Common';
-import { IconProps } from '../Icon/Icon';
+import { Icon } from '@components/common';
+import { IconProps } from '../icon/Icon';
 
 import * as Styled from './DrawerStyle';
 

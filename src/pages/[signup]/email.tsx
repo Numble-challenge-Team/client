@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
-import { Button, Input } from '@components/Common';
-import Layout from '@components/Layout/Layout';
-import Title from '@components/Common/Title/Title';
-import Text from '@components/Common/Text/Text';
+import { Button, Input } from '@components/common';
+import Layout from '@components/layout/Layout';
+import Title from '@components/common/title/Title';
+import Text from '@components/common/text/Text';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
 import { FormRegisterType, SignupInfoType } from '@/types/signup';

@@ -3,7 +3,7 @@ import { PropsWithChildren, useState } from 'react';
 import { showSearchState } from '@store/search';
 import { useRecoilState } from 'recoil';
 
-import { Icon } from '@components/Common';
+import { Icon } from '@components/common';
 import SearchModal from './SearchModal';
 import * as SearchStyled from './SearchStyle';
 

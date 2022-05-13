@@ -1,8 +1,8 @@
 import { FormEventHandler, PropsWithChildren } from 'react';
 
-import * as LayoutStyled from '@components/Layout/LayoutStyle';
-import { Icon } from '@components/Common';
-import { CommonForm, FormStyled, EmbedLinkInput } from '@components/MyVideo/Upload/Common';
+import * as LayoutStyled from '@components/layout/LayoutStyle';
+import { Icon } from '@components/common';
+import { CommonForm, FormStyled, EmbedLinkInput } from '@components/myVideo/upload/common';
 
 interface EmbedVideoFormProps {
   isUploading: boolean;

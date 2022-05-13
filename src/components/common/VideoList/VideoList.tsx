@@ -5,11 +5,11 @@ import { Fragment, PropsWithChildren, useEffect } from 'react';
 import { QueryKey, UseInfiniteQueryResult } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 
-import { VideoCard, Icon } from '@components/Common';
-import * as LayoutStyled from '@components/Layout/LayoutStyle';
-import { UpdateButton } from '@components/MyVideo';
+import { VideoCard, Icon } from '@components/common';
+import * as LayoutStyled from '@components/layout/LayoutStyle';
+import { UpdateButton } from '@components/myVideo';
 import * as VideoListStyled from './VideoListStyle';
-import SkeletonCard from '../VideoCard/SkeletonCard';
+import SkeletonCard from '../videoCard/SkeletonCard';
 
 interface VideoListProps {
   useVideosQueryResult: UseInfiniteQueryResult<

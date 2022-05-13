@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { ChangeEventHandler, FormEvent, useCallback, useState } from 'react';
-import { Icon, Title, Text, Textarea } from '@components/Common';
-import Comment from '@components/Watch/TapItems/Comment/Comment';
+import { Icon, Title, Text, Textarea } from '@components/common';
+import Comment from '@components/watch/TapItems/Comment/Comment';
 
 import { VideoDetailCommentsType } from '@/types/watch';
 

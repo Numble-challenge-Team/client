@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Icon } from '@components/Common';
+import { Icon } from '@components/common';
 import { useRecoilState } from 'recoil';
 import { searchState } from '@store/search';
 import { useRouter } from 'next/router';

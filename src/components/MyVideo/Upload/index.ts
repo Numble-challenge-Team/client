@@ -7,8 +7,8 @@ export {
   TagInput,
   InputWithTitle,
   FormStyled,
-} from './Common';
-export { NormalVideoForm, EmbedVideoForm } from './Form';
+} from './common';
+export { NormalVideoForm, EmbedVideoForm } from './form';
 export { default as EmbedVideoUploadForm } from './EmbedVideoUploadForm';
 export { default as EmbedVideoUpdateForm } from './EmbedVideoUpdateForm';
 export { default as NormalVideoUploadForm } from './NormalVideoUploadForm';

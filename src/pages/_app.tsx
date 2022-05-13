@@ -8,7 +8,7 @@ import Theme from '@styles/theme';
 import { ThemeProvider } from 'styled-components';
 import './_app.css';
 
-import { SVGSprite } from '@components/Common';
+import { SVGSprite } from '@components/common';
 
 const queryClient = new QueryClient();
 

@@ -1,6 +1,6 @@
-import Layout from '@components/Layout/Layout';
-import { UploadButton } from '@components/MyVideo';
-import { VideoList } from '@components/Common';
+import Layout from '@components/layout/Layout';
+import { UploadButton } from '@components/myVideo';
+import { VideoList } from '@components/common';
 
 import { useUserVideosQuery } from '@api/queries/videos';
 

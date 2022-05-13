@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';
 
-import Layout from '@components/Layout/Layout';
-import { VideoList } from '@components/Common';
+import Layout from '@components/layout/Layout';
+import { VideoList } from '@components/common';
 
 import { useAllVideosQuery } from '@api/queries/videos';
 import { useRecoilState } from 'recoil';

@@ -1,5 +1,5 @@
-import Layout from '@components/Layout/Layout';
-import { EmbedVideoUploadForm } from '@components/MyVideo';
+import Layout from '@components/layout/Layout';
+import { EmbedVideoUploadForm } from '@components/myVideo';
 
 interface MyVideoEmbedProps {}
 

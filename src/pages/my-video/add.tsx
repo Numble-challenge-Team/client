@@ -1,5 +1,5 @@
-import Layout from '@components/Layout/Layout';
-import { NormalVideoUploadForm } from '@components/MyVideo';
+import Layout from '@components/layout/Layout';
+import { NormalVideoUploadForm } from '@components/myVideo';
 
 interface MyVideoAddProps {}
 
