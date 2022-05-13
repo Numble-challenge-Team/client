@@ -1,21 +1,20 @@
 import CommentsList from '@components/Watch/TapItems/CommentsList/Comments';
 import ConcernVideosList from '@components/Watch/TapItems/ConcernVideosList/ConcernVideosList';
 
-import { ConcernVideoListType, VideoDetailCommentsType } from '@/types/watch';
+import { ConcernVideoListType } from '@/types/watch';
 
 import * as Styled from './TapItemsStyle';
 
 interface TapItemsPropsType {
   focusedType: string;
   concernVideoList?: ConcernVideoListType;
-  comments?: VideoDetailCommentsType[];
 }
 
-function TapItems({ focusedType, concernVideoList, comments }: TapItemsPropsType) {
+function TapItems({ focusedType, concernVideoList }: TapItemsPropsType) {
   return (
     <Styled.TapItemsContainer>
       {focusedType === 'concernVideos' && <ConcernVideosList concernVideoList={concernVideoList} />}
-      {focusedType === 'comments' && <CommentsList comments={comments} />}
+      {focusedType === 'comments' && <CommentsList />}
     </Styled.TapItemsContainer>
   );
 }
