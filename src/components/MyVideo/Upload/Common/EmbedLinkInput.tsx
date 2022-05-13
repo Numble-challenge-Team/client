@@ -44,7 +44,7 @@ function EmbedLinkInput(prop: PropsWithChildren<EmbedLinkInputProps>) {
           <FormStyled.EmptyPlayerWrapper>임베드된 영상 없음</FormStyled.EmptyPlayerWrapper>
         )}
       </FormStyled.EmbedPlayerWrapper>
-      <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} />
+      <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} value={embedLink} />
     </InputWithTitle>
   );
 }

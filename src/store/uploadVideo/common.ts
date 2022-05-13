@@ -9,6 +9,10 @@ export const myVideoThumbnail = atom<File | null>({
   key: 'myVideoThumbnail',
   default: null,
 });
+export const myVideoThumbnailURL = atom<string>({
+  key: 'myVideoThumbnailURL',
+  default: '',
+});
 
 export const myVideoTitle = atom<string>({
   key: 'myVideoTitle',

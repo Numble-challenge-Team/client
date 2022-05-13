@@ -9,7 +9,7 @@ import {
 } from 'react';
 
 import { inValidMessageMyVideoThumbnail, isValidMyVideoThumbnail } from '@store/uploadVideo/valid';
-import { myVideoThumbnail } from '@store/uploadVideo/common';
+import { myVideoThumbnail, myVideoThumbnailURL } from '@store/uploadVideo/common';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import * as FormStyled from './FormStyle';
@@ -43,6 +43,7 @@ function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
   };
 
   const [thumbnail, setThumbnail] = useRecoilState(myVideoThumbnail);
+  const [thumbnailURL, setThumbnailURL] = useRecoilState(myVideoThumbnailURL);
   const setIsValidThumbnail = useSetRecoilState(isValidMyVideoThumbnail);
   const setInValidMessageThumbnail = useSetRecoilState(inValidMessageMyVideoThumbnail);
   const uploadFile = (file: File) => {
@@ -50,6 +51,7 @@ function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
     const MB = size / 1024 / 1024;
 
     setThumbnail(file);
+    setThumbnailURL(URL.createObjectURL(file));
     setIsValidThumbnail(true);
     setInValidMessageThumbnail('');
   };
@@ -78,6 +80,7 @@ function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
   };
   const deleteFile: MouseEventHandler<HTMLButtonElement> = (e) => {
     setThumbnail(null);
+    setThumbnailURL('');
     setIsDragging(false);
     setIsValidThumbnail(false);
     setInValidMessageThumbnail('');
@@ -85,9 +88,9 @@ function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
 
   return (
     <FormStyled.ImgContainer>
-      {thumbnail ? (
+      {thumbnailURL ? (
         <>
-          <FormStyled.Image src={URL.createObjectURL(thumbnail)} width={320} height={180} />
+          <FormStyled.Image src={thumbnailURL} width={320} height={180} />
           <FormStyled.DeleteFileButton type="button" onClick={deleteFile}>
             ×
           </FormStyled.DeleteFileButton>

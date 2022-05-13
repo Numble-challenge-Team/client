@@ -26,7 +26,7 @@ export const Thumbnail = styled.img`
 export const CaptionContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1.2rem 1.6rem;
+  padding: 1.2rem 1.6rem;
 `;
 
 export const CardTitle = styled.h3`
@@ -70,3 +70,5 @@ export const LikeButton = styled.button`
     color: ${({ theme }) => theme.color.gray[400]};
   }
 `;
+
+export const DialPadButton = styled.button``;

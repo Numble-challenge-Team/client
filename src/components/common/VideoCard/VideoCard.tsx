@@ -7,6 +7,10 @@ import type { resVideos, Videos } from '@/types/videos';
 import { PropsWithChildren } from 'react';
 import { QueryKey, useQueryClient } from 'react-query';
 import { useLikeMutation } from '@api/queries/like';
+
+import { useRecoilState } from 'recoil';
+import { updateVideoIdState } from '@store/videoId';
+import { showBottomUpModalState } from '@store/modal';
 import Icon from '../Icon/Icon';
 
 import * as VideoCardStyled from './VideoCardStyle';
@@ -55,7 +59,6 @@ function VideoCard({
     },
   });
   const router = useRouter();
-
   const handleLike = () => {
     if (!localStorage.getItem('accessToken')) {
       alert('로그인 후 이용해 주세요.');
@@ -64,6 +67,13 @@ function VideoCard({
     }
 
     likeMutation.mutate(videoId);
+  };
+
+  const [showBottomUpModal, setShowBottomUpModal] = useRecoilState(showBottomUpModalState);
+  const [updateVideoId, setUpdateVideoId] = useRecoilState(updateVideoIdState);
+  const handleDialPad = () => {
+    setShowBottomUpModal(true);
+    setUpdateVideoId(videoId);
   };
 
   return (
@@ -88,9 +98,9 @@ function VideoCard({
         </VideoCardStyled.TextCaptionWrapper>
 
         {owner ? (
-          <button type="button">
+          <VideoCardStyled.DialPadButton onClick={handleDialPad}>
             <Icon type="dial-pad" />
-          </button>
+          </VideoCardStyled.DialPadButton>
         ) : (
           <VideoCardStyled.LikeButton onClick={handleLike}>
             <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />

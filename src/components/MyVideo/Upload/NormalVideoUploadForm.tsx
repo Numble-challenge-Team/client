@@ -1,34 +1,58 @@
-import { FormEventHandler, PropsWithChildren } from 'react';
+import { PropsWithChildren, FormEventHandler } from 'react';
 
-import * as LayoutStyled from '@components/Layout/LayoutStyle';
-import { Icon } from '@components/Common';
-import { CommonForm, FormStyled, VideoInput } from '@components/MyVideo/Upload/Common';
+import { useRecoilState } from 'recoil';
+import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/uploadVideo/normalVideo';
 
-interface NormalVideoUploadFormProps {
-  isUploading: boolean;
-  isValid: boolean;
-  handleSubmitVideo: FormEventHandler<HTMLFormElement>;
-}
+import { useNormalUploadMutation } from '@api/queries/upload';
 
-function NormalVideoUploadForm({
-  isUploading,
-  isValid,
-  handleSubmitVideo,
-}: PropsWithChildren<NormalVideoUploadFormProps>) {
-  if (isUploading) {
-    return (
-      <LayoutStyled.EmptyContainer>
-        <Icon width={100} height={100} type="loading" />
-        영상 업로드 중입니다...
-      </LayoutStyled.EmptyContainer>
-    );
-  }
+import { NormalVideoForm } from '@components/MyVideo';
 
+interface NormalVideoUploadFormProps {}
+
+function NormalVideoUploadForm(prop: PropsWithChildren<NormalVideoUploadFormProps>) {
+  const [isValid, setIsValid] = useRecoilState(isValidNormalVideoUploadForm);
+  const [normalVideoFormData, setNormalVideoFormData] = useRecoilState(normalVideoUploadFormData);
+
+  const resetFormData = (logInfo: any) => {
+    console.log({ logInfo });
+
+    setNormalVideoFormData({
+      video: null,
+      videoURL: '',
+      duration: 0,
+      thumbnail: null,
+      thumbnailURL: '',
+      title: '',
+      tags: [],
+      description: '',
+    });
+    setIsValid(false);
+  };
+  const uploadMutation = useNormalUploadMutation({
+    onSuccess: resetFormData,
+    onError: resetFormData,
+  });
+
+  const handleSubmitVideo: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    const { video, duration, thumbnail, title, tags, description } = normalVideoFormData;
+
+    if (!isValid) return;
+
+    const formData = new FormData();
+    formData.append('video', video as File);
+    formData.append('duration', `${Math.ceil(duration)}`);
+    formData.append('thumbnail', thumbnail as File);
+    formData.append('title', title as string);
+    tags.forEach((tag) => {
+      formData.append('tags', tag);
+    });
+    formData.append('description', description);
+
+    uploadMutation.mutate(formData);
+  };
   return (
-    <FormStyled.Form onSubmit={handleSubmitVideo} noValidate>
-      <VideoInput />
-      <CommonForm isValid={isValid} />
-    </FormStyled.Form>
+    <NormalVideoForm isUploading={uploadMutation.isLoading} isValid={isValid} handleSubmitVideo={handleSubmitVideo} />
   );
 }
 

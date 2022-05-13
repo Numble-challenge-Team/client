@@ -15,7 +15,14 @@ interface LayoutProps {
   hasNav?: boolean;
   hasBackButton?: boolean;
   hasHeader?: boolean;
-  title?: '마이 비디오' | '임베드 영상 업로드' | '직접 영상 업로드' | '관심 영상' | '로그인' | '회원가입';
+  title?:
+    | '마이 비디오'
+    | '임베드 영상 업로드'
+    | '직접 영상 업로드'
+    | '관심 영상'
+    | '로그인'
+    | '회원가입'
+    | '비디오 수정';
 }
 
 function Layout({

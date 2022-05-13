@@ -10,7 +10,7 @@ import {
 import ReactPlayer from 'react-player/lazy';
 
 import { isValidMyVideoFile, inValidMessageMyVideoFile } from '@store/uploadVideo/valid';
-import { myVideoFile } from '@store/uploadVideo/normalVideo';
+import { myVideoFile, myVideoFileURL } from '@store/uploadVideo/normalVideo';
 import { myVideoDuration } from '@store/uploadVideo/common';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -45,6 +45,7 @@ function VideoInput(prop: PropsWithChildren<VideoInputProps>) {
     setIsDragging(false);
   };
   const [video, setVideo] = useRecoilState(myVideoFile);
+  const [videoURL, setVideoURL] = useRecoilState(myVideoFileURL);
   const setIsValidVideo = useSetRecoilState(isValidMyVideoFile);
   const [inValidMessageVideo, setInValidMessageVideo] = useRecoilState(inValidMessageMyVideoFile);
   const setDuration = useSetRecoilState(myVideoDuration);
@@ -69,6 +70,7 @@ function VideoInput(prop: PropsWithChildren<VideoInputProps>) {
     }
 
     setVideo(file);
+    setVideoURL(URL.createObjectURL(file));
     setIsValidVideo(true);
     setInValidMessageVideo('');
   };
@@ -96,8 +98,9 @@ function VideoInput(prop: PropsWithChildren<VideoInputProps>) {
     uploadFile(e.dataTransfer.files[0]);
   };
 
-  const deleteFile: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const deleteFile: MouseEventHandler<HTMLButtonElement> = () => {
     setVideo(null);
+    setVideoURL('');
     setIsDragging(false);
     setIsValidVideo(false);
   };
@@ -105,11 +108,11 @@ function VideoInput(prop: PropsWithChildren<VideoInputProps>) {
   return (
     <InputWithTitle title="영상" inValidateMessage={inValidMessageVideo}>
       <FormStyled.VideoContainer>
-        {video ? (
+        {videoURL ? (
           <>
             <FormStyled.PlayerWrapper>
               <ReactPlayer
-                url={URL.createObjectURL(video)}
+                url={videoURL}
                 width="100%"
                 height="100%"
                 onReady={validateVideo}

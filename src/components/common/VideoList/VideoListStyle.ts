@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 export const Videos = styled.ul`
-  margin-bottom: 16rem;
+  overflow: hidden;
+  padding-bottom: 16rem;
+
+  & > li:last-child {
+    box-shadow: 0 0.1rem 0.4rem 0 ${({ theme }) => theme.color.gray[300]};
+  }
 `;
 
 export const Observer = styled.div`

@@ -5,7 +5,7 @@ export const Form = styled.form`
   padding-bottom: 10rem;
 
   & input,
-  p[contenteditable='true'] {
+  textarea {
     width: 100%;
     padding: 1.4rem 1rem;
     border: 1px solid #e3e3e3;
@@ -21,7 +21,7 @@ export const Form = styled.form`
     }
   }
 
-  & p[contenteditable='true'] {
+  & textarea {
     min-height: 12.2rem;
 
     &:empty:before {

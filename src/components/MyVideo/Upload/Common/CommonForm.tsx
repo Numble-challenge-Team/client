@@ -1,9 +1,10 @@
-import { ChangeEventHandler, FormEventHandler } from 'react';
+import { ChangeEventHandler, FormEventHandler, MutableRefObject, useEffect, useRef } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { isValidMyVideoTitle } from '@store/uploadVideo/valid';
 import { myVideoTitle, myVideoDescription } from '@store/uploadVideo/common';
 
+import TextareaAutosize from 'react-textarea-autosize';
 import * as FormStyled from './FormStyle';
 import ImgInput from './ImgInput';
 import TagInput from './TagInput';
@@ -22,8 +23,8 @@ function CommonForm({ isValid }: CommonFormProps) {
   };
 
   const [description, setDescription] = useRecoilState(myVideoDescription);
-  const changeDescription: FormEventHandler<HTMLDivElement> = (e) => {
-    setDescription(`${(e.target as HTMLDivElement).innerText}`);
+  const changeDescription: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    setDescription(e.target.value);
   };
 
   return (
@@ -41,7 +42,7 @@ function CommonForm({ isValid }: CommonFormProps) {
       </InputWithTitle>
 
       <InputWithTitle title="설명">
-        <p contentEditable placeholder="내용을 입력해주세요." onInput={changeDescription} />
+        <TextareaAutosize placeholder="내용을 입력해주세요." onChange={changeDescription} value={description} />
       </InputWithTitle>
 
       <FormStyled.SubmitFixContainer>
