@@ -5,9 +5,10 @@ import { Text, Textarea } from '@components/Common';
 
 import { VideoDetailCommentsType } from '@/types/watch';
 
-import { useCommentCreateMutation } from '@api/queries/comment';
+import { useCommentsMutation } from '@api/queries/comment';
 import { useRouter } from 'next/router';
 import { useQueryClient } from 'react-query';
+import { CommentType } from '@/types/comment';
 
 interface CommentsListType {
   comments?: VideoDetailCommentsType[];
@@ -19,7 +20,7 @@ function CommentsList({ comments }: CommentsListType) {
 
   const [commentValue, setCommentValue] = useState<string>('');
 
-  const commentMutation = useCommentCreateMutation({
+  const fetchCreateComment = useCommentsMutation<CommentType>('create', {
     onSuccess: () => {
       queryClient.invalidateQueries('video-watch');
     },
@@ -33,7 +34,7 @@ function CommentsList({ comments }: CommentsListType) {
       context: commentValue,
     };
 
-    commentMutation.mutate(createCommentData);
+    fetchCreateComment.mutate(createCommentData);
     setCommentValue('');
   };
 

@@ -26,7 +26,7 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
     <Styled.CommentContainer>
       <Styled.CommentInfoWrapper>
         <Styled.CommentUser>
-          <Profile size={24} profileUrl={profileUrl} /> <span>{nickname}</span>
+          <Profile size={24} profileUrl={profileUrl} /> <Text>{nickname}</Text>
           <Text size="text4" fontColor="500">
             {created_at[0]}. {created_at[1]}. {created_at[2]}
           </Text>
@@ -46,7 +46,7 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
           isOpen={isOpenRecomment}
           setIsOpen={handleOpenRecomment}
         >
-          <Recomment setIsOpen={handleOpenRecomment} />
+          <Recomment comment={comment} setIsOpen={handleOpenRecomment} />
         </Drawer>
       )}
     </Styled.CommentContainer>
