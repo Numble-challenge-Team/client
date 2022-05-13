@@ -20,7 +20,7 @@ function Home() {
       setTimeout(() => {
         setIsFirstAccess(false);
         sessionStorage.setItem('isAccessed', 'true');
-      }, 1000);
+      }, 2000);
     }
   }, []);
 
