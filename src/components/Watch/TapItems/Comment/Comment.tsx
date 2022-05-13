@@ -5,14 +5,16 @@ import Drawer from '@components/Common/Drawer/Drawer';
 import Recomment from '@components/Watch/TapItems/Recomment/Recomment';
 
 import { VideoDetailCommentsType } from '@/types/watch';
+import { Icon, Profile, Text } from '@components/Common';
+import * as Styled from './CommentStyle';
 
 interface CommentPropsType {
-  comment: any;
+  comment: VideoDetailCommentsType;
   hasRecomments?: boolean;
 }
 
 function Comment({ comment, hasRecomments }: CommentPropsType) {
-  const { nickname, context } = comment;
+  const { profileUrl, nickname, context, created_at, likesCount } = comment;
 
   const [isOpenRecomment, setIsOpenRecomment] = useState<boolean>(false);
 
@@ -20,14 +22,23 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
     setIsOpenRecomment(newOpen);
   };
 
-  console.log(comment);
-
   return (
-    <div>
-      <div>
-        프로필 <span>{nickname}</span> <span>{}</span> <span>좋아요</span>
-      </div>
-      <p>{context}</p>
+    <Styled.CommentContainer>
+      <Styled.CommentInfoWrapper>
+        <Styled.CommentUser>
+          <Profile size={24} profileUrl={profileUrl} /> <span>{nickname}</span>
+          <Text size="text4" fontColor="500">
+            {created_at[0]}. {created_at[1]}. {created_at[2]}
+          </Text>
+        </Styled.CommentUser>
+        <div>
+          <Styled.CommentLikeButtonWrapper type="button">
+            <Icon type="thumbs-up" width={18} height={18} />
+            <span>{likesCount}</span>
+          </Styled.CommentLikeButtonWrapper>
+        </div>
+      </Styled.CommentInfoWrapper>
+      <Text>{context}</Text>
       {hasRecomments && (
         <Drawer
           icon={{ type: 'help-question', width: 18, height: 18 }}
@@ -38,7 +49,7 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
           <Recomment setIsOpen={handleOpenRecomment} />
         </Drawer>
       )}
-    </div>
+    </Styled.CommentContainer>
   );
 }
 

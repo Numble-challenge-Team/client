@@ -5,16 +5,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Skeleton from '@mui/material/Skeleton';
 
-import Icon, { IconProps } from '../Icon/Icon';
+import { Icon } from '@components/Common';
+import { IconProps } from '../Icon/Icon';
 
-import { StyledBox, Puller } from './DrawerStyle';
+import * as Styled from './DrawerStyle';
 
 const drawerBleeding = 56;
 
 interface DrawerPropsType {
   window?: () => Window;
   icon: IconProps;
-  iconText?: string;
+  iconText?: number;
   isOpen: boolean;
   setIsOpen: (newOpen: boolean) => void;
 }
@@ -26,7 +27,7 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div>
+    <Styled.Root>
       <CssBaseline />
       <Global
         styles={{
@@ -38,10 +39,10 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
           },
         }}
       />
-      <button type="button" onClick={() => setIsOpen(true)}>
+      <Styled.DrawerButton type="button" onClick={() => setIsOpen(true)}>
         <Icon type={icon.type} width={icon.width} height={icon.height} />
-        {iconText && <span>{iconText}</span>}
-      </button>
+      </Styled.DrawerButton>
+      <Styled.DrawerText>{iconText && <span>{iconText}</span>}</Styled.DrawerText>
       <SwipeableDrawer
         container={container}
         anchor="bottom"
@@ -54,7 +55,7 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
           keepMounted: true,
         }}
       >
-        <StyledBox
+        <Styled.StyledBox
           sx={{
             pt: 3,
             px: 2,
@@ -63,11 +64,11 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
             overflow: 'auto',
           }}
         >
-          <Puller />
+          <Styled.Puller />
           {children}
-        </StyledBox>
+        </Styled.StyledBox>
       </SwipeableDrawer>
-    </div>
+    </Styled.Root>
   );
 }
 
