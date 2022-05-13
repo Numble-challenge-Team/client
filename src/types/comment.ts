@@ -12,3 +12,14 @@ export interface CommentType {
   videoId: string | string[] | undefined;
   context: string;
 }
+
+export interface RecommentsListDataType {
+  block: boolean;
+  commentSeq: number;
+  context: string;
+  id: number;
+  nickname: string;
+  title: string;
+  userId: number;
+  videoId: number;
+}

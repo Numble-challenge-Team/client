@@ -1,4 +1,4 @@
-interface IconProps {
+export interface IconProps {
   type:
     | 'chevron-down'
     | 'chevron-up'
@@ -20,6 +20,7 @@ interface IconProps {
     | 'send'
     | 'app-logo'
     | 'thumbs-up'
+    | 'thumbs-up-fill'
     | 'user'
     | 'video'
     | 'cancle'
@@ -28,7 +29,8 @@ interface IconProps {
     | 'history'
     | 'edit'
     | 'delete'
-    | 'user-delete';
+    | 'user-delete'
+    | 'bend-arrow-right';
   fill?: string;
   width?: number;
   height?: number;

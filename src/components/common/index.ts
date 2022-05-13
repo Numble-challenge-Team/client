@@ -6,6 +6,7 @@ export { default as Icon } from './Icon/Icon';
 export { default as VideoList } from './VideoList/VideoList';
 export { default as VideoCard } from './VideoCard/VideoCard';
 export { default as Input } from './Input/Input';
+export { default as Profile } from './Profile/Profile';
 export { default as Title } from './Title/Title';
 export { default as Text } from './Text/Text';
 export { default as Tag } from './Tag/Tag';

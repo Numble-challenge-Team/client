@@ -3,16 +3,18 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Layout from '@components/Layout/Layout';
+import TapPanel from '@components/Watch/TapPanel/TapPanel';
+import { Icon, Tag, Text, Title } from '@components/Common';
 
 import * as Styled from '@components/Watch/WatchStyle';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
-import TapPanel from '@components/Watch/TapPanel/TapPanel';
-import { Icon, Tag, Text, Title } from '@components/Common';
 
 function VideoWatchPage() {
   const router = useRouter();
-  const { data } = useVideoDetailQuery(router.query.v);
+  const { data } = useVideoDetailQuery(router.query.v, {
+    enabled: !!router.query.v,
+  });
 
   const [isOpenDescription, setIsOpenDescription] = useState<boolean>(false);
 
@@ -21,7 +23,7 @@ function VideoWatchPage() {
   }, []);
 
   return (
-    <Layout hasNav={false} hasHeader={false}>
+    <Layout hasNav={false} hasHeader={false} hasWhitespace={router.pathname === '/watch'}>
       {/* 영상 */}
       <Styled.VideoContainer>
         <iframe

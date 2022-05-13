@@ -59,13 +59,16 @@ export interface VideoRetrieveDetailType {
 
 export interface VideoDetailCommentsType {
   block: boolean;
-  commentCount: number;
-  commentSeq: number;
+  childCount: number;
   context: string;
+  created_at: string;
   id: number;
+  liked: boolean;
+  likesCount: number;
   nickname: string;
+  profileUrl: string;
+  commentSeq: number;
   reComment: boolean;
   title: string;
   userId: number;
-  videoId: number;
 }

@@ -5,23 +5,26 @@ import { Text, Textarea } from '@components/Common';
 
 import { VideoDetailCommentsType } from '@/types/watch';
 
-import { useCommentCreateMutation } from '@api/queries/comment';
+import { useCommentsMutation, useCommentsQuery } from '@api/queries/comment';
 import { useRouter } from 'next/router';
 import { useQueryClient } from 'react-query';
+import { CommentType } from '@/types/comment';
+import * as Styled from '../Recomment/RecommentStyle';
 
-interface CommentsListType {
-  comments?: VideoDetailCommentsType[];
-}
-
-function CommentsList({ comments }: CommentsListType) {
+function CommentsList() {
   const router = useRouter();
+  const videoId = router.query.v;
   const queryClient = useQueryClient();
 
   const [commentValue, setCommentValue] = useState<string>('');
 
-  const commentMutation = useCommentCreateMutation({
+  const getCommentsList = useCommentsQuery<VideoDetailCommentsType[]>(`commentList/${videoId}`, {
+    enabled: !!videoId,
+  });
+
+  const fetchCreateComment = useCommentsMutation<CommentType>('create', {
     onSuccess: () => {
-      queryClient.invalidateQueries('video-watch');
+      queryClient.invalidateQueries('comments');
     },
   });
 
@@ -33,7 +36,7 @@ function CommentsList({ comments }: CommentsListType) {
       context: commentValue,
     };
 
-    commentMutation.mutate(createCommentData);
+    fetchCreateComment.mutate(createCommentData);
     setCommentValue('');
   };
 
@@ -44,12 +47,14 @@ function CommentsList({ comments }: CommentsListType) {
   return (
     <>
       <Textarea value={commentValue} formSubmit={handleCommentCreate} changeEvent={handleCommentValue} />
-      {comments?.length === 0 ? (
-        <Text>아직 댓글이 없습니다.</Text>
+      {getCommentsList.data?.length === 0 ? (
+        <Styled.NoneDataMessage>
+          <Text>아직 댓글이 없습니다.</Text>
+        </Styled.NoneDataMessage>
       ) : (
         <>
-          {comments?.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+          {getCommentsList.data?.map((comment) => (
+            <Comment key={comment.id} comment={comment} hasRecomments={!!comment} />
           ))}
         </>
       )}
