@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 import { DefaultTheme } from 'styled-components';
 
 interface SVGSpriteProps {
-  color: string;
+  color?: string;
 }
 
 function SVGSprite(prop: SVGSpriteProps) {
@@ -379,6 +379,14 @@ function SVGSprite(prop: SVGSpriteProps) {
           fill="#0C364E"
           fillRule="evenodd"
           d="M22.356 4.756a2.2 2.2 0 1 0-3.112-3.112L12 8.89 4.756 1.644a2.2 2.2 0 1 0-3.112 3.112L8.89 12l-7.245 7.244a2.2 2.2 0 1 0 3.112 3.112L12 15.11l7.244 7.245a2.2 2.2 0 1 0 3.112-3.112L15.11 12l7.245-7.244z"
+          clipRule="evenodd"
+        />
+      </symbol>
+      <symbol id="bend-arrow-right" viewBox="0 0 24 24">
+        <path
+          fill="#4A4A4A"
+          fillRule="evenodd"
+          d="M14.2929 18.7071C13.9024 18.3166 13.9024 17.6834 14.2929 17.2929L16.5858 15L9 15C6.23858 15 4 12.7614 4 10L4 6C4 5.44771 4.44772 5 5 5C5.55229 5 6 5.44771 6 6L6 10C6 11.6569 7.34315 13 9 13L16.5858 13L14.2929 10.7071C13.9024 10.3166 13.9024 9.68342 14.2929 9.29289C14.6834 8.90237 15.3166 8.90237 15.7071 9.29289L19.7071 13.2929C20.0976 13.6834 20.0976 14.3166 19.7071 14.7071L15.7071 18.7071C15.3166 19.0976 14.6834 19.0976 14.2929 18.7071Z"
           clipRule="evenodd"
         />
       </symbol>
