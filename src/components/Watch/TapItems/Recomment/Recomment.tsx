@@ -58,6 +58,8 @@ function Recomment({ comment, setIsOpen }: RecommentPropsType) {
         <Icon type="bend-arrow-right" />
         <Textarea value={RecommentValue} formSubmit={handleCommentCreate} changeEvent={handleRecommentValue} />
       </Styled.RecommentInputLine>
+
+      {/* 대댓글 리스트 */}
       <Styled.RecommentsListContainer>
         {getRecommentsList.data?.length === 0 && (
           <Styled.NoneDataMessage>

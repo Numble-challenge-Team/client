@@ -37,7 +37,7 @@ function TapPanel({ concernVideoList, comments }: TapPanelPropsType) {
         </button>
       </Styled.TapPanelStyle>
 
-      <TapItems focusedType={focusedButton} concernVideoList={concernVideoList} comments={comments} />
+      <TapItems focusedType={focusedButton} concernVideoList={concernVideoList} />
     </section>
   );
 }
