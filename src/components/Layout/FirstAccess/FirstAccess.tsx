@@ -8,10 +8,12 @@ interface FirstAccessProps {}
 function FirstAccess(prop: PropsWithChildren<FirstAccessProps>) {
   return (
     <FirstAccessStyled.FirstAccessContainer>
-      <Icon type="app-logo" width={250} height={120} />
+      <FirstAccessStyled.MovementBox>
+        <Icon type="app-logo" width={250} height={120} />
+      </FirstAccessStyled.MovementBox>
       <FirstAccessStyled.CaptionWrapper>
-        <span>Ours Zoo</span>
-        <span>Moonguneun Ahjick meejung</span>
+        <span>Our Zoo</span>
+        <span>당신의 동물을 자랑하세요!</span>
       </FirstAccessStyled.CaptionWrapper>
     </FirstAccessStyled.FirstAccessContainer>
   );
