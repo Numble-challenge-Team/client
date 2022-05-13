@@ -42,6 +42,8 @@ export interface VideoDetailType {
   usersId: number;
   videoId: number;
   view: number;
+  videoType: 'embedded' | 'upload';
+  url: string;
 }
 
 export interface VideoThumbnail {

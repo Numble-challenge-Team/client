@@ -1,11 +1,6 @@
 import Link from 'next/link';
 
-import { PropsWithChildren } from 'react';
-
-import { useRecoilState } from 'recoil';
-import { showMyVideoUploadNav } from '@store/myVideo';
-
-// import { MyVideoStyled } from '@components/MyVideo';
+import { PropsWithChildren, useState } from 'react';
 
 import { Icon } from '@components/Common';
 import * as MyVideoStyled from './MyVideoStyle';
@@ -13,7 +8,7 @@ import * as MyVideoStyled from './MyVideoStyle';
 interface UploadButtonProps {}
 
 function UploadButton(prop: PropsWithChildren<UploadButtonProps>) {
-  const [showUploadNav, setShowUploadNav] = useRecoilState(showMyVideoUploadNav);
+  const [showUploadNav, setShowUploadNav] = useState(false);
   const toggleShowUploadNav = () => {
     setShowUploadNav(!showUploadNav);
   };

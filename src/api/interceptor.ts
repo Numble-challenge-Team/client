@@ -10,6 +10,7 @@ export function interceptors(requestHTTP: AxiosInstance) {
 
       if (config.headers) {
         config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers.guest = !accessToken;
         return config;
       }
     },

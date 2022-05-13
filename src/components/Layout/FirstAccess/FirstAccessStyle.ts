@@ -23,3 +23,20 @@ export const CaptionWrapper = styled.div`
   justify-content: center;
   gap: 0.4rem;
 `;
+
+export const MovementBox = styled.div`
+  animation-name: movement;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: 1;
+
+  @keyframes movement {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+`;

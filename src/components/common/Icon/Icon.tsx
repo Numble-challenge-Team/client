@@ -26,6 +26,10 @@ export interface IconProps {
     | 'cancle'
     | 'loading'
     | 'fetching'
+    | 'history'
+    | 'edit'
+    | 'delete'
+    | 'user-delete'
     | 'bend-arrow-right'
     | 'warning';
   fill?: string;

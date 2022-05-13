@@ -1,6 +1,3 @@
-import { createPortal } from 'react-dom';
-import { DefaultTheme } from 'styled-components';
-
 interface SVGSpriteProps {
   color?: string;
 }
@@ -8,6 +5,48 @@ interface SVGSpriteProps {
 function SVGSprite(prop: SVGSpriteProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" display="none">
+      <symbol id="user-delete" viewBox="0 0 24 24">
+        <path
+          fill="#333"
+          fillRule="evenodd"
+          d="M11 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM6 7a5 5 0 1 1 10 0A5 5 0 0 1 6 7zm3 8a4 4 0 0 0-4 4v1a1 1 0 1 1-2 0v-1a6 6 0 0 1 6-6h3.75a1 1 0 1 1 0 2H9zm11.293-.707a1 1 0 0 1 1.414 1.414L19.914 17.5l1.793 1.793a1 1 0 0 1-1.414 1.414L18.5 18.914l-1.793 1.793a1 1 0 0 1-1.414-1.414l1.793-1.793-1.793-1.793a1 1 0 0 1 1.414-1.414l1.793 1.793 1.793-1.793z"
+          clipRule="evenodd"
+        />
+      </symbol>
+      <symbol id="delete" viewBox="0 0 24 24">
+        <path
+          fill="#333"
+          fillRule="evenodd"
+          d="M11 2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h16a1 1 0 1 0 0-2h-4V5a3 3 0 0 0-3-3h-2zm3 4V5a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v1h4z"
+          clipRule="evenodd"
+        />
+        <path
+          fill="#333"
+          d="M5.821 9.016a1 1 0 0 1 1.163.805l1.701 9.358a1 1 0 0 0 .984.82h4.662a1 1 0 0 0 .984-.82l1.701-9.358a1 1 0 0 1 1.968.358l-1.702 9.358A3 3 0 0 1 14.331 22H9.669a3 3 0 0 1-2.951-2.463l-1.702-9.358a1 1 0 0 1 .805-1.163z"
+        />
+      </symbol>
+      <symbol id="edit" viewBox="0 0 24 24">
+        <path
+          fill="#333"
+          fillRule="evenodd"
+          d="M16.257 3.5a2 2 0 0 1 2.829 0L20.5 4.914a2 2 0 0 1 0 2.829L9.671 18.572a3 3 0 0 1-1.533.82l-2.942.589a1 1 0 0 1-1.176-1.177l.588-2.942a3 3 0 0 1 .82-1.533L16.258 3.5zm2.829 2.828l-1.414-1.414-.707.707 1.414 1.415.707-.708zM16.965 8.45L15.55 7.036l-8.707 8.707a1 1 0 0 0-.274.511l-.294 1.471 1.47-.294a1 1 0 0 0 .512-.273l8.708-8.708z"
+          clipRule="evenodd"
+        />
+      </symbol>
+      <symbol id="history" viewBox="0 0 24 24">
+        <path
+          fill="#333"
+          fillRule="evenodd"
+          d="M10.58 5.145a7 7 0 1 1-4.243 10.97 1 1 0 0 0-1.618 1.175 9 9 0 1 0-1.547-7.042 1 1 0 0 0-1.363 1.461l1.5 1.5a1 1 0 0 0 1.414 0l1.5-1.5a1 1 0 0 0-.94-1.68 6.999 6.999 0 0 1 5.298-4.884z"
+          clipRule="evenodd"
+        />
+        <path
+          fill="#333"
+          fillRule="evenodd"
+          d="M12 7a1 1 0 0 1 1 1v3.586l2.707 2.707a1 1 0 0 1-1.414 1.414l-3-3A1 1 0 0 1 11 12V8a1 1 0 0 1 1-1z"
+          clipRule="evenodd"
+        />
+      </symbol>
       <symbol id="loading" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
         <circle cx="50" cy="50" r="0" fill="none" stroke="#333333" strokeWidth="7">
           <animate
@@ -198,13 +237,13 @@ function SVGSprite(prop: SVGSpriteProps) {
       </symbol>
       <symbol id="circle-arrow-left" viewBox="0 0 24 24">
         <path
-          fill="#333"
+          fill="#00CDDB"
           fillRule="evenodd"
           d="M12 3.2a8.8 8.8 0 1 0 0 17.6 8.8 8.8 0 0 0 0-17.6zM1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12z"
           clipRule="evenodd"
         />
         <path
-          fill="#333"
+          fill="#00CDDB"
           fillRule="evenodd"
           d="M18 12c0 .69-.492 1.25-1.1 1.25h-6.144l1.422 1.616c.43.488.43 1.28 0 1.768s-1.126.488-1.556 0l-3.3-3.75a1.374 1.374 0 0 1 0-1.768l3.3-3.75c.43-.488 1.126-.488 1.556 0 .43.488.43 1.28 0 1.768l-1.422 1.616H16.9c.608 0 1.1.56 1.1 1.25z"
           clipRule="evenodd"
