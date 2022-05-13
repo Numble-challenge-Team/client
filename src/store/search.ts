@@ -9,3 +9,8 @@ export const showSearchState = atom<boolean>({
   key: 'showSearchState',
   default: false,
 });
+
+export const searchStackState = atom<string[]>({
+  key: 'searchStackState',
+  default: [],
+});
