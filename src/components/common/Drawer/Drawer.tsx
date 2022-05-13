@@ -10,7 +10,7 @@ import { IconProps } from '../Icon/Icon';
 
 import * as Styled from './DrawerStyle';
 
-const drawerBleeding = 56;
+const drawerBleeding = 0;
 
 interface DrawerPropsType {
   window?: () => Window;
@@ -32,7 +32,7 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(100% - 15rem - ${drawerBleeding}px)`,
+            height: `calc(100% - 21rem - ${drawerBleeding}px)`,
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15,
             overflow: 'visible',
