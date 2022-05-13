@@ -48,19 +48,19 @@ const handleColor = (color: any, fontColor: string) => {
   switch (fontColor) {
     case 'primary':
       return css`
-        color: ${primary['700']};
+        ${primary['700']};
       `;
     case '500':
       return css`
-        color: ${gray['500']};
+        ${gray['500']};
       `;
     case '600':
       return css`
-        color: ${gray['600']};
+        ${gray['600']};
       `;
     default:
       return css`
-        color: ${gray['700']};
+        ${gray['700']};
       `;
   }
 };

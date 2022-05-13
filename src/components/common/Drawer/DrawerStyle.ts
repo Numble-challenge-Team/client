@@ -4,6 +4,8 @@ import { grey } from '@mui/material/colors';
 import { Button } from '@mui/material';
 
 export const Root = styled(Box)(() => ({
+  position: 'relative',
+  zIndex: '100',
   display: 'flex',
   gap: '0.8rem',
 }));

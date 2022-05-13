@@ -24,7 +24,8 @@ export interface IconProps {
     | 'video'
     | 'cancle'
     | 'loading'
-    | 'fetching';
+    | 'fetching'
+    | 'bend-arrow-right';
   fill?: string;
   width?: number;
   height?: number;
