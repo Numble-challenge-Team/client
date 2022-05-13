@@ -26,7 +26,8 @@ export interface IconProps {
     | 'cancle'
     | 'loading'
     | 'fetching'
-    | 'bend-arrow-right';
+    | 'bend-arrow-right'
+    | 'warning';
   fill?: string;
   width?: number;
   height?: number;
