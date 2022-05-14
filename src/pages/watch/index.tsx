@@ -23,7 +23,7 @@ function VideoWatchPage() {
   }, []);
 
   return (
-    <Layout hasNav={false} hasHeader={false} hasWhitespace={router.pathname === '/watch'}>
+    <Layout hasNav={false} hasHeader={false} hasWhitespace>
       {/* 영상 */}
       <Styled.VideoContainer>
         <iframe
