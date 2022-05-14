@@ -9,7 +9,7 @@ export const VideoContainer = styled.section`
 `;
 
 export const VideoDetailInfoContainer = styled.section`
-  padding: 1.6rem 0 2.4rem;
+  padding: 1.6rem 2rem 2.4rem;
 `;
 
 export const UserInfoWrapper = styled.div`
