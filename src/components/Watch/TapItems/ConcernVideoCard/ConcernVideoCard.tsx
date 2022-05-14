@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { VideoDetailType } from '@/types/watch';
 import { Text, Title } from '@components/Common';
 
+import dateFormatter from '@utils/dateFormatter';
+
 import * as Styled from './ConcernVideoCardStyle';
 
 interface ConcernVideoCard {
@@ -28,7 +30,7 @@ function ConcernVideoCard({ video }: ConcernVideoCard) {
       </Styled.VideoThumbnail>
       <div>
         <Text size="text4" margin="0 0 0.4rem" fontColor="500">
-          조회수 {view} | {created_at}
+          조회수 {view} | {dateFormatter(created_at)}
         </Text>
         <Title size="title3" margin="0 0 0.4rem" lineHeight="1.8" hasBold={false}>
           {title}

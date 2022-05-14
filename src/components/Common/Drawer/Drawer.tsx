@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react';
 
 import { Global } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Skeleton from '@mui/material/Skeleton';
 
@@ -28,7 +27,6 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
 
   return (
     <Styled.Root>
-      <CssBaseline />
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
