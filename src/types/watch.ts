@@ -31,7 +31,7 @@ export interface ListSortType {
 
 export interface VideoDetailType {
   block: boolean;
-  created_at: string;
+  created_at: number[];
   description: string;
   duration: number;
   liked: boolean;
@@ -46,6 +46,7 @@ export interface VideoDetailType {
   view: number;
   videoType: 'embedded' | 'upload';
   url: string;
+  profileImg: ProfileImgType;
 }
 
 export interface VideoThumbnail {
@@ -53,8 +54,19 @@ export interface VideoThumbnail {
   name: string;
 }
 
+export interface ProfileImgType {
+  name?: string;
+  url: string;
+}
+
 export interface VideoRetrieveDetailType {
   comments: CommentDataType[];
   concernVideoList: ConcernVideoListType;
   videoDetail: VideoDetailType;
+}
+
+export interface VideoIframeDataType {
+  title: string;
+  src?: string;
+  url?: string;
 }
