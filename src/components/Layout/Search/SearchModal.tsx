@@ -26,21 +26,7 @@ function SearchModal(prop: PropsWithChildren<SearchModalProps>) {
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [searchStack, setSearchStack] = useRecoilState(searchStackState);
 
-  const changeSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSearch(e.target.value);
-  };
-  const changeSearchByHistory: (keyword: string) => MouseEventHandler<HTMLButtonElement> = (keyword) => () => {
-    setSearch(keyword);
-  };
-  const deleteKeywordInHistory: (targetKeyword: string) => MouseEventHandler<HTMLButtonElement> =
-    (targetKeyword) => () => {
-      const filterSearchHistory = searchHistory.filter((keyword) => keyword !== targetKeyword);
-      setSearchHistory(filterSearchHistory);
-      localStorage.setItem('search-history', JSON.stringify(filterSearchHistory));
-    };
-  const handleSubmitSearch: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-
+  const onSearch = (search: string) => {
     const filterSearchHistory = searchHistory.filter((keyword) => keyword !== search);
     if (filterSearchHistory.length === searchHistory.length) {
       localStorage.setItem('search-history', JSON.stringify([search, ...searchHistory]));
@@ -51,6 +37,24 @@ function SearchModal(prop: PropsWithChildren<SearchModalProps>) {
     setSearchStack([...searchStack, search]);
     router.push(search ? `?search=${search}` : '/');
     setShowSearch(false);
+  };
+
+  const changeSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearch(e.target.value);
+  };
+  const changeSearchByHistory: (keyword: string) => MouseEventHandler<HTMLButtonElement> = (keyword) => () => {
+    setSearch(keyword);
+    onSearch(keyword);
+  };
+  const deleteKeywordInHistory: (targetKeyword: string) => MouseEventHandler<HTMLButtonElement> =
+    (targetKeyword) => () => {
+      const filterSearchHistory = searchHistory.filter((keyword) => keyword !== targetKeyword);
+      setSearchHistory(filterSearchHistory);
+      localStorage.setItem('search-history', JSON.stringify(filterSearchHistory));
+    };
+  const handleSubmitSearch: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    onSearch(search);
   };
   const handleCloseSearch: MouseEventHandler<HTMLButtonElement> = () => {
     setShowSearch(false);
