@@ -25,31 +25,34 @@ function Navigation(prop: NavigationProps) {
       <NavigationStyled.Nav>
         <ul>
           <li>
-            <Link href={`${search ? `/?search=${search}` : '/'}`}>
-              <a>
-                <Icon type="home" fill={judgeColorWithRoute(isHome)} />
-              </a>
+            <Link href={`${search ? `/?search=${search}` : '/'}`} passHref>
+              <NavigationStyled.NavLink isCurrentRoute={isHome}>
+                <Icon type="home" fill={judgeColorWithRoute(isHome)} />홈
+              </NavigationStyled.NavLink>
             </Link>
           </li>
           <li>
-            <Link href="/my-video">
-              <a>
+            <Link href="/my-video" passHref>
+              <NavigationStyled.NavLink isCurrentRoute={isMyVideo}>
                 <Icon type="video" fill={judgeColorWithRoute(isMyVideo)} />
-              </a>
+                마이 비디오
+              </NavigationStyled.NavLink>
             </Link>
           </li>
           <li>
-            <Link href="/like-video">
-              <a>
+            <Link href="/like-video" passHref>
+              <NavigationStyled.NavLink isCurrentRoute={isLikeVideo}>
                 <Icon type="heart" fill={judgeColorWithRoute(isLikeVideo)} />
-              </a>
+                관심영상
+              </NavigationStyled.NavLink>
             </Link>
           </li>
           <li>
-            <Link href="/profile">
-              <a>
+            <Link href="/profile" passHref>
+              <NavigationStyled.NavLink isCurrentRoute={isProfile}>
                 <Icon type="user" fill={judgeColorWithRoute(isProfile)} />
-              </a>
+                프로필
+              </NavigationStyled.NavLink>
             </Link>
           </li>
         </ul>
