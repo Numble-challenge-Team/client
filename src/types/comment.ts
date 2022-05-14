@@ -1,25 +1,26 @@
 export interface CommentDataType {
-  data: {
-    accessToken: string | null;
-    refreshToken: string | null;
-  };
-  message: string;
-  result: string;
-  state: number;
+  id: number;
+  nickname: string;
+  context: string;
+  title: string;
+  profileUrl: string;
+  userId: number;
+  childCount: number;
+  likesCount: number;
+  created_at: number[];
+  block: boolean;
+  liked: boolean;
 }
 
-export interface CommentType {
+export interface CommentCreateType {
   videoId: string | string[] | undefined;
   context: string;
 }
 
-export interface RecommentsListDataType {
-  block: boolean;
-  commentSeq: number;
-  context: string;
-  id: number;
-  nickname: string;
-  title: string;
-  userId: number;
-  videoId: number;
+export interface CommentIdType {
+  commentId: number;
+}
+
+export interface CommentLikeIncreasedType {
+  likeIncreased: boolean;
 }
