@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
 
 import Layout from '@components/Layout/Layout';
 import TapPanel from '@components/Watch/TapPanel/TapPanel';
@@ -9,11 +10,18 @@ import { Icon, Tag, Text, Title } from '@components/Common';
 import * as Styled from '@components/Watch/WatchStyle';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
+import { videoDetailTitleState } from '@store/videoDetailTitle';
 
 function VideoWatchPage() {
   const router = useRouter();
+  const setVideoTitle = useSetRecoilState<string>(videoDetailTitleState);
+
   const { data } = useVideoDetailQuery(router.query.v, {
     enabled: !!router.query.v,
+    staleTime: 300000,
+    onSuccess: (data) => {
+      setVideoTitle(() => data.videoDetail.title);
+    },
   });
 
   const [isOpenDescription, setIsOpenDescription] = useState<boolean>(false);
@@ -23,7 +31,7 @@ function VideoWatchPage() {
   }, []);
 
   return (
-    <Layout hasNav={false} hasHeader={false} hasWhitespace>
+    <Layout hasNav={false} hasHeader={false}>
       {/* 영상 */}
       <Styled.VideoContainer>
         <iframe
