@@ -1,22 +1,26 @@
 /* eslint-disable import/no-cycle */
 import { ChangeEventHandler, FormEvent, useCallback, useState } from 'react';
+import { useQueryClient } from 'react-query';
+
 import { Icon, Title, Text, Textarea } from '@components/Common';
 import Comment from '@components/Watch/TapItems/Comment/Comment';
 
-import { VideoDetailCommentsType } from '@/types/watch';
+import { CommentDataType } from '@/types/comment';
 
 import { useCommentsMutation, useCommentsQuery } from '@api/queries/comment';
-import { useQueryClient } from 'react-query';
+
 import * as Styled from './RecommentStyle';
 
 interface RecommentPropsType {
-  comment: VideoDetailCommentsType;
+  comment: CommentDataType;
+  isOpenRecomment: boolean;
   setIsOpen: (newOpen: boolean) => void;
 }
 
-function Recomment({ comment, setIsOpen }: RecommentPropsType) {
+function Recomment({ comment, isOpenRecomment, setIsOpen }: RecommentPropsType) {
   const queryClient = useQueryClient();
-  const getRecommentsList = useCommentsQuery<VideoDetailCommentsType[]>(`getChild/${comment.id}`, {
+  const getRecommentsList = useCommentsQuery<CommentDataType[]>(`getChild/${comment.id}`, {
+    enabled: isOpenRecomment,
     staleTime: 5000,
   });
 
@@ -66,7 +70,7 @@ function Recomment({ comment, setIsOpen }: RecommentPropsType) {
             <Text>아직 답글이 없습니다.</Text>
           </Styled.NoneDataMessage>
         )}
-        {getRecommentsList.data?.map((recomment: VideoDetailCommentsType) => (
+        {getRecommentsList.data?.map((recomment: CommentDataType) => (
           <Comment key={recomment.id} comment={recomment} />
         ))}
       </Styled.RecommentsListContainer>
