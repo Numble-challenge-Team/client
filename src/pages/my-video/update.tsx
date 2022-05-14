@@ -43,7 +43,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
           thumbnail: null,
           thumbnailURL: thumbnailUrl,
           title,
-          tags,
+          tags: tags || [],
           description,
         });
       } else if (videoType === 'upload') {
@@ -58,7 +58,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
           thumbnail: null,
           thumbnailURL: thumbnailUrl,
           title,
-          tags,
+          tags: tags || [],
           description,
         });
       }

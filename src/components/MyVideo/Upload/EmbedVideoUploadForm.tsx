@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { PropsWithChildren, FormEventHandler } from 'react';
 
 import { useRecoilState } from 'recoil';
@@ -6,16 +7,19 @@ import { embedVideoUploadFormData, isValidEmbedVideoUploadForm } from '@store/up
 import { useEmbedUploadMutation } from '@api/queries/upload';
 
 import { EmbedVideoForm } from '@components/MyVideo';
+import { showToastModalState, toastModalMessageState } from '@store/modal';
 
 interface EmbedVideoUploadFormProps {}
 
 function EmbedVideoUploadForm(prop: PropsWithChildren<EmbedVideoUploadFormProps>) {
+  const router = useRouter();
   const [isValid, setIsValid] = useRecoilState(isValidEmbedVideoUploadForm);
   const [embedVideoFormData, setEmbedVideoFormData] = useRecoilState(embedVideoUploadFormData);
+  const [showToastModal, setShowToastModal] = useRecoilState(showToastModalState);
+  const [toastModalMessage, setToastModalMessage] = useRecoilState(toastModalMessageState);
 
-  const resetFormData = (logInfo: any) => {
-    console.log({ logInfo });
-
+  const resetFormData = (toastMessage: string) => () => {
+    router.back();
     setEmbedVideoFormData({
       embedLink: '',
       duration: 0,
@@ -26,10 +30,17 @@ function EmbedVideoUploadForm(prop: PropsWithChildren<EmbedVideoUploadFormProps>
       description: '',
     });
     setIsValid(false);
+    setShowToastModal(true);
+    setToastModalMessage(toastMessage);
+
+    setTimeout(() => {
+      setShowToastModal(false);
+      setToastModalMessage('');
+    }, 2000);
   };
   const uploadMutation = useEmbedUploadMutation({
-    onSuccess: resetFormData,
-    onError: resetFormData,
+    onSuccess: resetFormData('영상 업로드가 완료되었습니다.'),
+    onError: resetFormData('영상 업로드에 실패했습니다.'),
   });
 
   const handleSubmitVideo: FormEventHandler<HTMLFormElement> = (e) => {

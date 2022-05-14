@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { PropsWithChildren, FormEventHandler } from 'react';
 import { EmbedVideoForm } from '@components/MyVideo';
 
@@ -16,17 +17,20 @@ import {
   myVideoDuration,
 } from '@store/uploadVideo/common';
 import { isValidMyVideoThumbnail, isValidMyVideoEmbedLink } from '@store/uploadVideo/valid';
+import { toastModalMessageState, showToastModalState } from '@store/modal';
 
 interface EmbedVideoUpdateFormProps {}
 
 function EmbedVideoUpdateForm(prop: PropsWithChildren<EmbedVideoUpdateFormProps>) {
+  const router = useRouter();
   const [updateVideoId, setUpdateVideoId] = useRecoilState(updateVideoIdState);
   const [isValid, setIsValid] = useRecoilState(isValidEmbedVideoUploadForm);
   const [embedVideoFormData, setEmbedVideoFormData] = useRecoilState(embedVideoUploadFormData);
+  const [showToastModal, setShowToastModal] = useRecoilState(showToastModalState);
+  const [toastModalMessage, setToastModalMessage] = useRecoilState(toastModalMessageState);
 
-  const resetFormData = (logInfo: any) => {
-    console.log({ logInfo });
-
+  const resetFormData = (toastMessage: string) => () => {
+    router.back();
     setEmbedVideoFormData({
       embedLink: '',
       duration: 0,
@@ -37,12 +41,18 @@ function EmbedVideoUpdateForm(prop: PropsWithChildren<EmbedVideoUpdateFormProps>
       description: '',
     });
     setIsValid(false);
-    setUpdateVideoId(null);
+    setShowToastModal(true);
+    setToastModalMessage(toastMessage);
+
+    setTimeout(() => {
+      setShowToastModal(false);
+      setToastModalMessage('');
+    }, 2000);
   };
   const updateMutation = useUpdateVideoMutation({
     retry: false,
-    onSuccess: resetFormData,
-    onError: resetFormData,
+    onSuccess: resetFormData('영상 수정이 완료되었습니다.'),
+    onError: resetFormData('영상 수정에 실패했습니다.'),
   });
 
   const { data } = useVideoDetailQuery(`${updateVideoId}`);

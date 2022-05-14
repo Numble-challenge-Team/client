@@ -25,6 +25,8 @@ const fetchAllVideos =
       res = await axiosWithToken.get<resVideos>(`/videos/main?page=${pageParam}`);
     }
 
+    console.log({ res });
+
     const { contents, hasMore } = res.data;
     return {
       contents,

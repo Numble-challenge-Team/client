@@ -100,3 +100,21 @@ export const AlertModalContainer = styled.div`
     }
   }
 `;
+
+export const ToastModalContainer = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  bottom: 8rem;
+  width: 100%;
+`;
+
+export const ToastModalWrapper = styled.div`
+  display: inline-block;
+  margin: 0 auto;
+  padding: 1.4rem 3.6rem;
+  border-radius: 6rem;
+  background-color: ${({ theme }) => theme.color.black};
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.color.white};
+`;

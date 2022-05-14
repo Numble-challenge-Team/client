@@ -9,3 +9,13 @@ export const showAlertModalState = atom<boolean>({
   key: 'showAlertModalState',
   default: false,
 });
+
+export const showToastModalState = atom<boolean>({
+  key: 'showToastModalState',
+  default: false,
+});
+
+export const toastModalMessageState = atom<string>({
+  key: 'toastModalMessageState',
+  default: '',
+});
