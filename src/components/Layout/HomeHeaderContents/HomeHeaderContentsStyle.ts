@@ -13,9 +13,19 @@ export const HomeHeaderContentsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.6rem;
   height: 100%;
 
   font-family: 'NanumSquareR';
   font-size: 1.6rem;
   color: ${({ theme }) => theme.color.black};
+`;
+
+export const OpenSearchModalWithSearchKeyword = styled.button`
+  display: block;
+  width: 100%;
+  font-family: 'NanumSquareB';
+  font-size: 1.8rem;
+  padding: 0.8rem 0;
+  text-align: left;
 `;

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 
 import { Icon } from '@components/Common';
-import { searchState, searchStackState } from '@store/search';
+import { searchState, searchStackState, showSearchState } from '@store/search';
 import { useRecoilState } from 'recoil';
 import Search from '../Search/Search';
 
@@ -16,33 +16,38 @@ function HomeHeaderContents(prop: PropsWithChildren<HomeHeaderContentsProps>) {
   const router = useRouter();
   const [search, setSearch] = useRecoilState(searchState);
   const [searchStack, setSearchStack] = useRecoilState(searchStackState);
+  const [showSearch, setShowSearch] = useRecoilState(showSearchState);
+  const toggleShowSearch = () => {
+    setShowSearch(!showSearch);
+  };
+
+  const handleSearchBackButton = () => {
+    const filterSearchStack = searchStack.slice(0, searchStack.length - 1);
+
+    if (filterSearchStack.length) {
+      const beforeSearch = filterSearchStack[filterSearchStack.length - 1];
+
+      setSearch(beforeSearch);
+      router.push(beforeSearch ? `?search=${beforeSearch}` : '/');
+      setSearchStack(filterSearchStack.slice(0, searchStack.length - 1));
+    } else {
+      setSearch('');
+      setSearchStack([]);
+      router.push('/');
+    }
+  };
 
   return (
     <HomeHeaderContentsStyled.HomeHeaderContentsContainer>
       <HomeHeaderContentsStyled.HomeHeaderContentsWrapper>
         {router.query.search ? (
           <>
-            <button
-              type="button"
-              onClick={() => {
-                const filterSearchStack = searchStack.slice(0, searchStack.length - 1);
-
-                if (filterSearchStack.length) {
-                  const beforeSearch = filterSearchStack[filterSearchStack.length - 1];
-
-                  setSearch(beforeSearch);
-                  router.push(beforeSearch ? `?search=${beforeSearch}` : '/');
-                  setSearchStack(filterSearchStack.slice(0, searchStack.length - 1));
-                } else {
-                  setSearch('');
-                  setSearchStack([]);
-                  router.push('/');
-                }
-              }}
-            >
+            <button type="button" onClick={handleSearchBackButton}>
               <Icon type="circle-arrow-left" />
             </button>
-            {router.query.search}
+            <HomeHeaderContentsStyled.OpenSearchModalWithSearchKeyword onClick={toggleShowSearch}>
+              {router.query.search}
+            </HomeHeaderContentsStyled.OpenSearchModalWithSearchKeyword>
           </>
         ) : (
           <Link href="/">
