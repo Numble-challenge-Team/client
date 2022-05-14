@@ -1,14 +1,16 @@
 import { ChangeEventHandler, FormEvent, useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useQueryClient } from 'react-query';
+import { useRecoilValue } from 'recoil';
 
 import Comment from '@components/Watch/TapItems/Comment/Comment';
 import { Text, Textarea } from '@components/Common';
 
-import { VideoDetailCommentsType } from '@/types/watch';
+import { CommentDataType, CommentCreateType } from '@/types/comment';
 
 import { useCommentsMutation, useCommentsQuery } from '@api/queries/comment';
-import { useRouter } from 'next/router';
-import { useQueryClient } from 'react-query';
-import { CommentType } from '@/types/comment';
+import { videoDetailTitleState } from '@store/videoDetailTitle';
+
 import * as Styled from '../Recomment/RecommentStyle';
 
 function CommentsList() {
@@ -17,12 +19,14 @@ function CommentsList() {
   const queryClient = useQueryClient();
 
   const [commentValue, setCommentValue] = useState<string>('');
+  const videoTitle = useRecoilValue(videoDetailTitleState);
 
-  const getCommentsList = useCommentsQuery<VideoDetailCommentsType[]>(`commentList/${videoId}`, {
+  const getCommentsList = useCommentsQuery<CommentDataType[]>(`commentList/${videoId}`, {
     enabled: !!videoId,
+    staleTime: 6000,
   });
 
-  const fetchCreateComment = useCommentsMutation<CommentType>('create', {
+  const fetchCreateComment = useCommentsMutation<CommentCreateType>('create', {
     onSuccess: () => {
       queryClient.invalidateQueries('comments');
     },
@@ -34,6 +38,7 @@ function CommentsList() {
     const createCommentData = {
       videoId: router.query.v,
       context: commentValue,
+      title: videoTitle,
     };
 
     fetchCreateComment.mutate(createCommentData);
