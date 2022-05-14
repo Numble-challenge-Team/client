@@ -1,3 +1,5 @@
+import { CommentDataType } from './comment';
+
 export interface ConcernVideoListType {
   content: VideoDetailType[];
   empty: boolean;
@@ -52,23 +54,7 @@ export interface VideoThumbnail {
 }
 
 export interface VideoRetrieveDetailType {
-  comments: VideoDetailCommentsType[];
+  comments: CommentDataType[];
   concernVideoList: ConcernVideoListType;
   videoDetail: VideoDetailType;
-}
-
-export interface VideoDetailCommentsType {
-  block: boolean;
-  childCount: number;
-  context: string;
-  created_at: string;
-  id: number;
-  liked: boolean;
-  likesCount: number;
-  nickname: string;
-  profileUrl: string;
-  commentSeq: number;
-  reComment: boolean;
-  title: string;
-  userId: number;
 }
