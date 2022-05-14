@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
-import { Button, Input } from '@components/Common';
+import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
-import Title from '@components/Common/Title/Title';
-import Text from '@components/Common/Text/Text';
+
+import * as Styled from '@components/Layout/LayoutStyle';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
 import { FormRegisterType, SignupInfoType } from '@/types/signup';
@@ -57,26 +57,28 @@ function SingupEmailPage() {
   }, [errors.email?.message]);
 
   return (
-    <Layout hasNav={false}>
-      <Text margin="0 0 0.8rem 0">안녕하세요. 오즈가 처음이신가요?</Text>
-      <Title margin="0 0 2.8rem 0">먼저 이메일을 확인해 주세요!</Title>
-      <form onSubmit={handleSubmit(handleEmailSubmit)}>
-        <label>E-mail</label>
-        <Input
-          label="email"
-          register={register}
-          pattern={EMAIL_VALIDATION}
-          placeholderText="이메일을 입력해 주세요."
-          hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-          required
-        />
-        {errors && <Text hasError={!!errors}>{errors.email?.message}</Text>}
-        {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
+    <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
+      <Styled.Section>
+        <Text margin="0 0 0.8rem 0">안녕하세요. 오즈가 처음이신가요?</Text>
+        <Title margin="0 0 2.8rem 0">먼저 이메일을 확인해 주세요!</Title>
+        <form onSubmit={handleSubmit(handleEmailSubmit)}>
+          <label>E-mail</label>
+          <Input
+            label="email"
+            register={register}
+            pattern={EMAIL_VALIDATION}
+            placeholderText="이메일을 입력해 주세요."
+            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+            required
+          />
+          {errors && <Text hasError={!!errors}>{errors.email?.message}</Text>}
+          {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
-        <Button type="submit" margin="3.6rem 0 0 0">
-          다음
-        </Button>
-      </form>
+          <Button type="submit" margin="3.6rem 0 0 0">
+            다음
+          </Button>
+        </form>
+      </Styled.Section>
     </Layout>
   );
 }

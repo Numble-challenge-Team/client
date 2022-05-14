@@ -30,3 +30,7 @@ export const EmptyContainer = styled.div`
   height: 100vh;
   margin-top: -6.4rem;
 `;
+
+export const Section = styled.section`
+  padding-top: 7rem;
+`;
