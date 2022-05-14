@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Layout from '@components/Layout/Layout';
 import { VideoList } from '@components/Common';
