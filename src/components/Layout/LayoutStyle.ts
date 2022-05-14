@@ -11,7 +11,7 @@ export const Header = styled.header`
 
 export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean }>`
   position: relative;
-  margin: ${({ hasHeader }) => (hasHeader ? '6.4rem auto 0' : null)};
+  margin: ${({ hasHeader }) => (hasHeader ? '6.4rem auto 0' : '0 auto')};
   padding: ${({ hasWhitespace }) => (hasWhitespace ? '0 2rem' : null)};
   max-width: 37.5rem;
   min-height: calc(100vh - 6.4rem);
