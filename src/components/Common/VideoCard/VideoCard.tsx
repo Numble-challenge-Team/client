@@ -102,7 +102,7 @@ function VideoCard({
             <Icon type="dial-pad" />
           </VideoCardStyled.DialPadButton>
         ) : (
-          <VideoCardStyled.LikeButton onClick={handleLike}>
+          <VideoCardStyled.LikeButton onClick={handleLike} isLike={liked}>
             <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
             <span>{likes}</span>
           </VideoCardStyled.LikeButton>

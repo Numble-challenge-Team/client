@@ -61,13 +61,13 @@ export const CaptionInfoBox = styled.div`
   }
 `;
 
-export const LikeButton = styled.button`
+export const LikeButton = styled.button<{ isLike: boolean }>`
   display: flex;
   align-items: center;
   flex-direction: column;
   & > span {
     font-size: 1.1rem;
-    color: ${({ theme }) => theme.color.gray[400]};
+    color: ${({ theme, isLike }) => (isLike ? theme.color.primary[700] : theme.color.gray[400])};
   }
 `;
 
