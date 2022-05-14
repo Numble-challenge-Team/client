@@ -3,6 +3,7 @@ import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, PropsWithC
 import { useRecoilState } from 'recoil';
 import { myVideoTags } from '@store/uploadVideo/common';
 
+import { Tag } from '@components/Common';
 import * as FormStyled from './FormStyle';
 
 interface TagInputProps {}
@@ -21,10 +22,11 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
       setTag('');
 
       if (tags.includes(tag)) {
+        setTags([tag, ...tags.filter((tagInTags) => tagInTags !== tag)].slice(0, 3));
         return;
       }
 
-      setTags([...tags, tag]);
+      setTags([tag, ...tags].slice(0, 3));
     }
   };
 
