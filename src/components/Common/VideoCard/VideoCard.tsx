@@ -94,7 +94,7 @@ function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<
           <VideoCardStyled.CaptionInfoBox>
             <span>{nickname}</span>
             <span>조회수 {view}</span>
-            <span>{created_at}</span>
+            <span>{created_at.map((date) => `${date}`.padStart(2, '0')).join('.')}</span>
           </VideoCardStyled.CaptionInfoBox>
         </VideoCardStyled.TextCaptionWrapper>
 
