@@ -3,7 +3,7 @@ import * as Styled from './PropfileStyle';
 interface ProfilePropsType {
   size: 24 | 36;
   profileUrl: string;
-  priority?: boolean;
+  alt: string;
 }
 
 function Profile(props: ProfilePropsType) {
@@ -11,7 +11,7 @@ function Profile(props: ProfilePropsType) {
 
   return (
     <Styled.ProfileStyle>
-      <Styled.ProfileImage {...rest} src={profileUrl} width={size} height={size} />
+      <Styled.ProfileImage {...rest} src={profileUrl} width={size} height={size} priority />
     </Styled.ProfileStyle>
   );
 }
