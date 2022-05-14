@@ -1,10 +1,10 @@
 import { MutationFunction, useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
-import { axiosService, axiosWithToken } from '@api';
 import { FetchDataType } from '@/types/fetchData';
+import { axiosWithToken } from '@api';
 
 const fetchComments = async (pathname: string) => {
-  const response = await axiosService.get(`comments/${pathname}`);
+  const response = await axiosWithToken.get(`comments/${pathname}`);
   return response.data;
 };
 
