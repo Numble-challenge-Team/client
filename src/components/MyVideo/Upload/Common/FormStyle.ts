@@ -121,6 +121,7 @@ export const Video = styled.video`
 export const Image = styled.img`
   object-fit: contain;
   position: absolute;
+  background-color: ${({ theme }) => theme.color.black};
   top: 0;
   left: 0;
   width: 100%;
