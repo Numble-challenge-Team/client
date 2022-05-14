@@ -48,7 +48,7 @@ function HeaderTitle({ hasBackButton, children }: PropsWithChildren<HeaderTitleP
     const queries = router.pathname.split('/');
     queries.pop();
     const newQuery = queries.join('/');
-    router.push(newQuery || '/');
+    router.push(newQuery.replace(/[[\]]/g, '') || '/');
     resetAllFormData();
   };
 
