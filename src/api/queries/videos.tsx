@@ -10,6 +10,7 @@ const InfinityOption = {
       return nextPage;
     }
   },
+  staleTime: 60 * 1000,
 };
 
 // 전체 비디오 조회

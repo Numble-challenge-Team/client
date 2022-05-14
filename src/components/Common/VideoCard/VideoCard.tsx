@@ -12,6 +12,7 @@ import { useRecoilState } from 'recoil';
 import { updateVideoIdState } from '@store/videoId';
 import { showBottomUpModalState } from '@store/modal';
 import Icon from '../Icon/Icon';
+import Profile from '../Profile/Profile';
 
 import * as VideoCardStyled from './VideoCardStyle';
 
@@ -22,23 +23,7 @@ interface VideoCardProps {
   cardInfo: Videos;
 }
 
-function VideoCard({
-  curPage,
-  queryKey,
-  videoIdx,
-  cardInfo: {
-    videoId,
-    thumbnail: { url, name },
-    title,
-    owner,
-    duration,
-    nickname,
-    view,
-    likes,
-    liked,
-    created_at,
-  },
-}: PropsWithChildren<VideoCardProps>) {
+function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<VideoCardProps>) {
   const queryClient = useQueryClient();
   const likeMutation = useLikeMutation({
     onSuccess: ({ data }) => {
@@ -69,6 +54,21 @@ function VideoCard({
     likeMutation.mutate(videoId);
   };
 
+  const {
+    videoId,
+    thumbnail: { url, name },
+    title,
+    owner,
+    duration,
+    nickname,
+    view,
+    likes,
+    liked,
+    created_at,
+    profileImg: { url: profileUrl },
+  } = cardInfo;
+  console.log({ cardInfo });
+
   const [showBottomUpModal, setShowBottomUpModal] = useRecoilState(showBottomUpModalState);
   const [updateVideoId, setUpdateVideoId] = useRecoilState(updateVideoIdState);
   const handleDialPad = () => {
@@ -84,6 +84,7 @@ function VideoCard({
         </VideoCardStyled.LinkThumbnail>
       </Link>
       <VideoCardStyled.CaptionContainer>
+        <Profile profileUrl={profileUrl} size={36} />
         <VideoCardStyled.TextCaptionWrapper>
           <Link href={`/watch?v=${videoId}`}>
             <a>

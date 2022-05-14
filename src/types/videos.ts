@@ -19,6 +19,7 @@ export interface Videos {
   usersId: number;
   videoId: number;
   view: number;
+  profileImg: { name: string | null; url: string };
 }
 
 export interface resVideos {
