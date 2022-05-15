@@ -2,7 +2,7 @@ import { MutationFunction, useMutation, UseMutationOptions, useQuery, UseQueryOp
 
 import { AxiosError, AxiosResponse } from 'axios';
 import { ServerResponse } from 'http';
-import { axiosService, axiosWithToken } from '@api';
+import { axiosService, axiosWithToken, axiosWithTokenInUpload } from '@api';
 
 import { SignupInfoType, ValidationResponseType } from '@/types/signup';
 import { FetchDataType } from '@/types/fetchData';
@@ -69,8 +69,7 @@ export const useLogoutMutation = <BodyDataType,>(
 
 // 프로필 수정 mutation
 export const useProfileMutation = <BodyDataType,>(
-  query: string,
   options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
 ) => {
-  return useMutation((bodyData: BodyDataType) => axiosWithToken.put(`/update/${query}`, bodyData), options);
+  return useMutation((bodyData: BodyDataType) => axiosWithTokenInUpload.put(`/users/update`, bodyData), options);
 };
