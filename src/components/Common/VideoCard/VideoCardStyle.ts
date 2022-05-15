@@ -26,14 +26,22 @@ export const Thumbnail = styled.img`
 export const CaptionContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.6rem;
   padding: 1.2rem 1.6rem;
+
+  & > div:first-child {
+    min-width: 3.6rem;
+  }
 `;
 
 export const CardTitle = styled.h3`
   font-size: 1.6rem;
 `;
 
-export const TextCaptionWrapper = styled.div``;
+export const TextCaptionWrapper = styled.div`
+  width: 100%;
+`;
 
 export const CaptionInfoBox = styled.div`
   margin-top: 0.8rem;
@@ -61,13 +69,13 @@ export const CaptionInfoBox = styled.div`
   }
 `;
 
-export const LikeButton = styled.button`
+export const LikeButton = styled.button<{ isLike: boolean }>`
   display: flex;
   align-items: center;
   flex-direction: column;
   & > span {
     font-size: 1.1rem;
-    color: ${({ theme }) => theme.color.gray[400]};
+    color: ${({ theme, isLike }) => (isLike ? theme.color.primary[700] : theme.color.gray[400])};
   }
 `;
 

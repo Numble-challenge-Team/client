@@ -68,8 +68,34 @@ export const VideoContainer = styled(FileContainer)`
   max-width: 33.5rem;
 `;
 
-export const ImgContainer = styled(FileContainer)`
+export const ImgContainer = styled.div`
+  position: relative;
+  display: flex;
+  gap: 1.6rem;
+`;
+export const ImgWrapper = styled(FileContainer)`
   max-width: 11.2rem;
+`;
+
+export const ImgCaptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+
+  & > span {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-line-clamp: 1;
+    color: ${({ theme }) => theme.color.black};
+  }
+
+  & > span:last-child {
+    color: ${({ theme }) => theme.color.gray[500]};
+  }
 `;
 
 export const EmbedPlayerWrapper = styled.div`
@@ -121,6 +147,7 @@ export const Video = styled.video`
 export const Image = styled.img`
   object-fit: contain;
   position: absolute;
+  background-color: ${({ theme }) => theme.color.black};
   top: 0;
   left: 0;
   width: 100%;
@@ -187,12 +214,13 @@ export const UploadLabel = styled.label<{ isDragging: boolean }>`
 
 export const Tags = styled.ul`
   margin-top: 0.8rem;
+  color: ${({ theme }) => theme.color.primary['800']};
 
   & > li {
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem 1rem;
     display: inline-block;
-    border: 0.1rem solid ${({ theme }) => theme.color.black};
-    border-radius: 0.8rem;
+    border: 1px solid ${({ theme }) => theme.color.primary['800']};
+    border-radius: 5rem;
     font-family: 'NanumSquareB';
     margin-right: 0.4rem;
     margin-bottom: 0.4rem;
@@ -203,8 +231,8 @@ export const Tags = styled.ul`
       height: 1.2rem;
       line-height: 0;
       font-family: 'NanumSquareEB';
-      font-size: 1.6rem;
-      color: ${({ theme }) => theme.color.black};
+      font-size: 2rem;
+      color: ${({ theme }) => theme.color.primary['800']};
     }
   }
 `;

@@ -38,8 +38,6 @@ function HeaderTitle({
   const [embedVideoFormData, setEmbedVideoFormData] = useRecoilState(embedVideoUploadFormData);
   const [isValidNormalVideoForm, setIsValidNormalVideoForm] = useRecoilState(isValidNormalVideoUploadForm);
   const [normalVideoFormData, setNormalVideoFormData] = useRecoilState(normalVideoUploadFormData);
-  const [videoId, setVideoId] = useRecoilState(updateVideoIdState);
-
   const resetAllFormData = () => {
     setIsValidEmbedVideoForm(false);
     setEmbedVideoFormData({

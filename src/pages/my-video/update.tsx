@@ -24,6 +24,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
 
   const { data, isLoading } = useVideoDetailQuery(`${updateVideoId}`, {
     retry: false,
+    enabled: typeof updateVideoId === 'number',
     onSuccess: (data) => {
       if (!isFirstSetData) return;
       const {
@@ -34,6 +35,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
         title,
         tags,
         description,
+        videoId,
       } = data.videoDetail;
 
       if (videoType === 'embedded') {
@@ -43,7 +45,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
           thumbnail: null,
           thumbnailURL: thumbnailUrl,
           title,
-          tags,
+          tags: tags || [],
           description,
         });
       } else if (videoType === 'upload') {
@@ -58,7 +60,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
           thumbnail: null,
           thumbnailURL: thumbnailUrl,
           title,
-          tags,
+          tags: tags || [],
           description,
         });
       }
@@ -74,6 +76,10 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
       router.push('/');
     }
   }, [updateVideoId]);
+
+  if (typeof updateVideoId !== 'number') {
+    return <></>;
+  }
 
   if (isLoading) {
     return (

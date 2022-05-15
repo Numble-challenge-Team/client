@@ -1,7 +1,7 @@
+import axios, { AxiosInstance } from 'axios';
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-param-reassign */
 import { axiosService } from '@api';
-import { AxiosInstance } from 'axios';
 
 export function interceptors(requestHTTP: AxiosInstance) {
   requestHTTP.interceptors.request.use(
@@ -41,6 +41,12 @@ export function interceptors(requestHTTP: AxiosInstance) {
           return requestHTTP(error.config);
         } catch (error) {
           console.log('토큰 만료 후 재요청 실패', { error });
+          if (axios.isAxiosError(error)) {
+            if (error.response?.status === 403) {
+              alert('로그인 유효기간이 만료 되었습니다. 다시 로그인 해주세요.');
+              window.location.href = '/login';
+            }
+          }
         }
       }
 

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { QueryKey, useInfiniteQuery } from 'react-query';
-import { axiosService, axiosWithToken } from '@api';
+import { axiosWithToken } from '@api';
 import type { resVideos } from '@/types/videos';
 
 // Infinity Option
@@ -10,31 +10,39 @@ const InfinityOption = {
       return nextPage;
     }
   },
+  staleTime: 1000,
 };
 
 // 전체 비디오 조회
 const fetchAllVideos =
-  (queryKey: QueryKey, search: string | string[] | undefined) =>
+  (queryKey: QueryKey, search: string | string[] | undefined, searchOrder: 'created_at,desc' | 'likes,desc') =>
   async ({ pageParam = 0 }) => {
     let res: AxiosResponse<resVideos, any>;
 
+    const commonQuery = `?page=${pageParam}&sort=${searchOrder}`;
     if (search) {
-      res = await axiosWithToken.get<resVideos>(`/videos/search?page=${pageParam}&query=${search}`);
+      res = await axiosWithToken.get<resVideos>(`/videos/search${commonQuery}&query=${search}`);
     } else {
-      res = await axiosWithToken.get<resVideos>(`/videos/main?page=${pageParam}`);
+      res = await axiosWithToken.get<resVideos>(`/videos/main${commonQuery}`);
     }
 
-    const { contents, hasMore } = res.data;
+    console.log({ res });
+
+    const { contents, hasMore, totalCount } = res.data;
     return {
       contents,
       nextPage: pageParam + 1,
       hasMore,
+      totalCount,
       queryKey,
     };
   };
-export const useAllVideosQuery = (search: string | string[] | undefined) => {
-  const queryKey = ['allVideos', search];
-  return useInfiniteQuery(queryKey, fetchAllVideos(queryKey, search), InfinityOption);
+export const useAllVideosQuery = (
+  search: string | string[] | undefined,
+  searchOrder: 'created_at,desc' | 'likes,desc'
+) => {
+  const queryKey = ['allVideos', search, searchOrder];
+  return useInfiniteQuery(queryKey, fetchAllVideos(queryKey, search, searchOrder), InfinityOption);
 };
 
 // 마이 비디오 조회

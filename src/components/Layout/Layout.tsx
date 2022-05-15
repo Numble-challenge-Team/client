@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { isFirstAccessState } from '@store/home';
 
+import { showToastModalState } from '@store/modal';
+import { Toast } from '@components/Common/Modal';
 import FirstAccess from './FirstAccess/FirstAccess';
 import HomeHeaderContents from './HomeHeaderContents/HomeHeaderContents';
 import HeaderTitle from './HeaderTitle/HeaderTitle';
@@ -51,6 +53,7 @@ function Layout({
 }: PropsWithChildren<LayoutProps>) {
   const { pathname } = useRouter();
   const [isFirstAccess] = useRecoilState(isFirstAccessState);
+  const [showToastModal] = useRecoilState(showToastModalState);
 
   if (isFirstAccess) {
     return <FirstAccess />;
@@ -59,7 +62,7 @@ function Layout({
   return (
     <>
       {hasHeader && (
-        <LayoutStyled.Header>
+        <LayoutStyled.Header hasSearchInfo={pathname === '/'}>
           {pathname === '/' ? (
             <HomeHeaderContents />
           ) : (
@@ -81,9 +84,10 @@ function Layout({
           {hasNav && <Navigation />}
         </LayoutStyled.Header>
       )}
-      <LayoutStyled.Main hasHeader={hasHeader} hasWhitespace={hasWhitespace}>
+      <LayoutStyled.Main hasHeader={hasHeader} hasWhitespace={hasWhitespace} hasSearchInfo={pathname === '/'}>
         {children}
       </LayoutStyled.Main>
+      {showToastModal && <Toast />}
     </>
   );
 }

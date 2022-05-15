@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, MutableRefObject, useEffect, useRef } from 'react';
+import { ChangeEventHandler } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { isValidMyVideoTitle } from '@store/uploadVideo/valid';
@@ -34,7 +34,14 @@ function CommonForm({ isValid }: CommonFormProps) {
       </InputWithTitle>
 
       <InputWithTitle title="제목">
-        <input required type="text" placeholder="제목을 입력해주세요." onChange={changeTitle} value={title as string} />
+        <input
+          maxLength={40}
+          required
+          type="text"
+          placeholder="제목을 입력해주세요."
+          onChange={changeTitle}
+          value={title as string}
+        />
       </InputWithTitle>
 
       <InputWithTitle title="태그">
