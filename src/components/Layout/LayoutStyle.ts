@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
 
 export const Header = styled.header<{ hasSearchInfo: boolean }>`
@@ -11,7 +12,8 @@ export const Header = styled.header<{ hasSearchInfo: boolean }>`
 
 export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean; hasSearchInfo: boolean }>`
   position: relative;
-  margin: ${({ hasHeader, hasSearchInfo }) => hasHeader && (hasSearchInfo ? '10.2rem auto 0' : '6.4rem auto 0')};
+  margin: ${({ hasHeader, hasSearchInfo }) =>
+    hasHeader ? (hasSearchInfo ? '10.2rem auto 0' : '6.4rem auto 0') : '0 auto'};
   padding: ${({ hasWhitespace }) => (hasWhitespace ? '0 2rem' : null)};
   max-width: 37.5rem;
   min-height: ${({ hasHeader, hasSearchInfo }) =>
