@@ -33,7 +33,8 @@ export interface IconProps {
     | 'bend-arrow-right'
     | 'warning'
     | 'setting'
-    | 'logout';
+    | 'logout'
+    | 'profile-edit';
   fill?: string;
   width?: number;
   height?: number;
