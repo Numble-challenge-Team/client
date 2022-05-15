@@ -45,10 +45,12 @@ export function interceptors(requestHTTP: AxiosInstance) {
         } catch (axiosError) {
           if (axios.isAxiosError(axiosError)) {
             if (axiosError.response?.status === 403) {
-              if (window.location.pathname === '/') {
-                error.config.headers.guest = true;
-                return requestHTTP(error.config);
-              }
+              // 좋아요 문제 해결한 뒤 주석 해제
+              // console.log({ axiosError });
+              // if (window.location.pathname === '/') {
+              //   error.config.headers.guest = true;
+              //   return requestHTTP(error.config);
+              // }
               alert('로그인 정보가 만료되었습니다. 다시 로그인 해주세요.');
               window.location.href = '/login';
             }
