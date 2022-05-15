@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 
-export const Header = styled.header`
+export const Header = styled.header<{ hasSearchInfo: boolean }>`
   position: fixed;
   z-index: 1000;
   top: 0;
   width: 100%;
-  height: 10.2rem;
+  height: ${({ hasSearchInfo }) => (hasSearchInfo ? '10.2rem' : '6.4rem')};
   background-color: ${({ theme }) => theme.color.white};
 `;
 
-export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean }>`
+export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean; hasSearchInfo: boolean }>`
   position: relative;
-  margin: ${({ hasHeader }) => (hasHeader ? '10.2rem auto 0' : null)};
-  padding: ${({ hasWhitespace }) => (hasWhitespace ? '0 2rem' : null)};
+  margin: ${({ hasHeader, hasSearchInfo }) => (hasHeader && hasSearchInfo ? '10.2rem auto 0' : '6.4rem auto 0')};
   max-width: 37.5rem;
-  min-height: calc(100vh - 10.2rem);
+  min-height: ${({ hasHeader, hasSearchInfo }) =>
+    hasHeader && hasSearchInfo ? 'calc(100vh - 10.2rem)' : 'calc(100vh - 6.4rem)'};
   font-family: 'NanumSquareR';
   font-size: 1.4rem;
   color: ${({ theme }) => theme.color.black};
@@ -28,7 +28,7 @@ export const EmptyContainer = styled.div`
   gap: 1.1rem;
   width: 100%;
   height: 100vh;
-  margin-top: -10.2rem;
+  margin-top: -1010.2m;
 `;
 
 export const Section = styled.section`

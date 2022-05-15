@@ -47,7 +47,7 @@ function Layout({
   return (
     <>
       {hasHeader && (
-        <LayoutStyled.Header>
+        <LayoutStyled.Header hasSearchInfo={pathname === '/'}>
           {pathname === '/' ? (
             <HomeHeaderContents />
           ) : (
@@ -56,7 +56,7 @@ function Layout({
           {hasNav && <Navigation />}
         </LayoutStyled.Header>
       )}
-      <LayoutStyled.Main hasHeader={hasHeader} hasWhitespace={hasWhitespace}>
+      <LayoutStyled.Main hasHeader={hasHeader} hasWhitespace={hasWhitespace} hasSearchInfo={pathname === '/'}>
         {children}
       </LayoutStyled.Main>
       {showToastModal && <Toast />}
