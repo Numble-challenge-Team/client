@@ -1,51 +1,58 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { QueryClient } from 'react-query';
 
 import { Button, Icon, Input, Profile, Text } from '@components/Common';
 import { NICKNAME_VALIDATION } from '@constants/validation';
-import { UserEditDataType, UserNicknameType, UserProfileType } from '@/types/profile';
+import { UserProfileType } from '@/types/profile';
 
 import { useProfileMutation } from '@api/queries/users';
 
+import * as SignupStyle from '@components/Signup/SignupPageStyle';
 import * as Styled from './ProfileStyle';
 
 interface ProfileEditPropsType {
   userData?: UserProfileType;
-  isEditDone: boolean;
   setIsEditDone: Dispatch<SetStateAction<boolean>>;
 }
 
-function ProfileEdit({ userData, isEditDone, setIsEditDone }: ProfileEditPropsType) {
+function ProfileEdit({ userData, setIsEditDone }: ProfileEditPropsType) {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<any>();
   const imageInput = useRef<HTMLInputElement>(null);
+  const formData = new FormData();
+  const queryClient = new QueryClient();
 
   const [userProfileImage, setUserProfileImage] = useState<any>(userData?.profileImg.url);
+  const [userProfileNickname, setUserProfileNickname] = useState<string>('');
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
-  const [userSaveEditData, setUserSaveEditData] = useState<any>({
-    nickname: '',
-  });
+  const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
+  const [isClickSubmitButton, setIsClickSubmitButton] = useState<boolean>(false);
 
-  const fetchSaveEditProfil = useProfileMutation<UserEditDataType>({
+  const fetchSaveEditProfil = useProfileMutation<FormData>({
+    onMutate: () => {
+      setIsFormErrorState(false);
+      setNicknameErrorMessage('');
+    },
     onSuccess: () => {
-      setIsEditDone(false);
+      queryClient.invalidateQueries('profile');
+      setUserProfileImage(userData?.profileImg.url);
+
+      if (isClickSubmitButton) {
+        setIsEditDone(false);
+      }
+    },
+    onError: (error) => {
+      setIsFormErrorState(true);
+
+      if (error.response) {
+        setNicknameErrorMessage(error.response.data.message);
+      }
     },
   });
-  const formData = new FormData();
-
-  const handleEditProfileSubmit = (userNickname: UserNicknameType) => {
-    console.log(formData);
-
-    const userEditData = {
-      img: formData,
-      nickname: userNickname.nickname,
-    };
-
-    fetchSaveEditProfil.mutate(userEditData);
-  };
 
   const handleUploadImage = useCallback(() => {
     if (imageInput.current) {
@@ -53,16 +60,31 @@ function ProfileEdit({ userData, isEditDone, setIsEditDone }: ProfileEditPropsTy
     }
   }, []);
 
-  const handleEditImage = useCallback((e: any) => {
-    if (e.target.files) {
-      formData.append('img', e.target.files ? e.target.files : new File([], 'empty'));
-      // setUserProfileImage(formData);
-    }
+  const handleEditProfileSubmit = (userNickname: any) => {
+    setIsClickSubmitButton((prev) => !prev);
+    formData.append('img', new File([], 'empty'));
+    formData.append('nickname', userNickname.nickname);
 
-    console.log('@@@11', formData, e.target.files);
-  }, []);
+    fetchSaveEditProfil.mutate(formData);
 
-  console.log('@@@@22', userProfileImage);
+    setUserProfileNickname(userNickname.nickname);
+  };
+
+  const handleEditImage = useCallback(
+    (e: any) => {
+      if (e.target.files) {
+        formData.append('img', e.target.files[0] ? e.target.files[0] : new File([], 'empty'));
+        formData.append('nickname', userProfileNickname);
+      }
+
+      fetchSaveEditProfil.mutate(formData);
+    },
+    [userProfileImage]
+  );
+
+  useEffect(() => {
+    setUserProfileImage(userData?.profileImg.url);
+  }, [userProfileImage]);
 
   return (
     <>
@@ -96,9 +118,9 @@ function ProfileEdit({ userData, isEditDone, setIsEditDone }: ProfileEditPropsTy
         <Text size="text3" fontColor="500">
           Nickname
         </Text>
-        <form onSubmit={handleSubmit(handleEditProfileSubmit)}>
+        <form encType="multipart/form-data" onSubmit={handleSubmit(handleEditProfileSubmit)}>
           <Input
-            type="name"
+            type="nickname"
             label="nickname"
             register={register}
             pattern={NICKNAME_VALIDATION}
@@ -106,6 +128,8 @@ function ProfileEdit({ userData, isEditDone, setIsEditDone }: ProfileEditPropsTy
             hasErrorDisplay={isFormErrorState || !!errors.nickname?.message}
             required
           />
+          {errors && <SignupStyle.ErrorMessage>{errors.nickname?.message}</SignupStyle.ErrorMessage>}
+          {isFormErrorState && <SignupStyle.ErrorMessage>{nicknameErrorMessage}</SignupStyle.ErrorMessage>}
           <Styled.EditProfileButtonWrapper>
             <Button type="submit">수정</Button>
           </Styled.EditProfileButtonWrapper>
