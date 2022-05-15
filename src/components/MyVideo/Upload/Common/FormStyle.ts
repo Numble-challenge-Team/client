@@ -68,8 +68,34 @@ export const VideoContainer = styled(FileContainer)`
   max-width: 33.5rem;
 `;
 
-export const ImgContainer = styled(FileContainer)`
+export const ImgContainer = styled.div`
+  position: relative;
+  display: flex;
+  gap: 1.6rem;
+`;
+export const ImgWrapper = styled(FileContainer)`
   max-width: 11.2rem;
+`;
+
+export const ImgCaptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+
+  & > span {
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-line-clamp: 1;
+    color: ${({ theme }) => theme.color.black};
+  }
+
+  & > span:last-child {
+    color: ${({ theme }) => theme.color.gray[500]};
+  }
 `;
 
 export const EmbedPlayerWrapper = styled.div`
