@@ -24,6 +24,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
 
   const { data, isLoading } = useVideoDetailQuery(`${updateVideoId}`, {
     retry: false,
+    enabled: typeof updateVideoId === 'number',
     onSuccess: (data) => {
       if (!isFirstSetData) return;
       const {
@@ -75,6 +76,10 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
       router.push('/');
     }
   }, [updateVideoId]);
+
+  if (typeof updateVideoId !== 'number') {
+    return <></>;
+  }
 
   if (isLoading) {
     return (
