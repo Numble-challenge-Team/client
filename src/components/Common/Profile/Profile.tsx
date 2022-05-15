@@ -1,9 +1,9 @@
 import * as Styled from './PropfileStyle';
 
 interface ProfilePropsType {
-  size: 24 | 36;
+  size: 24 | 36 | 128;
   profileUrl: string;
-  alt: string;
+  alt?: string;
 }
 
 function Profile(props: ProfilePropsType) {

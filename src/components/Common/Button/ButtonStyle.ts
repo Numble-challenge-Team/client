@@ -25,7 +25,7 @@ const handleSize = (size: string) => {
   switch (size) {
     case 'S':
       return css`
-        width: 12rem;
+        width: 12rem !important;
         height: 3.2rem;
       `;
     case 'M':
@@ -59,6 +59,10 @@ const handleColor = (color: any, backColor: any) => {
       return css`
         color: ${gray['500']};
         background-color: ${primary['100']};
+      `;
+    case 'border':
+      return css`
+        border: 1px solid ${primary['500']};
       `;
     default:
       return css`

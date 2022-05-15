@@ -12,7 +12,7 @@ import { EMAIL_VALIDATION } from '@constants/validation';
 import { FormRegisterType, SignupInfoType } from '@/types/signup';
 
 import { userSingupState } from '@store/signup';
-import { useValidationSignupQuery } from '@api/queries/signup';
+import { useValidationSignupQuery } from '@api/queries/users';
 
 function SingupEmailPage() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -16,8 +16,13 @@ import * as LayoutStyled from './LayoutStyle';
 interface LayoutProps {
   hasNav?: boolean;
   hasBackButton?: boolean;
+  hasSettingButton?: boolean;
   hasHeader?: boolean;
   hasWhitespace?: boolean;
+  isOpenSettingModal?: boolean;
+  setIsOpenSettingModal?: (newOpen: boolean) => void;
+  isLogout?: boolean;
+  setIsLogout?: Dispatch<SetStateAction<boolean>>;
   title?:
     | '마이 비디오'
     | '임베드 영상 업로드'
@@ -25,15 +30,21 @@ interface LayoutProps {
     | '관심 영상'
     | '로그인'
     | '회원가입'
-    | '비디오 수정';
+    | '비디오 수정'
+    | '프로필';
 }
 
 function Layout({
   children,
   hasNav = true,
   hasBackButton = false,
+  hasSettingButton = false,
   hasHeader = true,
   hasWhitespace = false,
+  isOpenSettingModal,
+  setIsOpenSettingModal,
+  isLogout,
+  setIsLogout,
   title,
 }: PropsWithChildren<LayoutProps>) {
   const { pathname } = useRouter();
@@ -51,7 +62,18 @@ function Layout({
           {pathname === '/' ? (
             <HomeHeaderContents />
           ) : (
-            title && <HeaderTitle hasBackButton={hasBackButton}>{title}</HeaderTitle>
+            title && (
+              <HeaderTitle
+                hasBackButton={hasBackButton}
+                hasSettingButton={hasSettingButton}
+                isOpenSettingModal={isOpenSettingModal}
+                setIsOpenSettingModal={setIsOpenSettingModal}
+                isLogout={isLogout}
+                setIsLogout={setIsLogout}
+              >
+                {title}
+              </HeaderTitle>
+            )
           )}
           {hasNav && <Navigation />}
         </LayoutStyled.Header>

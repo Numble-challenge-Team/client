@@ -13,7 +13,7 @@ import { NICKNAME_VALIDATION } from '@constants/validation';
 import { FormRegisterType, SignupInfoType } from '@/types/signup';
 
 import { userSingupState } from '@store/signup';
-import { useSignupQuery, useValidationSignupQuery } from '@api/queries/signup';
+import { useSignupQuery, useValidationSignupQuery } from '@api/queries/users';
 
 import { AlertColor, Snackbar } from '@mui/material';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';

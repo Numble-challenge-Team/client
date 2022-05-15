@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import * as Styled from './TextStyle';
 
 interface TextPropsType {
-  size: 'text1' | 'text2' | 'text3' | 'text4';
+  size: 'text1' | 'text2' | 'text3' | 'text4' | 'textL';
   fontColor: string;
   margin?: string;
   hasBold?: boolean;
