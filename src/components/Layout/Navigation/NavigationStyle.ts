@@ -21,5 +21,22 @@ export const Nav = styled.nav`
     height: 100%;
     align-items: center;
     justify-content: space-evenly;
+
+    & a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+    }
   }
+`;
+
+export const NavLink = styled.a<{ isCurrentRoute: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: ${({ theme, isCurrentRoute }) => (isCurrentRoute ? theme.color.primary[700] : theme.color.gray[500])};
 `;

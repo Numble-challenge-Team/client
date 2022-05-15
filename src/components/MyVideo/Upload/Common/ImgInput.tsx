@@ -19,6 +19,8 @@ interface ImgInputProps {}
 
 function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [thumbnailSize, setThumbnailSize] = useState<number>(0);
+  const [thumbnailName, setThumbnailName] = useState<string>('');
   const initEvent: ReactEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -47,11 +49,13 @@ function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
   const setIsValidThumbnail = useSetRecoilState(isValidMyVideoThumbnail);
   const setInValidMessageThumbnail = useSetRecoilState(inValidMessageMyVideoThumbnail);
   const uploadFile = (file: File) => {
-    const { size } = file;
-    const MB = size / 1024 / 1024;
+    const { size, name } = file;
+    const MB = Math.ceil(size / 1024 / 1024);
 
     setThumbnail(file);
     setThumbnailURL(URL.createObjectURL(file));
+    setThumbnailName(name);
+    setThumbnailSize(MB);
     setIsValidThumbnail(true);
     setInValidMessageThumbnail('');
   };
@@ -88,29 +92,37 @@ function ImgInput(prop: PropsWithChildren<ImgInputProps>) {
 
   return (
     <FormStyled.ImgContainer>
-      {thumbnailURL ? (
-        <>
-          <FormStyled.Image src={thumbnailURL} width={320} height={180} />
-          <FormStyled.DeleteFileButton type="button" onClick={deleteFile}>
-            ×
-          </FormStyled.DeleteFileButton>
-        </>
-      ) : (
-        <>
-          <UploadInput
-            type="image"
-            inputProp={{ onChange: changeFile }}
-            labelProp={{
-              isDragging,
-              onDragEnter: enterDrag,
-              onDragLeave: leaveDrag,
-              onDragOver: initEvent,
-              onDrop: dropFile,
-            }}
-          >
-            썸네일 업로드
-          </UploadInput>
-        </>
+      <FormStyled.ImgWrapper>
+        {thumbnailURL ? (
+          <>
+            <FormStyled.Image src={thumbnailURL} width={320} height={180} />
+            <FormStyled.DeleteFileButton type="button" onClick={deleteFile}>
+              ×
+            </FormStyled.DeleteFileButton>
+          </>
+        ) : (
+          <>
+            <UploadInput
+              type="image"
+              inputProp={{ onChange: changeFile }}
+              labelProp={{
+                isDragging,
+                onDragEnter: enterDrag,
+                onDragLeave: leaveDrag,
+                onDragOver: initEvent,
+                onDrop: dropFile,
+              }}
+            >
+              썸네일 업로드
+            </UploadInput>
+          </>
+        )}
+      </FormStyled.ImgWrapper>
+      {thumbnailURL && thumbnailName && thumbnailSize && (
+        <FormStyled.ImgCaptionContainer>
+          <span>{thumbnailName}</span>
+          <span>{thumbnailSize}mb</span>
+        </FormStyled.ImgCaptionContainer>
       )}
     </FormStyled.ImgContainer>
   );

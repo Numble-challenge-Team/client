@@ -12,6 +12,7 @@ import { useRecoilState } from 'recoil';
 import { updateVideoIdState } from '@store/videoId';
 import { showBottomUpModalState } from '@store/modal';
 import Icon from '../Icon/Icon';
+import Profile from '../Profile/Profile';
 
 import * as VideoCardStyled from './VideoCardStyle';
 
@@ -22,23 +23,7 @@ interface VideoCardProps {
   cardInfo: Videos;
 }
 
-function VideoCard({
-  curPage,
-  queryKey,
-  videoIdx,
-  cardInfo: {
-    videoId,
-    thumbnail: { url, name },
-    title,
-    owner,
-    duration,
-    nickname,
-    view,
-    likes,
-    liked,
-    created_at,
-  },
-}: PropsWithChildren<VideoCardProps>) {
+function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<VideoCardProps>) {
   const queryClient = useQueryClient();
   const likeMutation = useLikeMutation({
     onSuccess: ({ data }) => {
@@ -65,9 +50,22 @@ function VideoCard({
       router.push('/login');
       return;
     }
-
     likeMutation.mutate(videoId);
   };
+
+  const {
+    videoId,
+    thumbnail: { url, name },
+    title,
+    owner,
+    duration,
+    nickname,
+    view,
+    likes,
+    liked,
+    created_at,
+    profileImg: { url: profileUrl },
+  } = cardInfo;
 
   const [showBottomUpModal, setShowBottomUpModal] = useRecoilState(showBottomUpModalState);
   const [updateVideoId, setUpdateVideoId] = useRecoilState(updateVideoIdState);
@@ -75,7 +73,6 @@ function VideoCard({
     setShowBottomUpModal(true);
     setUpdateVideoId(videoId);
   };
-
   return (
     <VideoCardStyled.Card>
       <Link href={`/watch?v=${videoId}`} passHref>
@@ -84,6 +81,7 @@ function VideoCard({
         </VideoCardStyled.LinkThumbnail>
       </Link>
       <VideoCardStyled.CaptionContainer>
+        <Profile profileUrl={profileUrl} size={36} alt={nickname} />
         <VideoCardStyled.TextCaptionWrapper>
           <Link href={`/watch?v=${videoId}`}>
             <a>
@@ -93,7 +91,7 @@ function VideoCard({
           <VideoCardStyled.CaptionInfoBox>
             <span>{nickname}</span>
             <span>조회수 {view}</span>
-            <span>{created_at}</span>
+            <span>{created_at.map((date) => `${date}`.padStart(2, '0')).join('.')}</span>
           </VideoCardStyled.CaptionInfoBox>
         </VideoCardStyled.TextCaptionWrapper>
 
@@ -102,7 +100,7 @@ function VideoCard({
             <Icon type="dial-pad" />
           </VideoCardStyled.DialPadButton>
         ) : (
-          <VideoCardStyled.LikeButton onClick={handleLike}>
+          <VideoCardStyled.LikeButton onClick={handleLike} isLike={liked}>
             <Icon type={liked ? 'fill-heart' : 'heart'} width={20} height={20} />
             <span>{likes}</span>
           </VideoCardStyled.LikeButton>

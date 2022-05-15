@@ -21,10 +21,11 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
       setTag('');
 
       if (tags.includes(tag)) {
+        setTags([tag, ...tags.filter((tagInTags) => tagInTags !== tag)].slice(0, 3));
         return;
       }
 
-      setTags([...tags, tag]);
+      setTags([tag, ...tags].slice(0, 3));
     }
   };
 

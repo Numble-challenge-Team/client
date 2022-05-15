@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Layout from '@components/Layout/Layout';
 import { VideoList } from '@components/Common';
@@ -8,11 +8,13 @@ import { VideoList } from '@components/Common';
 import { useAllVideosQuery } from '@api/queries/videos';
 import { useRecoilState } from 'recoil';
 import { isFirstAccessState } from '@store/home';
+import { searchOrderState } from '@store/search';
 
 function Home() {
   const { query } = useRouter();
   const [isFirstAccess, setIsFirstAccess] = useRecoilState(isFirstAccessState);
-  const useAllVideosQueryResult = useAllVideosQuery(query.search);
+  const [searchOrder] = useRecoilState(searchOrderState);
+  const useAllVideosQueryResult = useAllVideosQuery(query.search, searchOrder);
 
   useEffect(() => {
     if (!sessionStorage.getItem('isAccessed')) {

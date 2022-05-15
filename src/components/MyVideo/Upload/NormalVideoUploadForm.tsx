@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { PropsWithChildren, FormEventHandler } from 'react';
 
 import { useRecoilState } from 'recoil';
@@ -6,15 +7,19 @@ import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/
 import { useNormalUploadMutation } from '@api/queries/upload';
 
 import { NormalVideoForm } from '@components/MyVideo';
+import { showToastModalState, toastModalMessageState } from '@store/modal';
 
 interface NormalVideoUploadFormProps {}
 
 function NormalVideoUploadForm(prop: PropsWithChildren<NormalVideoUploadFormProps>) {
+  const router = useRouter();
   const [isValid, setIsValid] = useRecoilState(isValidNormalVideoUploadForm);
   const [normalVideoFormData, setNormalVideoFormData] = useRecoilState(normalVideoUploadFormData);
+  const [showToastModal, setShowToastModal] = useRecoilState(showToastModalState);
+  const [toastModalMessage, setToastModalMessage] = useRecoilState(toastModalMessageState);
 
-  const resetFormData = (logInfo: any) => {
-    console.log({ logInfo });
+  const resetFormData = (toastMessage: string) => () => {
+    router.back();
 
     setNormalVideoFormData({
       video: null,
@@ -27,10 +32,17 @@ function NormalVideoUploadForm(prop: PropsWithChildren<NormalVideoUploadFormProp
       description: '',
     });
     setIsValid(false);
+    setShowToastModal(true);
+    setToastModalMessage(toastMessage);
+
+    setTimeout(() => {
+      setShowToastModal(false);
+      setToastModalMessage('');
+    }, 2000);
   };
   const uploadMutation = useNormalUploadMutation({
-    onSuccess: resetFormData,
-    onError: resetFormData,
+    onSuccess: resetFormData('영상 업로드가 완료되었습니다.'),
+    onError: resetFormData('영상 업로드에 실패했습니다.'),
   });
 
   const handleSubmitVideo: FormEventHandler<HTMLFormElement> = (e) => {
@@ -44,9 +56,13 @@ function NormalVideoUploadForm(prop: PropsWithChildren<NormalVideoUploadFormProp
     formData.append('duration', `${Math.ceil(duration)}`);
     formData.append('thumbnail', thumbnail as File);
     formData.append('title', title as string);
-    tags.forEach((tag) => {
-      formData.append('tags', tag);
-    });
+    if (tags.length) {
+      tags.forEach((tag) => {
+        formData.append('tags', tag);
+      });
+    } else {
+      formData.append('tags', '');
+    }
     formData.append('description', description);
 
     uploadMutation.mutate(formData);

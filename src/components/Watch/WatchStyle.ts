@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const VideoContainer = styled.section`
   position: sticky;
-  z-index: 100;
+  z-index: 10000;
   top: 0;
-  width: 100%;
   height: 21rem;
+  background-color: ${({ theme }) => theme.color.gray['700']};
 `;
 
 export const VideoDetailInfoContainer = styled.section`
-  padding: 1.6rem 0 2.4rem;
+  padding: 1.6rem 2rem 2.4rem;
 `;
 
 export const UserInfoWrapper = styled.div`
@@ -20,14 +20,14 @@ export const UserInfoWrapper = styled.div`
 
   div:nth-child(1) {
     flex: 2;
+    justify-content: center;
+    align-items: center;
   }
   div:nth-child(2) {
     flex: 12;
   }
   div:nth-child(3) {
     flex: 1;
-    display: flex;
-    flex-direction: column;
     gap: 0.4rem;
 
     & > svg,

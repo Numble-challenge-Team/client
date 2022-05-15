@@ -31,7 +31,10 @@ export interface IconProps {
     | 'delete'
     | 'user-delete'
     | 'bend-arrow-right'
-    | 'warning';
+    | 'warning'
+    | 'setting'
+    | 'logout'
+    | 'profile-edit';
   fill?: string;
   width?: number;
   height?: number;

@@ -63,7 +63,7 @@ export const UploadNavigation = styled.ul`
 export const ShowUploadNavButton = styled.button`
   margin: 0;
   padding: 0;
-  width: 4.2rem;
-  height: 4.2rem;
+  width: 6.4rem;
+  height: 6.4rem;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;

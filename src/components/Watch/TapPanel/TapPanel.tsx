@@ -2,13 +2,14 @@ import { memo, useCallback, useState } from 'react';
 
 import TapItems from '@components/Watch/TapItems/TapItems';
 
-import { ConcernVideoListType, VideoDetailCommentsType } from '@/types/watch';
+import { ConcernVideoListType } from '@/types/watch';
+import { CommentDataType } from '@/types/comment';
 
 import * as Styled from './TapPanelStyle';
 
 interface TapPanelPropsType {
   concernVideoList?: ConcernVideoListType;
-  comments?: VideoDetailCommentsType[];
+  comments?: CommentDataType[];
 }
 
 function TapPanel({ concernVideoList, comments }: TapPanelPropsType) {

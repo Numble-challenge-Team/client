@@ -1,12 +1,4 @@
-import {
-  ChangeEventHandler,
-  FocusEventHandler,
-  FormEventHandler,
-  MouseEventHandler,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FormEventHandler, MouseEventHandler, PropsWithChildren, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { searchState, showSearchState, searchStackState } from '@store/search';
@@ -26,11 +18,27 @@ function SearchModal(prop: PropsWithChildren<SearchModalProps>) {
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [searchStack, setSearchStack] = useRecoilState(searchStackState);
 
+  const onSearch = (search: string) => {
+    if (search) {
+      const filterSearchHistory = searchHistory.filter((keyword) => keyword !== search);
+      if (filterSearchHistory.length === searchHistory.length) {
+        localStorage.setItem('search-history', JSON.stringify([search, ...searchHistory]));
+      } else {
+        localStorage.setItem('search-history', JSON.stringify([search, ...filterSearchHistory]));
+      }
+    }
+
+    setSearchStack([...searchStack, search]);
+    router.push(search ? `?search=${search}` : '/');
+    setShowSearch(false);
+  };
+
   const changeSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearch(e.target.value);
   };
   const changeSearchByHistory: (keyword: string) => MouseEventHandler<HTMLButtonElement> = (keyword) => () => {
     setSearch(keyword);
+    onSearch(keyword);
   };
   const deleteKeywordInHistory: (targetKeyword: string) => MouseEventHandler<HTMLButtonElement> =
     (targetKeyword) => () => {
@@ -40,17 +48,7 @@ function SearchModal(prop: PropsWithChildren<SearchModalProps>) {
     };
   const handleSubmitSearch: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
-    const filterSearchHistory = searchHistory.filter((keyword) => keyword !== search);
-    if (filterSearchHistory.length === searchHistory.length) {
-      localStorage.setItem('search-history', JSON.stringify([search, ...searchHistory]));
-    } else {
-      localStorage.setItem('search-history', JSON.stringify([search, ...filterSearchHistory]));
-    }
-
-    setSearchStack([...searchStack, search]);
-    router.push(search ? `?search=${search}` : '/');
-    setShowSearch(false);
+    onSearch(search);
   };
   const handleCloseSearch: MouseEventHandler<HTMLButtonElement> = () => {
     setShowSearch(false);

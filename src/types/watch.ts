@@ -1,3 +1,5 @@
+import { CommentDataType } from './comment';
+
 export interface ConcernVideoListType {
   content: VideoDetailType[];
   empty: boolean;
@@ -29,7 +31,7 @@ export interface ListSortType {
 
 export interface VideoDetailType {
   block: boolean;
-  created_at: string;
+  created_at: number[];
   description: string;
   duration: number;
   liked: boolean;
@@ -44,6 +46,7 @@ export interface VideoDetailType {
   view: number;
   videoType: 'embedded' | 'upload';
   url: string;
+  profileImg: ProfileImgType;
 }
 
 export interface VideoThumbnail {
@@ -51,24 +54,19 @@ export interface VideoThumbnail {
   name: string;
 }
 
+export interface ProfileImgType {
+  name?: string;
+  url: string;
+}
+
 export interface VideoRetrieveDetailType {
-  comments: VideoDetailCommentsType[];
+  comments: CommentDataType[];
   concernVideoList: ConcernVideoListType;
   videoDetail: VideoDetailType;
 }
 
-export interface VideoDetailCommentsType {
-  block: boolean;
-  childCount: number;
-  context: string;
-  created_at: string;
-  id: number;
-  liked: boolean;
-  likesCount: number;
-  nickname: string;
-  profileUrl: string;
-  commentSeq: number;
-  reComment: boolean;
+export interface VideoIframeDataType {
   title: string;
-  userId: number;
+  src?: string;
+  url?: string;
 }

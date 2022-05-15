@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react';
 
 import { Global } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Skeleton from '@mui/material/Skeleton';
 
@@ -16,23 +15,23 @@ interface DrawerPropsType {
   window?: () => Window;
   icon: IconProps;
   iconText?: number;
+  height?: number;
   isOpen: boolean;
   setIsOpen: (newOpen: boolean) => void;
 }
 
 function Drawer(props: PropsWithChildren<DrawerPropsType>) {
-  const { children, icon, iconText, isOpen, setIsOpen } = props;
+  const { children, icon, iconText, height, isOpen, setIsOpen } = props;
   const { window } = props;
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Styled.Root>
-      <CssBaseline />
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(100% - 21rem - ${drawerBleeding}px)`,
+            height: `calc(100% - 21rem - ${drawerBleeding}px - ${height}rem)`,
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15,
             overflow: 'visible',
@@ -71,5 +70,9 @@ function Drawer(props: PropsWithChildren<DrawerPropsType>) {
     </Styled.Root>
   );
 }
+
+Drawer.defaultProps = {
+  height: 0,
+};
 
 export default Drawer;

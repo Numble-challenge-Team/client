@@ -2,7 +2,7 @@ import { QueryKey } from 'react-query';
 
 export interface Videos {
   block: boolean;
-  created_at: string;
+  created_at: number[];
   description: string | null;
   duration: number;
   owner: boolean;
@@ -19,10 +19,12 @@ export interface Videos {
   usersId: number;
   videoId: number;
   view: number;
+  profileImg: { name: string | null; url: string };
 }
 
 export interface resVideos {
   contents: Videos[];
   hasMore: boolean;
   queryKey: QueryKey;
+  totalCount?: number;
 }

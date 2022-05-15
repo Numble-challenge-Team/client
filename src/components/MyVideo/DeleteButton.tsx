@@ -11,7 +11,6 @@ interface DeleteButtonProps {}
 function DeleteButton(prop: PropsWithChildren<DeleteButtonProps>) {
   const [showBottomUpModal, setShowBottomUpModal] = useRecoilState(showBottomUpModalState);
   const [showAlertModal, setShowAlertModal] = useRecoilState(showAlertModalState);
-  const [updateVideoId, setUpdateVideoId] = useRecoilState(updateVideoIdState);
   const handleDelete = () => {
     setShowBottomUpModal(!showBottomUpModal);
     setShowAlertModal(!showAlertModal);
