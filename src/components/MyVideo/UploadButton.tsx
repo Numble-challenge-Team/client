@@ -30,7 +30,7 @@ function UploadButton(prop: PropsWithChildren<UploadButtonProps>) {
           </MyVideoStyled.UploadNavigation>
         )}
         <MyVideoStyled.ShowUploadNavButton onClick={toggleShowUploadNav}>
-          <Icon type="plus-circle" width={64} height={64} />
+          <Icon type="plus-circle" width={56} height={56} />
         </MyVideoStyled.ShowUploadNavButton>
       </MyVideoStyled.UploadNavigationWrapper>
     </MyVideoStyled.UploadNavigationFixedContainer>
