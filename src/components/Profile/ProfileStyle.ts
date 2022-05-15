@@ -7,6 +7,7 @@ export const UserImageNickname = styled.div`
   align-items: center;
   gap: 2.8rem;
   margin-bottom: 6rem;
+  padding-top: 6rem;
 `;
 
 export const UserInfoStyle = styled.div`
@@ -40,7 +41,7 @@ export const LogoutButtonWrapper = styled.div`
 `;
 
 export const EditProfileButtonWrapper = styled.div`
-  margin-top: 18rem;
+  margin-top: 12rem;
 `;
 
 export const EditUserImageWrapper = styled.div`

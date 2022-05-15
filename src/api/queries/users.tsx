@@ -69,7 +69,7 @@ export const useLogoutMutation = <BodyDataType,>(
 
 // 프로필 수정 mutation
 export const useProfileMutation = <BodyDataType,>(
-  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, void>
 ) => {
   return useMutation((bodyData: BodyDataType) => axiosWithTokenInUpload.put(`/users/update`, bodyData), options);
 };
