@@ -23,6 +23,8 @@ interface LayoutProps {
   setIsOpenSettingModal?: (newOpen: boolean) => void;
   isLogout?: boolean;
   setIsLogout?: Dispatch<SetStateAction<boolean>>;
+  isEditProfile?: boolean;
+  setIsEditProfile?: Dispatch<SetStateAction<boolean>>;
   title?:
     | '마이 비디오'
     | '임베드 영상 업로드'
@@ -45,6 +47,8 @@ function Layout({
   setIsOpenSettingModal,
   isLogout,
   setIsLogout,
+  isEditProfile,
+  setIsEditProfile,
   title,
 }: PropsWithChildren<LayoutProps>) {
   const { pathname } = useRouter();
@@ -70,6 +74,8 @@ function Layout({
                 setIsOpenSettingModal={setIsOpenSettingModal}
                 isLogout={isLogout}
                 setIsLogout={setIsLogout}
+                isEditProfile={isEditProfile}
+                setIsEditProfile={setIsEditProfile}
               >
                 {title}
               </HeaderTitle>

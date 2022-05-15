@@ -17,6 +17,8 @@ interface HeaderTitleProps {
   setIsOpenSettingModal?: (newOpen: boolean) => void;
   isLogout?: boolean;
   setIsLogout?: Dispatch<SetStateAction<boolean>>;
+  isEditProfile?: boolean;
+  setIsEditProfile?: Dispatch<SetStateAction<boolean>>;
 }
 
 function HeaderTitle({
@@ -26,6 +28,8 @@ function HeaderTitle({
   setIsOpenSettingModal = () => false,
   isLogout = false,
   setIsLogout = (prev) => !prev,
+  isEditProfile = false,
+  setIsEditProfile = (prev) => !prev,
   children,
 }: PropsWithChildren<HeaderTitleProps>) {
   const router = useRouter();
@@ -71,6 +75,11 @@ function HeaderTitle({
     setIsLogout((prev) => !prev);
   }, [isOpenSettingModal, isLogout]);
 
+  const handleEditProfileInput = useCallback(() => {
+    setIsOpenSettingModal(false);
+    setIsEditProfile(true);
+  }, [isOpenSettingModal, isEditProfile]);
+
   return (
     <HeaderTitleStyled.TitleContainer>
       {hasBackButton && (
@@ -89,7 +98,7 @@ function HeaderTitle({
             setIsOpen={setIsOpenSettingModal}
           >
             <HeaderTitleStyled.SettingMenuWrapper>
-              <HeaderTitleStyled.SettingMenu>
+              <HeaderTitleStyled.SettingMenu onClick={handleEditProfileInput}>
                 <Icon type="edit" />
                 <Text>프로필 수정</Text>
               </HeaderTitleStyled.SettingMenu>
