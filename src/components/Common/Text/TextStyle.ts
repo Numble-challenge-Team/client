@@ -37,6 +37,10 @@ const handleSize = (size: string) => {
       return css`
         font-size: 1.1rem;
       `;
+    case 'textL':
+      return css`
+        font-size: 1.8rem;
+      `;
     default:
       break;
   }

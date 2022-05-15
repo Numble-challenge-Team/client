@@ -11,7 +11,7 @@ import * as Styled from '@components/Layout/LayoutStyle';
 import { EMAIL_VALIDATION } from '@constants/validation';
 import { LoginRequestDataType } from '@/types/login';
 
-import { useLoginMutation } from '@api/queries/login';
+import { useLoginMutation } from '@api/queries/users';
 
 function LoginPage() {
   const router = useRouter();

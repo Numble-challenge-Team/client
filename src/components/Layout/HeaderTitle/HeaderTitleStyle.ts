@@ -32,3 +32,30 @@ export const BackButton = styled.button`
   width: 2.4rem;
   height: 2.4rem;
 `;
+
+export const SettingButtonWrapper = styled.div`
+  position: absolute;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+`;
+
+export const SettingButton = styled.button`
+  width: 2.4rem;
+  height: 2.4rem;
+`;
+
+export const SettingMenuWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.4rem;
+  padding: 1.2rem 3.6rem;
+`;
+
+export const SettingMenu = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2.8rem;
+`;

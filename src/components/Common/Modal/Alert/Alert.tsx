@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import * as ModalStyled from '../ModalStyle';
 
 interface AlertProps {
-  onBlurModal: MouseEventHandler<HTMLDivElement>;
+  onBlurModal?: MouseEventHandler<HTMLDivElement>;
 }
 
 function Alert({ onBlurModal, children }: PropsWithChildren<AlertProps>) {
