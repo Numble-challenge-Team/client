@@ -33,7 +33,10 @@ function VideoList({ useVideosQueryResult }: PropsWithChildren<VideoListProps>) 
     }
   }, [inView]);
 
-  const isEmpty = !data?.pages.reduce((acc, { contents }) => acc + (contents ? contents.length : 0), 0);
+  const isEmpty = !data?.pages.reduce(
+    (acc, { contents }) => acc + (contents ? [...contents].filter((hasContent) => !!hasContent).length : 0),
+    0
+  );
 
   if (isLoading) {
     return (

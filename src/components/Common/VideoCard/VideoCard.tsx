@@ -34,7 +34,6 @@ function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<
         previousUserVideos.pages[curPage].contents[videoIdx].likes += data.likeIncreased ? 1 : -1;
         if (queryKey === 'likeVideos') {
           delete previousUserVideos.pages[curPage].contents[videoIdx];
-          previousUserVideos.pages[curPage].contents.length -= 1;
         }
 
         queryClient.setQueryData<{ pages: resVideos[] }>(queryKey, previousUserVideos);
@@ -51,7 +50,6 @@ function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<
       router.push('/login');
       return;
     }
-
     likeMutation.mutate(videoId);
   };
 
