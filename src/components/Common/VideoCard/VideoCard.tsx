@@ -75,7 +75,6 @@ function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<
     setShowBottomUpModal(true);
     setUpdateVideoId(videoId);
   };
-
   return (
     <VideoCardStyled.Card>
       <Link href={`/watch?v=${videoId}`} passHref>

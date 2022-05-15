@@ -34,6 +34,7 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
         title,
         tags,
         description,
+        videoId,
       } = data.videoDetail;
 
       if (videoType === 'embedded') {

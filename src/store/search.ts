@@ -5,6 +5,11 @@ export const searchState = atom<string>({
   default: '',
 });
 
+export const searchOrderState = atom<'created_at,desc' | 'likes,desc'>({
+  key: 'searchOrderState',
+  default: 'likes,desc',
+});
+
 export const showSearchState = atom<boolean>({
   key: 'showSearchState',
   default: false,

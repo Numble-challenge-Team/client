@@ -27,11 +27,13 @@ function SearchModal(prop: PropsWithChildren<SearchModalProps>) {
   const [searchStack, setSearchStack] = useRecoilState(searchStackState);
 
   const onSearch = (search: string) => {
-    const filterSearchHistory = searchHistory.filter((keyword) => keyword !== search);
-    if (filterSearchHistory.length === searchHistory.length) {
-      localStorage.setItem('search-history', JSON.stringify([search, ...searchHistory]));
-    } else {
-      localStorage.setItem('search-history', JSON.stringify([search, ...filterSearchHistory]));
+    if (search) {
+      const filterSearchHistory = searchHistory.filter((keyword) => keyword !== search);
+      if (filterSearchHistory.length === searchHistory.length) {
+        localStorage.setItem('search-history', JSON.stringify([search, ...searchHistory]));
+      } else {
+        localStorage.setItem('search-history', JSON.stringify([search, ...filterSearchHistory]));
+      }
     }
 
     setSearchStack([...searchStack, search]);

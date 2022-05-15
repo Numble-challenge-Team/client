@@ -56,9 +56,13 @@ function NormalVideoUploadForm(prop: PropsWithChildren<NormalVideoUploadFormProp
     formData.append('duration', `${Math.ceil(duration)}`);
     formData.append('thumbnail', thumbnail as File);
     formData.append('title', title as string);
-    tags.forEach((tag) => {
-      formData.append('tags', tag);
-    });
+    if (tags.length) {
+      tags.forEach((tag) => {
+        formData.append('tags', tag);
+      });
+    } else {
+      formData.append('tags', '');
+    }
     formData.append('description', description);
 
     uploadMutation.mutate(formData);

@@ -55,9 +55,13 @@ function EmbedVideoUploadForm(prop: PropsWithChildren<EmbedVideoUploadFormProps>
     formData.append('description', description);
     formData.append('videoUrl', embedLink as string);
     formData.append('thumbnail', thumbnail as File);
-    tags.forEach((tag) => {
-      formData.append('tags', tag);
-    });
+    if (tags.length) {
+      tags.forEach((tag) => {
+        formData.append('tags', tag);
+      });
+    } else {
+      formData.append('tags', '');
+    }
 
     uploadMutation.mutate(formData);
   };

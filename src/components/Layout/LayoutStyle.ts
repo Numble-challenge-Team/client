@@ -5,16 +5,16 @@ export const Header = styled.header`
   z-index: 1000;
   top: 0;
   width: 100%;
-  height: 6.4rem;
+  height: 10.2rem;
   background-color: ${({ theme }) => theme.color.white};
 `;
 
 export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean }>`
   position: relative;
-  margin: ${({ hasHeader }) => (hasHeader ? '6.4rem auto 0' : null)};
+  margin: ${({ hasHeader }) => (hasHeader ? '10.2rem auto 0' : null)};
   padding: ${({ hasWhitespace }) => (hasWhitespace ? '0 2rem' : null)};
   max-width: 37.5rem;
-  min-height: calc(100vh - 6.4rem);
+  min-height: calc(100vh - 10.2rem);
   font-family: 'NanumSquareR';
   font-size: 1.4rem;
   color: ${({ theme }) => theme.color.black};
@@ -28,7 +28,7 @@ export const EmptyContainer = styled.div`
   gap: 1.1rem;
   width: 100%;
   height: 100vh;
-  margin-top: -6.4rem;
+  margin-top: -10.2rem;
 `;
 
 export const Section = styled.section`

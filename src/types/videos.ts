@@ -26,4 +26,5 @@ export interface resVideos {
   contents: Videos[];
   hasMore: boolean;
   queryKey: QueryKey;
+  totalCount?: number;
 }
