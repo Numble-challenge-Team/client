@@ -20,7 +20,7 @@ export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean; h
   color: ${({ theme }) => theme.color.black};
 `;
 
-export const EmptyContainer = styled.div`
+export const EmptyContainer = styled.div<{ hasSearchInfo: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@ export const EmptyContainer = styled.div`
   gap: 1.1rem;
   width: 100%;
   height: 100vh;
-  margin-top: -1010.2m;
+  margin-top: ${({ hasSearchInfo }) => (hasSearchInfo ? '-10.2rem' : '-6.4rem')};
 `;
 
 export const Section = styled.section`

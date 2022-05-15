@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import { VideoCard, Icon } from '@components/Common';
 import * as LayoutStyled from '@components/Layout/LayoutStyle';
 import { UpdateButton } from '@components/MyVideo';
+import { useRouter } from 'next/router';
 import * as VideoListStyled from './VideoListStyle';
 import SkeletonCard from '../VideoCard/SkeletonCard';
 
@@ -24,6 +25,7 @@ interface VideoListProps {
 }
 
 function VideoList({ useVideosQueryResult }: PropsWithChildren<VideoListProps>) {
+  const { pathname } = useRouter();
   const { data, fetchNextPage, hasNextPage, isLoading } = useVideosQueryResult;
   const { ref, inView } = useInView();
 
@@ -50,7 +52,7 @@ function VideoList({ useVideosQueryResult }: PropsWithChildren<VideoListProps>) 
 
   if (isEmpty) {
     return (
-      <LayoutStyled.EmptyContainer>
+      <LayoutStyled.EmptyContainer hasSearchInfo={pathname === '/'}>
         <Icon type="video-off" width={66} height={66} />
         영상이 없습니다.
       </LayoutStyled.EmptyContainer>
