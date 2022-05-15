@@ -21,6 +21,12 @@ export const UserEmail = styled(UserInfoStyle)`
 
 export const UserCreateAt = styled(UserInfoStyle)``;
 
+export const UserNickname = styled.div`
+  & > p {
+    margin-bottom: 1.2rem;
+  }
+`;
+
 export const LogoutModalStyle = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,4 +37,18 @@ export const LogoutButtonWrapper = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 5rem;
+`;
+
+export const EditProfileButtonWrapper = styled.div`
+  margin-top: 18rem;
+`;
+
+export const EditUserImageWrapper = styled.div`
+  position: relative;
+`;
+
+export const ImageEditButton = styled.button`
+  position: absolute;
+  right: 0;
+  bottom: 0;
 `;
