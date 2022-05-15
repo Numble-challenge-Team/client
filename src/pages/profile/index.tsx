@@ -8,6 +8,7 @@ import { UserProfileType } from '@/types/profile';
 
 import { useLogoutMutation, useProfileQuery } from '@api/queries/users';
 import { useRouter } from 'next/router';
+import dateFormatter from '@utils/dateFormatter';
 
 function ProfilePage() {
   // 유저 데이터 조회 기능 o
@@ -75,7 +76,7 @@ function ProfilePage() {
           <Text size="text3" fontColor="500">
             가입일
           </Text>
-          <Text size="text1">{data?.usersId}</Text>
+          <Text size="text1">{dateFormatter(data?.created_at)}</Text>
         </Styled.UserCreateAt>
       </Layout>
       {isLogout && (
