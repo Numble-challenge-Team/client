@@ -62,7 +62,7 @@ function LoginPage() {
   };
 
   const handleSignupButton = () => {
-    router.push('/signup/email');
+    router.push('/signup');
   };
 
   return (
