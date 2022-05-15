@@ -1,5 +1,5 @@
-import { useQuery, UseQueryOptions } from 'react-query';
-import { AxiosError } from 'axios';
+import { MutationFunction, useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
+import { AxiosError, AxiosResponse } from 'axios';
 import { ServerResponse } from 'http';
 import { axiosWithToken } from '@api';
 
@@ -22,4 +22,11 @@ export const useVideoDetailQuery = (
   >
 ) => {
   return useQuery(['video-watch', videoId], () => fetchVideoDetail(videoId), options);
+};
+
+export const useVideoDetailMutation = <BodyDataType,>(
+  url: string,
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
+) => {
+  return useMutation((bodyData: BodyDataType) => axiosWithToken.post(`/videos/${url}`, bodyData), options);
 };

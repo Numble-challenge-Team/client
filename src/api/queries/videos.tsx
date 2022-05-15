@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { QueryKey, useInfiniteQuery } from 'react-query';
-import { axiosService, axiosWithToken } from '@api';
+import { axiosWithToken } from '@api';
 import type { resVideos } from '@/types/videos';
 
 // Infinity Option

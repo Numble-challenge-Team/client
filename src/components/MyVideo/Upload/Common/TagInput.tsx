@@ -3,7 +3,6 @@ import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, PropsWithC
 import { useRecoilState } from 'recoil';
 import { myVideoTags } from '@store/uploadVideo/common';
 
-import { Tag } from '@components/Common';
 import * as FormStyled from './FormStyle';
 
 interface TagInputProps {}

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const ProfileStyle = styled.div`
   display: flex;
+  height: 100%;
 `;
 
 export const ProfileImage = styled(Image)`

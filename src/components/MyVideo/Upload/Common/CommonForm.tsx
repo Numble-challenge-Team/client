@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, MutableRefObject, useEffect, useRef } from 'react';
+import { ChangeEventHandler } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { isValidMyVideoTitle } from '@store/uploadVideo/valid';

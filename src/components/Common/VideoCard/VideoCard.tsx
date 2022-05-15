@@ -83,7 +83,7 @@ function VideoCard({ curPage, queryKey, videoIdx, cardInfo }: PropsWithChildren<
         </VideoCardStyled.LinkThumbnail>
       </Link>
       <VideoCardStyled.CaptionContainer>
-        <Profile profileUrl={profileUrl} size={36} />
+        <Profile profileUrl={profileUrl} size={36} alt={nickname} />
         <VideoCardStyled.TextCaptionWrapper>
           <Link href={`/watch?v=${videoId}`}>
             <a>

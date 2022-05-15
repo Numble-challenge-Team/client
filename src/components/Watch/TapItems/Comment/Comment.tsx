@@ -8,7 +8,10 @@ import { Icon, Profile, Text } from '@components/Common';
 
 import { CommentDataType, CommentIdType } from '@/types/comment';
 
+import dateFormatter from '@utils/dateFormatter';
+
 import { useCommentsMutation } from '@api/queries/comment';
+
 import * as Styled from './CommentStyle';
 
 interface CommentPropsType {
@@ -53,9 +56,9 @@ function Comment({ comment, hasRecomments }: CommentPropsType) {
     <Styled.CommentContainer>
       <Styled.CommentInfoWrapper>
         <Styled.CommentUser>
-          <Profile size={24} profileUrl={profileUrl} /> <Text>{nickname}</Text>
+          <Profile size={24} profileUrl={profileUrl} alt="댓글 유저 프로필" /> <Text>{nickname}</Text>
           <Text size="text4" fontColor="500">
-            {created_at[0]}. {created_at[1]}. {created_at[2]}
+            {dateFormatter(created_at)}
           </Text>
         </Styled.CommentUser>
         <div>

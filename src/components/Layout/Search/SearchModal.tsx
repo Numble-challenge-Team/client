@@ -1,12 +1,4 @@
-import {
-  ChangeEventHandler,
-  FocusEventHandler,
-  FormEventHandler,
-  MouseEventHandler,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FormEventHandler, MouseEventHandler, PropsWithChildren, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { searchState, showSearchState, searchStackState } from '@store/search';

@@ -9,13 +9,7 @@ import { updateVideoIdState } from '@store/videoId';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { embedVideoUploadFormData, isValidEmbedVideoUploadForm, myVideoEmbedLink } from '@store/uploadVideo/embedVideo';
-import {
-  myVideoThumbnail,
-  myVideoTitle,
-  myVideoTags,
-  myVideoDescription,
-  myVideoDuration,
-} from '@store/uploadVideo/common';
+import { myVideoThumbnail, myVideoTitle, myVideoTags, myVideoDescription } from '@store/uploadVideo/common';
 import { isValidMyVideoThumbnail, isValidMyVideoEmbedLink } from '@store/uploadVideo/valid';
 import { toastModalMessageState, showToastModalState } from '@store/modal';
 
