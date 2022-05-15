@@ -20,7 +20,7 @@ export const Main = styled.main<{ hasHeader: boolean; hasWhitespace?: boolean; h
   color: ${({ theme }) => theme.color.black};
 `;
 
-export const EmptyContainer = styled.div<{ hasSearchInfo: boolean }>`
+export const EmptyContainer = styled.div<{ hasSearchInfo?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
