@@ -24,7 +24,6 @@ function ProfilePage() {
   const [isEditProfile, setIsEditProfile] = useState<boolean>(false);
 
   const { data } = useProfileQuery<UserProfileType>('', {
-    staleTime: 6000,
     onSuccess: (data) => {
       setUserProfileImage(data.profileImg.url);
     },
@@ -65,7 +64,7 @@ function ProfilePage() {
         setIsEditProfile={setIsEditProfile}
       >
         {isEditProfile ? (
-          <ProfileEdit userData={data} isEditDone={isEditProfile} setIsEditDone={setIsEditProfile} />
+          <ProfileEdit userData={data} setIsEditDone={setIsEditProfile} />
         ) : (
           <>
             <Styled.UserImageNickname>
