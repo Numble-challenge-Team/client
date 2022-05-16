@@ -42,7 +42,7 @@ export const useSignupQuery = (
 
 // 로그인 요청
 export const useLoginMutation = (
-  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, LoginRequestDataType, MutationFunction>
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, LoginRequestDataType, void>
 ) => {
   return useMutation((reqData: LoginRequestDataType) => axiosService.post(`/users/login`, reqData), options);
 };
