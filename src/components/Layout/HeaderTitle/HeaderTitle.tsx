@@ -17,6 +17,8 @@ interface HeaderTitleProps {
   setIsOpenSettingModal?: (newOpen: boolean) => void;
   isLogout?: boolean;
   setIsLogout?: Dispatch<SetStateAction<boolean>>;
+  isSignout?: boolean;
+  setIsSignout?: Dispatch<SetStateAction<boolean>>;
   isEditProfile?: boolean;
   setIsEditProfile?: Dispatch<SetStateAction<boolean>>;
 }
@@ -28,6 +30,8 @@ function HeaderTitle({
   setIsOpenSettingModal = () => false,
   isLogout = false,
   setIsLogout = (prev) => !prev,
+  isSignout = false,
+  setIsSignout = (prev) => !prev,
   isEditProfile = false,
   setIsEditProfile = (prev) => !prev,
   children,
@@ -75,6 +79,11 @@ function HeaderTitle({
     setIsLogout((prev) => !prev);
   }, [isOpenSettingModal, isLogout]);
 
+  const handleSignoutUser = useCallback(() => {
+    setIsOpenSettingModal(false);
+    setIsSignout((prev) => !prev);
+  }, [isOpenSettingModal, isSignout]);
+
   const handleEditProfileInput = useCallback(() => {
     setIsOpenSettingModal(false);
     setIsEditProfile(true);
@@ -106,7 +115,7 @@ function HeaderTitle({
                 <Icon type="logout" />
                 <Text>로그아웃</Text>
               </HeaderTitleStyled.SettingMenu>
-              <HeaderTitleStyled.SettingMenu>
+              <HeaderTitleStyled.SettingMenu onClick={handleSignoutUser}>
                 <Icon type="user-delete" />
                 <Text>회원 탈퇴</Text>
               </HeaderTitleStyled.SettingMenu>

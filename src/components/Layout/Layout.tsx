@@ -23,6 +23,8 @@ interface LayoutProps {
   setIsOpenSettingModal?: (newOpen: boolean) => void;
   isLogout?: boolean;
   setIsLogout?: Dispatch<SetStateAction<boolean>>;
+  isSignout?: boolean;
+  setIsSignout?: Dispatch<SetStateAction<boolean>>;
   isEditProfile?: boolean;
   setIsEditProfile?: Dispatch<SetStateAction<boolean>>;
   title?:
@@ -47,6 +49,8 @@ function Layout({
   setIsOpenSettingModal,
   isLogout,
   setIsLogout,
+  isSignout,
+  setIsSignout,
   isEditProfile,
   setIsEditProfile,
   title,
@@ -74,6 +78,8 @@ function Layout({
                 setIsOpenSettingModal={setIsOpenSettingModal}
                 isLogout={isLogout}
                 setIsLogout={setIsLogout}
+                isSignout={isSignout}
+                setIsSignout={setIsSignout}
                 isEditProfile={isEditProfile}
                 setIsEditProfile={setIsEditProfile}
               >

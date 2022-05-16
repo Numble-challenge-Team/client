@@ -7,7 +7,7 @@ import * as Styled from '@components/Profile/ProfileStyle';
 
 import { UserProfileType } from '@/types/profile';
 
-import { useLogoutMutation, useProfileQuery } from '@api/queries/users';
+import { useLogoutMutation, useProfileQuery, useSignoutMutation } from '@api/queries/users';
 import { useRouter } from 'next/router';
 import dateFormatter from '@utils/dateFormatter';
 
@@ -16,6 +16,7 @@ function ProfilePage() {
   const [userProfileImage, setUserProfileImage] = useState<string>('');
   const [isOpenEditProfileInput, setIsOpenEditProfileInput] = useState<boolean>(false);
   const [isLogout, setIsLogout] = useState<boolean>(false);
+  const [isSignout, setIsSignout] = useState<boolean>(false);
   const [isEditProfile, setIsEditProfile] = useState<boolean>(false);
 
   const { data, refetch } = useProfileQuery<UserProfileType>('', {
@@ -25,6 +26,13 @@ function ProfilePage() {
   });
 
   const fetchLogoutUser = useLogoutMutation({
+    onSuccess: () => {
+      localStorage.clear();
+      router.push('/');
+    },
+  });
+
+  const fetchSignoutUser = useSignoutMutation({
     onSuccess: () => {
       localStorage.clear();
       router.push('/');
@@ -44,6 +52,10 @@ function ProfilePage() {
     fetchLogoutUser.mutate(userToken);
   }, []);
 
+  const handleSignoutUser = useCallback(() => {
+    fetchSignoutUser.mutate(null);
+  }, []);
+
   return (
     <>
       <Layout
@@ -55,6 +67,8 @@ function ProfilePage() {
         setIsOpenSettingModal={setIsOpenEditProfileInput}
         isLogout={isLogout}
         setIsLogout={setIsLogout}
+        isSignout={isSignout}
+        setIsSignout={setIsSignout}
         isEditProfile={isEditProfile}
         setIsEditProfile={setIsEditProfile}
       >
@@ -83,17 +97,30 @@ function ProfilePage() {
           </>
         )}
       </Layout>
-      {isLogout && (
+      {(isLogout || isSignout) && (
         <Alert>
           <Styled.LogoutModalStyle>
-            <Text size="text1">로그아웃 하시겠어요?</Text>
+            {isLogout && <Text size="text1">로그아웃 하시겠어요?</Text>}
+            {isSignout && (
+              <>
+                <Text size="text1">정말 탈퇴하시겠어요?</Text>
+                <Text size="text1">동일한 이메일로는 재가입이 불가능해요.</Text>
+              </>
+            )}
             <Styled.LogoutButtonWrapper>
               <Button type="button" size="S" backColor="border" clickEvent={handleLogoutModalCancel}>
                 아니오
               </Button>
-              <Button type="button" size="S" clickEvent={hadleLogoutUser}>
-                네
-              </Button>
+              {isLogout && (
+                <Button type="button" size="S" clickEvent={hadleLogoutUser}>
+                  네
+                </Button>
+              )}
+              {isSignout && (
+                <Button type="button" size="S" clickEvent={handleSignoutUser}>
+                  탈퇴
+                </Button>
+              )}
             </Styled.LogoutButtonWrapper>
           </Styled.LogoutModalStyle>
         </Alert>
