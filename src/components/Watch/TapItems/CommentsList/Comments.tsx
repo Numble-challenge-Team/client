@@ -32,18 +32,25 @@ function CommentsList() {
     },
   });
 
-  const handleCommentCreate = (event: FormEvent) => {
-    event.preventDefault();
+  const handleCommentCreate = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault();
 
-    const createCommentData = {
-      videoId: router.query.v,
-      context: commentValue,
-      title: videoTitle,
-    };
+      if (!commentValue) {
+        return;
+      }
 
-    fetchCreateComment.mutate(createCommentData);
-    setCommentValue('');
-  };
+      const createCommentData = {
+        videoId: router.query.v,
+        context: commentValue,
+        title: videoTitle,
+      };
+
+      fetchCreateComment.mutate(createCommentData);
+      setCommentValue('');
+    },
+    [commentValue]
+  );
 
   const handleCommentValue: ChangeEventHandler<HTMLTextAreaElement> = useCallback((event) => {
     setCommentValue(event.target.value);
