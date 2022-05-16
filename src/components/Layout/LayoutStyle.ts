@@ -37,3 +37,16 @@ export const EmptyContainer = styled.div<{ hasSearchInfo?: boolean }>`
 export const Section = styled.section`
   padding-top: 7rem;
 `;
+
+export const WebAlertModalStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5.7rem 2rem 0;
+
+  & > button {
+    max-width: 25rem !important;
+    margin-top: 2.7rem;
+    border: none !important;
+    background-color: ${({ theme }) => theme.color.primary['700']} !important;
+  }
+`;
