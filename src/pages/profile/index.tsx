@@ -39,9 +39,13 @@ function ProfilePage() {
     },
   });
 
-  const handleLogoutModalCancel = useCallback(() => {
-    setIsLogout((prev) => !prev);
-  }, [isLogout]);
+  const handleModalCancel = useCallback(() => {
+    if (isLogout) {
+      setIsLogout((prev) => !prev);
+    } else if (isSignout) {
+      setIsSignout((prev) => !prev);
+    }
+  }, [isLogout, isSignout]);
 
   const hadleLogoutUser = useCallback(() => {
     const userToken = {
@@ -108,7 +112,7 @@ function ProfilePage() {
               </>
             )}
             <Styled.LogoutButtonWrapper>
-              <Button type="button" size="S" backColor="border" clickEvent={handleLogoutModalCancel}>
+              <Button type="button" size="S" backColor="border" clickEvent={handleModalCancel}>
                 아니오
               </Button>
               {isLogout && (
