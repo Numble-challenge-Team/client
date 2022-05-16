@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
 import { Button, Input, Title, Text } from '@components/Common';
@@ -38,6 +38,7 @@ function SignupNicknamePage() {
 
   const [userNicknameData, setUserNicknameData] = useState<Pick<SignupInfoType, 'nickname'>>({ nickname: '' });
   const [signupInfo, setSignupInfo] = useRecoilState<SignupInfoType>(userSingupState);
+  const resetSignupData = useResetRecoilState(userSingupState);
 
   const { error } = useValidationSignupQuery('nickname', userNicknameData, {
     enabled: !!userNicknameData.nickname,
@@ -54,6 +55,7 @@ function SignupNicknamePage() {
       // 회원가입 성공 시
       setIsShowSignupAlert(true);
       setAlertState('success');
+      resetSignupData();
 
       setTimeout(() => {
         router.push('/login');

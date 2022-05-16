@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-return */
 import { ChangeEventHandler, FormEvent } from 'react';
 import Icon from '../Icon/Icon';
 import * as Styled from './TextareaStyle';

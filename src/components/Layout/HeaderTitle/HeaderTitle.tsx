@@ -1,13 +1,15 @@
-import { Dispatch, PropsWithChildren, SetStateAction, useCallback, useState } from 'react';
+import { Dispatch, PropsWithChildren, SetStateAction, useCallback } from 'react';
 import { useRouter } from 'next/router';
-
-import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/uploadVideo/normalVideo';
-import { isValidEmbedVideoUploadForm, embedVideoUploadFormData } from '@store/uploadVideo/embedVideo';
-import { useRecoilState } from 'recoil';
 
 import { Icon, Text } from '@components/Common';
 import Drawer from '@components/Common/Drawer/Drawer';
-import { updateVideoIdState } from '@store/videoId';
+
+import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/uploadVideo/normalVideo';
+import { isValidEmbedVideoUploadForm, embedVideoUploadFormData } from '@store/uploadVideo/embedVideo';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+
+import { userSingupState } from '@store/signup';
+
 import * as HeaderTitleStyled from './HeaderTitleStyle';
 
 interface HeaderTitleProps {
@@ -38,10 +40,12 @@ function HeaderTitle({
 }: PropsWithChildren<HeaderTitleProps>) {
   const router = useRouter();
 
-  const [isValidEmbedVideoForm, setIsValidEmbedVideoForm] = useRecoilState(isValidEmbedVideoUploadForm);
-  const [embedVideoFormData, setEmbedVideoFormData] = useRecoilState(embedVideoUploadFormData);
-  const [isValidNormalVideoForm, setIsValidNormalVideoForm] = useRecoilState(isValidNormalVideoUploadForm);
-  const [normalVideoFormData, setNormalVideoFormData] = useRecoilState(normalVideoUploadFormData);
+  const setIsValidEmbedVideoForm = useSetRecoilState(isValidEmbedVideoUploadForm);
+  const setEmbedVideoFormData = useSetRecoilState(embedVideoUploadFormData);
+  const setIsValidNormalVideoForm = useSetRecoilState(isValidNormalVideoUploadForm);
+  const setNormalVideoFormData = useSetRecoilState(normalVideoUploadFormData);
+  const resetSignupData = useResetRecoilState(userSingupState);
+
   const resetAllFormData = () => {
     setIsValidEmbedVideoForm(false);
     setEmbedVideoFormData({
@@ -69,8 +73,13 @@ function HeaderTitle({
   const handleLinkBack = () => {
     const queries = router.pathname.split('/');
     queries.pop();
-    const newQuery = queries.join('/');
-    router.push(newQuery.replace(/[[\]]/g, '') || '/');
+
+    const newQuery = queries.join('/').replace(/[[\]]/g, '') || '/';
+    if (newQuery === '/signup') {
+      resetSignupData();
+    }
+
+    router.push(newQuery);
     resetAllFormData();
   };
 
