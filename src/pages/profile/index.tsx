@@ -12,18 +12,13 @@ import { useRouter } from 'next/router';
 import dateFormatter from '@utils/dateFormatter';
 
 function ProfilePage() {
-  // 유저 데이터 조회 기능 o
-  // 수정 기능
-  // 수정 완료 기능
-  // 로그아웃 기능 o
-  // 회원 탈퇴 기능
   const router = useRouter();
   const [userProfileImage, setUserProfileImage] = useState<string>('');
   const [isOpenEditProfileInput, setIsOpenEditProfileInput] = useState<boolean>(false);
   const [isLogout, setIsLogout] = useState<boolean>(false);
   const [isEditProfile, setIsEditProfile] = useState<boolean>(false);
 
-  const { data } = useProfileQuery<UserProfileType>('', {
+  const { data, refetch } = useProfileQuery<UserProfileType>('', {
     onSuccess: (data) => {
       setUserProfileImage(data.profileImg.url);
     },
@@ -64,7 +59,7 @@ function ProfilePage() {
         setIsEditProfile={setIsEditProfile}
       >
         {isEditProfile ? (
-          <ProfileEdit userData={data} setIsEditDone={setIsEditProfile} />
+          <ProfileEdit userData={data} setIsEditProfile={setIsEditProfile} refetch={refetch} />
         ) : (
           <>
             <Styled.UserImageNickname>

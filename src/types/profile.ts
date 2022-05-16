@@ -9,9 +9,9 @@ export interface UserProfileType {
 }
 
 export interface UserNicknameType {
-  nickname: any;
+  nickname: string;
 }
 
 export interface UserEditDataType extends UserNicknameType {
-  img: any;
+  img: File;
 }
