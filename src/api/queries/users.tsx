@@ -73,3 +73,10 @@ export const useProfileMutation = <BodyDataType,>(
 ) => {
   return useMutation((bodyData: BodyDataType) => axiosWithTokenInUpload.put(`/users/update`, bodyData), options);
 };
+
+// sign-out mutation
+export const useSignoutMutation = <BodyDataType,>(
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
+) => {
+  return useMutation((bodyData: BodyDataType) => axiosWithToken.delete(`/users/sign-out`, bodyData), options);
+};
