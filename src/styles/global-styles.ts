@@ -67,7 +67,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button{
-    cursor: pointer
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.black};
   }
 
   button:focus {
