@@ -42,7 +42,7 @@ export const useSignupQuery = (
 
 // 로그인 요청
 export const useLoginMutation = (
-  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, LoginRequestDataType, MutationFunction>
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, LoginRequestDataType, void>
 ) => {
   return useMutation((reqData: LoginRequestDataType) => axiosService.post(`/users/login`, reqData), options);
 };
@@ -72,4 +72,11 @@ export const useProfileMutation = <BodyDataType,>(
   options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, void>
 ) => {
   return useMutation((bodyData: BodyDataType) => axiosWithTokenInUpload.put(`/users/update`, bodyData), options);
+};
+
+// sign-out mutation
+export const useSignoutMutation = <BodyDataType,>(
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
+) => {
+  return useMutation((bodyData: BodyDataType) => axiosWithToken.delete(`/users/sign-out`, bodyData), options);
 };

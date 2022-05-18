@@ -51,6 +51,7 @@
     "no-shadow": "off",
     "no-empty-pattern": 0,
     "no-alert": 0,
+    "no-useless-return": "off",
     "consistent-return": "off",
     "camelcase": "off"
   },

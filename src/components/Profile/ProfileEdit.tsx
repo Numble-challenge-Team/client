@@ -1,11 +1,15 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { QueryClient } from 'react-query';
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
 
 import { Button, Icon, Input, Profile, Text } from '@components/Common';
 import { NICKNAME_VALIDATION } from '@constants/validation';
-import { UserProfileType } from '@/types/profile';
 
+import { UserNicknameType, UserProfileType } from '@/types/profile';
+import { FetchDataType } from '@/types/fetchData';
+import { FormRegisterType } from '@/types/signup';
+
+import { AxiosError } from 'axios';
 import { useProfileMutation } from '@api/queries/users';
 
 import * as SignupStyle from '@components/Signup/SignupPageStyle';
@@ -13,37 +17,37 @@ import * as Styled from './ProfileStyle';
 
 interface ProfileEditPropsType {
   userData?: UserProfileType;
-  setIsEditDone: Dispatch<SetStateAction<boolean>>;
+  setIsEditProfile: Dispatch<SetStateAction<boolean>>;
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<UserProfileType, AxiosError<FetchDataType, any>>>;
 }
 
-function ProfileEdit({ userData, setIsEditDone }: ProfileEditPropsType) {
+function ProfileEdit({ userData, setIsEditProfile, refetch }: ProfileEditPropsType) {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<any>();
+  } = useForm<FormRegisterType>();
   const imageInput = useRef<HTMLInputElement>(null);
-  const formData = new FormData();
-  const queryClient = new QueryClient();
 
-  const [userProfileImage, setUserProfileImage] = useState<any>(userData?.profileImg.url);
-  const [userProfileNickname, setUserProfileNickname] = useState<string>('');
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
-  const [isClickSubmitButton, setIsClickSubmitButton] = useState<boolean>(false);
 
-  const fetchSaveEditProfil = useProfileMutation<FormData>({
+  const fetchSaveEditImage = useProfileMutation<FormData>({
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const fetchSaveEditProfile = useProfileMutation<FormData>({
     onMutate: () => {
       setIsFormErrorState(false);
       setNicknameErrorMessage('');
     },
     onSuccess: () => {
-      queryClient.invalidateQueries('profile');
-      setUserProfileImage(userData?.profileImg.url);
-
-      if (isClickSubmitButton) {
-        setIsEditDone(false);
-      }
+      refetch();
+      setIsEditProfile(false);
     },
     onError: (error) => {
       setIsFormErrorState(true);
@@ -60,31 +64,23 @@ function ProfileEdit({ userData, setIsEditDone }: ProfileEditPropsType) {
     }
   }, []);
 
-  const handleEditProfileSubmit = (userNickname: any) => {
-    setIsClickSubmitButton((prev) => !prev);
+  const handleEditProfileSubmit = useCallback((userNickname: UserNicknameType) => {
+    const formData = new FormData();
     formData.append('img', new File([], 'empty'));
     formData.append('nickname', userNickname.nickname);
 
-    fetchSaveEditProfil.mutate(formData);
+    fetchSaveEditProfile.mutate(formData);
+  }, []);
 
-    setUserProfileNickname(userNickname.nickname);
-  };
+  const handleEditImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const formData = new FormData();
+      formData.append('img', e.target.files[0]);
+      formData.append('nickname', '');
 
-  const handleEditImage = useCallback(
-    (e: any) => {
-      if (e.target.files) {
-        formData.append('img', e.target.files[0] ? e.target.files[0] : new File([], 'empty'));
-        formData.append('nickname', userProfileNickname);
-      }
-
-      fetchSaveEditProfil.mutate(formData);
-    },
-    [userProfileImage]
-  );
-
-  useEffect(() => {
-    setUserProfileImage(userData?.profileImg.url);
-  }, [userProfileImage]);
+      fetchSaveEditImage.mutate(formData);
+    }
+  }, []);
 
   return (
     <>
@@ -102,7 +98,7 @@ function ProfileEdit({ userData, setIsEditDone }: ProfileEditPropsType) {
             />
           </form>
           {userData?.profileImg.url && (
-            <Profile profileUrl={userProfileImage} alt={userData?.profileImg.name} size={128} />
+            <Profile profileUrl={userData?.profileImg.url} alt={userData?.profileImg.name} size={128} />
           )}
           <Styled.ImageEditButton onClick={handleUploadImage}>
             <Icon type="profile-edit" />
@@ -130,6 +126,7 @@ function ProfileEdit({ userData, setIsEditDone }: ProfileEditPropsType) {
           />
           {errors && <SignupStyle.ErrorMessage>{errors.nickname?.message}</SignupStyle.ErrorMessage>}
           {isFormErrorState && <SignupStyle.ErrorMessage>{nicknameErrorMessage}</SignupStyle.ErrorMessage>}
+
           <Styled.EditProfileButtonWrapper>
             <Button type="submit">수정</Button>
           </Styled.EditProfileButtonWrapper>
