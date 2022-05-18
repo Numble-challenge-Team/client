@@ -65,4 +65,10 @@
 - **typescript**
 
 ### 백엔드
-- **java**
+- **java** -11
+- **Spring boot** - 2.5.12
+- **JPA**
+- **QueryDsl**
+- **Redis,MySQL**
+- **jwt**
+- **AWS** -EC2,RDS,S3,ACM,ELB,ROUTE53-
