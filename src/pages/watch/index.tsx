@@ -90,7 +90,7 @@ function VideoWatchPage() {
             </div>
             <div>
               <Text fontColor="600" margin="0 0 1.2rem">
-                {data?.videoDetail.usersId}
+                {data?.videoDetail.nickname}
               </Text>
               <Text size="text4" fontColor="500">
                 조회수 {data?.videoDetail.view} | {dateFormatter(data?.videoDetail.created_at)}
