@@ -16,7 +16,7 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
   };
 
   const addTags: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && tag) {
       e.preventDefault();
       setTag('');
 
