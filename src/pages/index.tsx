@@ -12,6 +12,8 @@ import { searchOrderState } from '@store/search';
 
 import * as Styled from '@components/Layout/LayoutStyle';
 
+import isMobile from '@utils/isMobile';
+
 function Home() {
   const { query } = useRouter();
   const [isFirstAccess, setIsFirstAccess] = useRecoilState(isFirstAccessState);
@@ -34,8 +36,13 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    if (sessionStorage.getItem('web-access')) {
+      return;
+    }
+
+    if (isMobile()) {
       setIsShowWebAlertModal(true);
+      sessionStorage.setItem('web-access', 'true');
     }
   }, []);
 
