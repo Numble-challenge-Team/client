@@ -1,19 +1,15 @@
 import { useRouter } from 'next/router';
 
-import { MouseEventHandler, PropsWithChildren } from 'react';
-
 import { updateVideoIdState } from '@store/videoId';
 import { showAlertModalState, showBottomUpModalState } from '@store/modal';
 import { useRecoilState } from 'recoil';
 
 import { useDeleteVideoMutation } from '@api/queries/delete';
 
-import { Alert, BottomUp, Icon } from '@components/Common';
+import { Alert, BottomUp, Button, Icon, Text } from '@components/Common';
 import DeleteButton from './DeleteButton';
 
-interface UpdateButtonProps {}
-
-function UpdateButton(prop: PropsWithChildren<UpdateButtonProps>) {
+function UpdateButton() {
   const router = useRouter();
   const [showBottomUpModal, setShowBottomUpModal] = useRecoilState(showBottomUpModalState);
   const [showAlertModal, setShowAlertModal] = useRecoilState(showAlertModalState);
@@ -46,7 +42,8 @@ function UpdateButton(prop: PropsWithChildren<UpdateButtonProps>) {
       router.reload();
     },
   });
-  const deleteVideo: MouseEventHandler<HTMLButtonElement> = () => {
+
+  const deleteVideo = () => {
     if (!updateVideoId) {
       return;
     }
@@ -72,14 +69,14 @@ function UpdateButton(prop: PropsWithChildren<UpdateButtonProps>) {
       )}
       {showAlertModal && (
         <Alert onBlurModal={handleBlurAlertModal}>
-          <h3>정말 삭제하시겠어요?</h3>
+          <Text>정말 삭제하시겠어요?</Text>
           <div>
-            <button type="button" onClick={deleteVideo}>
-              네
-            </button>
-            <button type="button" onClick={handleBlurAlertModal}>
+            <Button type="button" size="S" backColor="border" clickEvent={deleteVideo}>
               아니오
-            </button>
+            </Button>
+            <Button type="button" size="S" clickEvent={handleBlurAlertModal}>
+              네
+            </Button>
           </div>
         </Alert>
       )}

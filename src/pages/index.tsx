@@ -10,8 +10,6 @@ import { useRecoilState } from 'recoil';
 import { isFirstAccessState } from '@store/home';
 import { searchOrderState } from '@store/search';
 
-import * as Styled from '@components/Layout/LayoutStyle';
-
 import isMobile from '@utils/isMobile';
 
 function Home() {
@@ -57,14 +55,14 @@ function Home() {
       )}
       {isShowWebAlertModal && (
         <Alert>
-          <Styled.WebAlertModalStyle>
-            <Text size="text1">OZ는 모바일 환경에 최적화된 서비스입니다.</Text>
-            <Text size="text1">모바일로 이용해주세요.</Text>
+          <div>
+            <Text>OZ는 모바일 환경에 최적화된 서비스입니다.</Text>
+            <Text>모바일로 이용해주세요.</Text>
+          </div>
 
-            <Button type="button" size="M" backColor="primary" clickEvent={handleWebAlertModal}>
-              확인
-            </Button>
-          </Styled.WebAlertModalStyle>
+          <Button type="button" size="M" backColor="primary" clickEvent={handleWebAlertModal}>
+            확인
+          </Button>
         </Alert>
       )}
     </>

@@ -28,18 +28,6 @@ export const UserNickname = styled.div`
   }
 `;
 
-export const LogoutModalStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 7.2rem 4rem 0;
-`;
-
-export const LogoutButtonWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 5rem;
-`;
-
 export const EditProfileButtonWrapper = styled.div`
   margin-top: 12rem;
 `;
