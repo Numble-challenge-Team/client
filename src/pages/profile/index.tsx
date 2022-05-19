@@ -103,30 +103,38 @@ function ProfilePage() {
       </Layout>
       {(isLogout || isSignout) && (
         <Alert>
-          <Styled.LogoutModalStyle>
-            {isLogout && <Text size="text1">로그아웃 하시겠어요?</Text>}
-            {isSignout && (
-              <>
-                <Text size="text1">정말 탈퇴하시겠어요?</Text>
-                <Text size="text1">동일한 이메일로는 재가입이 불가능해요.</Text>
-              </>
-            )}
-            <Styled.LogoutButtonWrapper>
-              <Button type="button" size="S" backColor="border" clickEvent={handleModalCancel}>
-                아니오
-              </Button>
-              {isLogout && (
+          {/* 로그아웃 모달 */}
+          {isLogout && (
+            <>
+              <Text>로그아웃 하시겠어요?</Text>
+              <div>
+                <Button type="button" size="S" backColor="border" clickEvent={handleModalCancel}>
+                  아니오
+                </Button>
                 <Button type="button" size="S" clickEvent={hadleLogoutUser}>
                   네
                 </Button>
-              )}
-              {isSignout && (
+              </div>
+            </>
+          )}
+
+          {/* 회원탈퇴 모달 */}
+          {isSignout && (
+            <>
+              <div>
+                <Text>정말 탈퇴하시겠어요?</Text>
+                <Text>동일한 이메일로는 재가입이 불가능해요.</Text>
+              </div>
+              <div>
+                <Button type="button" size="S" backColor="border" clickEvent={handleModalCancel}>
+                  아니오
+                </Button>
                 <Button type="button" size="S" clickEvent={handleSignoutUser}>
                   탈퇴
                 </Button>
-              )}
-            </Styled.LogoutButtonWrapper>
-          </Styled.LogoutModalStyle>
+              </div>
+            </>
+          )}
         </Alert>
       )}
     </>
