@@ -6,8 +6,6 @@ export {
   TagInput,
   InputWithTitle,
   FormStyled,
-  NormalVideoForm,
-  EmbedVideoForm,
   EmbedVideoUploadForm,
   NormalVideoUploadForm,
 } from './Upload';
