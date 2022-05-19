@@ -2,15 +2,16 @@ import { FormEventHandler, PropsWithChildren } from 'react';
 
 import * as LayoutStyled from '@components/Layout/LayoutStyle';
 import { Icon } from '@components/Common';
-import { CommonForm, FormStyled, EmbedLinkInput } from '@components/MyVideo/Upload/Common';
+import { CommonForm, FormStyled, EmbedLinkInput, VideoInput } from '@components/MyVideo/Upload/Common';
 
-interface EmbedVideoFormProps {
+interface VideoFormProps {
+  type: 'embed' | 'normal';
   isUploading: boolean;
   isValid: boolean;
   handleSubmitVideo: FormEventHandler<HTMLFormElement>;
 }
 
-function EmbedVideoForm({ isUploading, isValid, handleSubmitVideo }: PropsWithChildren<EmbedVideoFormProps>) {
+function VideoForm({ type, isUploading, isValid, handleSubmitVideo }: PropsWithChildren<VideoFormProps>) {
   if (isUploading) {
     return (
       <LayoutStyled.EmptyContainer>
@@ -22,10 +23,11 @@ function EmbedVideoForm({ isUploading, isValid, handleSubmitVideo }: PropsWithCh
 
   return (
     <FormStyled.Form onSubmit={handleSubmitVideo} noValidate>
-      <EmbedLinkInput />
+      {type === 'embed' && <EmbedLinkInput />}
+      {type === 'normal' && <VideoInput />}
       <CommonForm isValid={isValid} />
     </FormStyled.Form>
   );
 }
 
-export default EmbedVideoForm;
+export default VideoForm;

@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { PropsWithChildren, FormEventHandler } from 'react';
-import { NormalVideoForm } from '@components/MyVideo';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
 import { useUpdateVideoMutation } from '@api/queries/update';
 
+import { VideoForm } from '@components/MyVideo/Upload/Form';
 import { updateVideoIdState } from '@store/videoId';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -100,7 +100,8 @@ function NormalVideoUpdateForm(prop: PropsWithChildren<NormalVideoUpdateFormProp
   };
 
   return (
-    <NormalVideoForm
+    <VideoForm
+      type="normal"
       isUploading={updateMutation.isLoading}
       isValid={isValidMyVideoUpdateForm}
       handleSubmitVideo={handleSubmitNormalVideo}

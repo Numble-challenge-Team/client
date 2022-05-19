@@ -6,7 +6,7 @@ import { embedVideoUploadFormData, isValidEmbedVideoUploadForm } from '@store/up
 
 import { useEmbedUploadMutation } from '@api/queries/upload';
 
-import { EmbedVideoForm } from '@components/MyVideo';
+import { VideoForm } from '@components/MyVideo/Upload/Form';
 import { showToastModalState, toastModalMessageState } from '@store/modal';
 
 interface EmbedVideoUploadFormProps {}
@@ -67,7 +67,12 @@ function EmbedVideoUploadForm(prop: PropsWithChildren<EmbedVideoUploadFormProps>
   };
 
   return (
-    <EmbedVideoForm isUploading={uploadMutation.isLoading} isValid={isValid} handleSubmitVideo={handleSubmitVideo} />
+    <VideoForm
+      type="embed"
+      isUploading={uploadMutation.isLoading}
+      isValid={isValid}
+      handleSubmitVideo={handleSubmitVideo}
+    />
   );
 }
 

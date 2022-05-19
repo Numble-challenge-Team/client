@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import { PropsWithChildren, FormEventHandler } from 'react';
-import { EmbedVideoForm } from '@components/MyVideo';
 
 import { useVideoDetailQuery } from '@api/queries/watch';
 import { useUpdateVideoMutation } from '@api/queries/update';
+
+import { VideoForm } from '@components/MyVideo/Upload/Form';
 
 import { updateVideoIdState } from '@store/videoId';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -93,7 +94,8 @@ function EmbedVideoUpdateForm(prop: PropsWithChildren<EmbedVideoUpdateFormProps>
   };
 
   return (
-    <EmbedVideoForm
+    <VideoForm
+      type="embed"
       isUploading={updateMutation.isLoading}
       isValid={isValidEmbedVideoUpdateForm}
       handleSubmitVideo={handleSubmitEmbedVideo}

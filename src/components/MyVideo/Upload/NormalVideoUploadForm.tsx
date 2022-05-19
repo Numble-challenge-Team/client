@@ -6,7 +6,7 @@ import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/
 
 import { useNormalUploadMutation } from '@api/queries/upload';
 
-import { NormalVideoForm } from '@components/MyVideo';
+import { VideoForm } from '@components/MyVideo/Upload/Form';
 import { showToastModalState, toastModalMessageState } from '@store/modal';
 
 interface NormalVideoUploadFormProps {}
@@ -68,7 +68,12 @@ function NormalVideoUploadForm(prop: PropsWithChildren<NormalVideoUploadFormProp
     uploadMutation.mutate(formData);
   };
   return (
-    <NormalVideoForm isUploading={uploadMutation.isLoading} isValid={isValid} handleSubmitVideo={handleSubmitVideo} />
+    <VideoForm
+      type="normal"
+      isUploading={uploadMutation.isLoading}
+      isValid={isValid}
+      handleSubmitVideo={handleSubmitVideo}
+    />
   );
 }
 
