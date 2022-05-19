@@ -7,9 +7,7 @@ import SignupExitModal from '@components/Signup/SignupExitModal';
 
 import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/uploadVideo/normalVideo';
 import { isValidEmbedVideoUploadForm, embedVideoUploadFormData } from '@store/uploadVideo/embedVideo';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
-
-import { userSingupState } from '@store/signup';
+import { useSetRecoilState } from 'recoil';
 
 import * as HeaderTitleStyled from './HeaderTitleStyle';
 
@@ -47,7 +45,6 @@ function HeaderTitle({
   const setEmbedVideoFormData = useSetRecoilState(embedVideoUploadFormData);
   const setIsValidNormalVideoForm = useSetRecoilState(isValidNormalVideoUploadForm);
   const setNormalVideoFormData = useSetRecoilState(normalVideoUploadFormData);
-  const resetSignupData = useResetRecoilState(userSingupState);
 
   const resetAllFormData = () => {
     setIsValidEmbedVideoForm(false);
@@ -80,8 +77,6 @@ function HeaderTitle({
     const newQuery = queries.join('/').replace(/[[\]]/g, '') || '/';
     if (newQuery === '/signup') {
       setIsShowExitSignupModal((prev) => !prev);
-      resetSignupData();
-
       return;
     }
 

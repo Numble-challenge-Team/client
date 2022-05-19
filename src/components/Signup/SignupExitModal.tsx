@@ -1,6 +1,10 @@
-import { Alert, Button, Text } from '@components/Common';
-import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useCallback } from 'react';
+import { useRouter } from 'next/router';
+
+import { Alert, Button, Text } from '@components/Common';
+
+import { useResetRecoilState } from 'recoil';
+import { userSingupState } from '@store/signup';
 
 interface SignupExitModalPropsType {
   isShowModal: boolean;
@@ -9,6 +13,7 @@ interface SignupExitModalPropsType {
 
 function SignupExitModal({ isShowModal, setIsShowModal }: SignupExitModalPropsType) {
   const router = useRouter();
+  const resetSignupData = useResetRecoilState(userSingupState);
 
   const handleCloseModal = useCallback(() => {
     setIsShowModal((prev) => !prev);
@@ -16,6 +21,8 @@ function SignupExitModal({ isShowModal, setIsShowModal }: SignupExitModalPropsTy
 
   const handleExitSignout = useCallback(() => {
     setIsShowModal((prev) => !prev);
+    resetSignupData();
+
     router.push('/login');
   }, [isShowModal]);
 
