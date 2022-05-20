@@ -22,7 +22,6 @@ function UpdateButton() {
     setShowAlertModal(!showAlertModal);
     setUpdateVideoId(null);
   };
-
   const handleUpdateLink = () => {
     setShowBottomUpModal(!showBottomUpModal);
     router.push('/my-video/update');
@@ -71,10 +70,10 @@ function UpdateButton() {
         <Alert onBlurModal={handleBlurAlertModal}>
           <Text>정말 삭제하시겠어요?</Text>
           <div>
-            <Button type="button" size="S" backColor="border" clickEvent={deleteVideo}>
+            <Button type="button" size="S" backColor="border" clickEvent={handleBlurAlertModal}>
               아니오
             </Button>
-            <Button type="button" size="S" clickEvent={handleBlurAlertModal}>
+            <Button type="button" size="S" clickEvent={deleteVideo}>
               네
             </Button>
           </div>

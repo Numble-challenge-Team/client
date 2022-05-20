@@ -1,38 +1,55 @@
-import { myVideoDuration } from '@store/uploadVideo/common';
-import { myVideoEmbedLink } from '@store/uploadVideo/embedVideo';
-import { isValidMyVideoEmbedLink } from '@store/uploadVideo/valid';
+import { UpdateType, UploadType, ValidMap } from '@/types/videoForm';
+
 import { ChangeEventHandler, memo, PropsWithChildren } from 'react';
 import ReactPlayer from 'react-player/lazy';
-import { useRecoilState } from 'recoil';
 
 import * as FormStyled from './FormStyle';
-import InputWithTitle from './InputWithTitle';
 
-interface EmbedLinkInputProps {}
+interface EmbedLinkInputProps {
+  fileURL: string;
+  setVideoFormDataByKey: (key: keyof UploadType, value: UploadType[keyof UploadType]) => void;
+  initUpdateFormData?: UpdateType;
+  setValidMapByKey: (key: keyof ValidMap, isValid: boolean, inValidMessage?: string) => void;
+}
 
-function EmbedLinkInput(prop: PropsWithChildren<EmbedLinkInputProps>) {
-  const [isValidEmbedLink, setIsValidEmbedLink] = useRecoilState(isValidMyVideoEmbedLink);
-  const [embedLink, setEmbedLink] = useRecoilState(myVideoEmbedLink);
-  const [duration, setDuration] = useRecoilState(myVideoDuration);
+function EmbedLinkInput({
+  fileURL,
+  setVideoFormDataByKey,
+  initUpdateFormData,
+  setValidMapByKey,
+}: PropsWithChildren<EmbedLinkInputProps>) {
   const validateEmbedLink = () => {
-    setIsValidEmbedLink(true);
+    if (initUpdateFormData) {
+      setValidMapByKey('video', initUpdateFormData.video.url !== fileURL && !!fileURL);
+    } else {
+      setValidMapByKey('video', true);
+    }
   };
   const inValidateEmbedLink = () => {
-    setIsValidEmbedLink(false);
+    setValidMapByKey('video', false);
   };
   const changeEmbedLink: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setEmbedLink(e.target.value);
+    const { value } = e.target;
+    setVideoFormDataByKey('video', {
+      file: null,
+      name: '',
+      url: value,
+      size: 0,
+    });
+    if (initUpdateFormData) {
+      setValidMapByKey('video', initUpdateFormData.video.url !== value && !!value);
+    }
   };
   const changeDuration = (duration: number) => {
-    setDuration(duration);
+    setVideoFormDataByKey('duration', Math.ceil(duration));
   };
 
   return (
-    <InputWithTitle title="영상">
+    <>
       <FormStyled.EmbedPlayerWrapper>
-        {embedLink ? (
+        {fileURL ? (
           <ReactPlayer
-            url={embedLink}
+            url={fileURL}
             width="100%"
             height="100%"
             onReady={validateEmbedLink}
@@ -44,8 +61,8 @@ function EmbedLinkInput(prop: PropsWithChildren<EmbedLinkInputProps>) {
           <FormStyled.EmptyPlayerWrapper>임베드된 영상 없음</FormStyled.EmptyPlayerWrapper>
         )}
       </FormStyled.EmbedPlayerWrapper>
-      <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} value={embedLink} />
-    </InputWithTitle>
+      <input required type="url" placeholder="영상링크를 입력해주세요." onChange={changeEmbedLink} value={fileURL} />
+    </>
   );
 }
 
