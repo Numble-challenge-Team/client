@@ -5,10 +5,6 @@ import { Icon, Text } from '@components/Common';
 import Drawer from '@components/Common/Drawer/Drawer';
 import SignupExitModal from '@components/Signup/SignupExitModal';
 
-import { isValidNormalVideoUploadForm, normalVideoUploadFormData } from '@store/uploadVideo/normalVideo';
-import { isValidEmbedVideoUploadForm, embedVideoUploadFormData } from '@store/uploadVideo/embedVideo';
-import { useSetRecoilState } from 'recoil';
-
 import * as HeaderTitleStyled from './HeaderTitleStyle';
 
 interface HeaderTitleProps {
@@ -41,35 +37,6 @@ function HeaderTitle({
 
   const [isShowExitSignupModal, setIsShowExitSignupModal] = useState<boolean>(false);
 
-  const setIsValidEmbedVideoForm = useSetRecoilState(isValidEmbedVideoUploadForm);
-  const setEmbedVideoFormData = useSetRecoilState(embedVideoUploadFormData);
-  const setIsValidNormalVideoForm = useSetRecoilState(isValidNormalVideoUploadForm);
-  const setNormalVideoFormData = useSetRecoilState(normalVideoUploadFormData);
-
-  const resetAllFormData = () => {
-    setIsValidEmbedVideoForm(false);
-    setEmbedVideoFormData({
-      embedLink: '',
-      duration: 0,
-      thumbnail: null,
-      thumbnailURL: '',
-      title: '',
-      tags: [],
-      description: '',
-    });
-    setIsValidNormalVideoForm(false);
-    setNormalVideoFormData({
-      video: null,
-      videoURL: '',
-      duration: 0,
-      thumbnail: null,
-      thumbnailURL: '',
-      title: '',
-      tags: [],
-      description: '',
-    });
-  };
-
   const handleLinkBack = useCallback(() => {
     const queries = router.pathname.split('/');
     queries.pop();
@@ -81,7 +48,6 @@ function HeaderTitle({
     }
 
     router.push(newQuery);
-    resetAllFormData();
   }, [router]);
 
   const handleLogoutUser = useCallback(() => {
