@@ -1,2 +1,1 @@
-export { default as NormalVideoForm } from './NormalVideoForm';
-export { default as EmbedVideoForm } from './EmbedVideoForm';
+export { default as VideoForm } from './VideoForm';

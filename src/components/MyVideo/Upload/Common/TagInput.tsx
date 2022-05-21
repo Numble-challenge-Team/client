@@ -1,34 +1,49 @@
-import { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler, PropsWithChildren, useState } from 'react';
-
-import { useRecoilState } from 'recoil';
-import { myVideoTags } from '@store/uploadVideo/common';
+import { UploadType, UpdateType, ValidMap } from '@/types/videoForm';
+import { ChangeEventHandler, KeyboardEventHandler, memo, MouseEventHandler, PropsWithChildren, useState } from 'react';
 
 import * as FormStyled from './FormStyle';
 
-interface TagInputProps {}
+interface TagInputProps {
+  tags: string[];
+  setVideoFormDataByKey: (key: keyof UploadType, value: UploadType[keyof UploadType]) => void;
+  initUpdateFormData?: UpdateType;
+  setValidMapByKey: (key: keyof ValidMap, isValid: boolean, inValidMessage?: string) => void;
+}
 
-function TagInput({}: PropsWithChildren<TagInputProps>) {
-  const [tags, setTags] = useRecoilState(myVideoTags);
-
-  const [tag, setTag] = useState<string>('');
+function TagInput({
+  tags,
+  initUpdateFormData,
+  setVideoFormDataByKey,
+  setValidMapByKey,
+}: PropsWithChildren<TagInputProps>) {
+  const [tag, setTag] = useState('');
   const changeTag: ChangeEventHandler<HTMLInputElement> = (e) => {
     setTag(e.target.value);
   };
 
+  const setValidTags = (tags: string[]) => {
+    if (!initUpdateFormData) {
+      return;
+    }
+
+    const newTags = [...tags].sort();
+    const initTags = [...initUpdateFormData.tags].sort();
+    const baseTags = newTags.length > initTags.length ? newTags : initTags;
+
+    setValidMapByKey('tags', !baseTags.every((_, idx) => initTags[idx] === newTags[idx]));
+  };
   const addTags: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter' && tag) {
       e.preventDefault();
+
+      const newTags = (
+        tags.includes(tag) ? [tag, ...tags.filter((tagInTags) => tagInTags !== tag)] : [tag, ...tags]
+      ).slice(0, 3);
+      setVideoFormDataByKey('tags', newTags);
+      setValidTags(newTags);
       setTag('');
-
-      if (tags.includes(tag)) {
-        setTags([tag, ...tags.filter((tagInTags) => tagInTags !== tag)].slice(0, 3));
-        return;
-      }
-
-      setTags([tag, ...tags].slice(0, 3));
     }
   };
-
   const deleteTag: MouseEventHandler<HTMLButtonElement> = (e) => {
     const hashTag = ((e.target as HTMLButtonElement).previousElementSibling as HTMLSpanElement).textContent;
     const parseHashTag = hashTag?.replace('#', '');
@@ -36,7 +51,9 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
     if (!parseHashTag) {
       return;
     }
-    setTags(tags.filter((tag) => tag !== parseHashTag));
+    const newTags = tags.filter((tag) => tag !== parseHashTag);
+    setVideoFormDataByKey('tags', newTags);
+    setValidTags(newTags);
   };
 
   const blockSubmit: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -72,4 +89,4 @@ function TagInput({}: PropsWithChildren<TagInputProps>) {
   );
 }
 
-export default TagInput;
+export default memo(TagInput);
