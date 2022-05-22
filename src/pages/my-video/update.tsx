@@ -22,7 +22,6 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
   const setShowToastModal = useSetRecoilState(showToastModalState);
   const setToastModalMessage = useSetRecoilState(toastModalMessageState);
   const { data, isLoading } = useVideoDetailQuery(`${updateVideoId}`, {
-    retry: false,
     enabled: typeof updateVideoId === 'number',
   });
 
