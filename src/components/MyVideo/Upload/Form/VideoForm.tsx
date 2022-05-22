@@ -68,7 +68,13 @@ function VideoForm({ formType, initUpdateFormData, isUploading, submitFormData }
 
     const videoFormDataList = Object.entries(videoFormData);
     videoFormDataList.forEach(([key, value]) => {
-      if (key === 'video' || key === 'thumbnail') {
+      if (key === 'video') {
+        if (formType === 'embed') {
+          formData.append('videoUrl', validMap[key].isValid ? videoFormData.video.url : '');
+        } else {
+          formData.append(key, validMap[key].isValid ? (videoFormData[key].file as File) : new File([], 'empty'));
+        }
+      } else if (key === 'thumbnail') {
         formData.append(key, validMap[key].isValid ? (videoFormData[key].file as File) : new File([], 'empty'));
       } else if (key === 'tags') {
         if (validMap[key].isValid && videoFormData.tags.length) {
