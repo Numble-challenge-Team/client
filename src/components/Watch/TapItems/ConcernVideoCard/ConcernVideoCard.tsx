@@ -13,7 +13,7 @@ interface ConcernVideoCard {
 
 function ConcernVideoCard({ video }: ConcernVideoCard) {
   const router = useRouter();
-  const { usersId, title, thumbnail, view, created_at, videoId } = video;
+  const { title, thumbnail, view, created_at, videoId, nickname } = video;
 
   const handleVideoDetailPage = () => {
     router.push({
@@ -36,7 +36,7 @@ function ConcernVideoCard({ video }: ConcernVideoCard) {
           {title}
         </Title>
         <Styled.ConcernVideoUserInfo>
-          <Text fontColor="600">{usersId}</Text>
+          <Text fontColor="600">{nickname}</Text>
         </Styled.ConcernVideoUserInfo>
       </div>
     </Styled.VideoContainer>
