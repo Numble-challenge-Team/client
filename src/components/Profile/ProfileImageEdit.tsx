@@ -6,10 +6,11 @@ import * as Styled from './ProfileStyle';
 interface ProfileImageEditPropsType {
   imageUrl?: string;
   imageName?: string;
+  nickname?: string;
   _onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function ProfileImageEdit({ imageUrl, imageName, _onChange }: ProfileImageEditPropsType) {
+function ProfileImageEdit({ imageUrl, imageName, nickname, _onChange }: ProfileImageEditPropsType) {
   const imageInput = useRef<HTMLInputElement>(null);
 
   const handleUploadImage = useCallback(() => {
@@ -37,7 +38,7 @@ function ProfileImageEdit({ imageUrl, imageName, _onChange }: ProfileImageEditPr
         </Styled.ImageEditButton>
       </Styled.EditUserImageWrapper>
       <Text size="textL" hasBold>
-        {imageName}
+        {nickname}
       </Text>
     </Styled.UserImageNickname>
   );

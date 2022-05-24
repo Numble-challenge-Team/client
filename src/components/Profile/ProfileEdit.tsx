@@ -82,6 +82,7 @@ function ProfileEdit({ userData, setIsEditProfile, refetch }: ProfileEditPropsTy
         <ProfileImageEdit
           imageUrl={userData?.profileImg.url}
           imageName={userData?.nickname}
+          nickname={userData?.nickname}
           _onChange={(e) => handleEditImage(e)}
         />
       )}

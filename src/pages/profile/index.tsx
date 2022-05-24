@@ -102,6 +102,7 @@ function ProfilePage() {
               <ProfileImageEdit
                 imageUrl={userProfileImage}
                 imageName={data?.profileImg.name}
+                nickname={data?.nickname}
                 _onChange={(e) => handleEditImage(e)}
               />
             )}
