@@ -27,6 +27,15 @@ export const UserInfoWrapper = styled.div`
     flex: 12;
   }
   div:nth-child(3) {
+    position: relative;
+    flex: 1;
+
+    & > button {
+      position: absolute;
+      top: 0.2rem;
+    }
+  }
+  div:nth-child(4) {
     flex: 1;
     gap: 0.4rem;
 

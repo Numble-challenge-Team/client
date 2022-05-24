@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil';
 
 import Layout from '@components/Layout/Layout';
 import TapPanel from '@components/Watch/TapPanel/TapPanel';
-import { Icon, Profile, Tag, Text, Title } from '@components/Common';
+import { Alert, Button, Icon, Profile, Tag, Text, Title } from '@components/Common';
 import WatchSkeleton from '@components/Watch/WatchSkeleton/WatchSkeleton';
 
 import * as Styled from '@components/Watch/WatchStyle';
@@ -29,6 +29,9 @@ function VideoWatchPage() {
   const [isOpenDescription, setIsOpenDescription] = useState<boolean>(false);
   const [userProfileImage, setUserProfileImage] = useState<string>('');
   const [isLikeVideo, setIsLikeVideo] = useState<boolean>(false);
+  const [isShowReportVideoModal, setIsShowReportVideoModal] = useState<boolean>(false);
+  const [isSuccessReportVideo, setIsSuccessReportVideo] = useState<boolean>(false);
+
   const [videoDetailData, setVideoDetailData] = useState<VideoIframeDataType>({
     title: '',
     url: '',
@@ -65,6 +68,21 @@ function VideoWatchPage() {
     setIsOpenDescription((prev) => !prev);
   }, [isOpenDescription]);
 
+  const handleReportVideoButton = useCallback(
+    (type: 'close' | 'submit') => {
+      switch (type) {
+        case 'close':
+          setIsShowReportVideoModal((prev) => !prev);
+          break;
+        case 'submit':
+          setIsSuccessReportVideo(true);
+          break;
+        // no default
+      }
+    },
+    [isShowReportVideoModal]
+  );
+
   const handleLikeVideoButton = useCallback(() => {
     setIsLikeVideo((prev) => !prev);
     fetchLikeVideo.mutate(videoId);
@@ -75,71 +93,110 @@ function VideoWatchPage() {
   }
 
   return (
-    <Layout hasNav={false} hasHeader={false}>
-      {/* 영상 */}
-      <Styled.VideoContainer>
-        <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
-      </Styled.VideoContainer>
+    <>
+      <Layout hasNav={false} hasHeader={false}>
+        {/* 영상 */}
+        <Styled.VideoContainer>
+          <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+        </Styled.VideoContainer>
 
-      <Styled.VideoDetailInfoContainer>
-        <div>
-          {/* 비디오 유저 정보 */}
-          <Styled.UserInfoWrapper>
-            <div>
-              {userProfileImage && <Profile size={36} profileUrl={userProfileImage} alt="비디오 업로드 유저 프로필" />}
-            </div>
-            <div>
-              <Text fontColor="600" margin="0 0 1.2rem">
-                {data?.videoDetail.nickname}
-              </Text>
-              <Text size="text4" fontColor="500">
-                조회수 {data?.videoDetail.view} | {dateFormatter(data?.videoDetail.created_at)}
-              </Text>
-            </div>
+        <Styled.VideoDetailInfoContainer>
+          <div>
+            {/* 비디오 유저 정보 */}
+            <Styled.UserInfoWrapper>
+              <div>
+                {userProfileImage && (
+                  <Profile size={36} profileUrl={userProfileImage} alt="비디오 업로드 유저 프로필" />
+                )}
+              </div>
+              <div>
+                <Text fontColor="600" margin="0 0 1.2rem">
+                  {data?.videoDetail.nickname}
+                </Text>
+                <Text size="text4" fontColor="500">
+                  조회수 {data?.videoDetail.view} | {dateFormatter(data?.videoDetail.created_at)}
+                </Text>
+              </div>
 
-            {/* 좋아요 버튼 */}
-            <div>
-              <button type="button" onClick={handleLikeVideoButton}>
-                <Icon type={data?.videoDetail.liked || isLikeVideo ? 'fill-heart' : 'heart'} width={20} height={20} />
-                <span>{data?.videoDetail.likes}</span>
-              </button>
-            </div>
-          </Styled.UserInfoWrapper>
+              {/* 신고 버튼 */}
+              <div>
+                <button type="button" onClick={() => handleReportVideoButton('close')}>
+                  <Icon type="flag" width={18} height={18} />
+                </button>
+              </div>
+              {/* 좋아요 버튼 */}
+              <div>
+                <button type="button" onClick={handleLikeVideoButton}>
+                  <Icon type={data?.videoDetail.liked || isLikeVideo ? 'fill-heart' : 'heart'} width={20} height={20} />
+                  <span>{data?.videoDetail.likes}</span>
+                </button>
+              </div>
+            </Styled.UserInfoWrapper>
 
-          {/* 비디오 제목 */}
-          <Styled.VideoTitleWrapper>
-            <div>
-              <Title size="title2" hasBold={false}>
-                {data?.videoDetail.title}
-              </Title>
-              <Icon
-                type={isOpenDescription ? 'chevron-down' : 'chevron-up'}
-                width={20}
-                height={20}
-                clickEvent={handleDescriptionOpen}
-              />
-            </div>
+            {/* 비디오 제목 */}
+            <Styled.VideoTitleWrapper>
+              <div>
+                <Title size="title2" hasBold={false}>
+                  {data?.videoDetail.title}
+                </Title>
+                <Icon
+                  type={isOpenDescription ? 'chevron-down' : 'chevron-up'}
+                  width={20}
+                  height={20}
+                  clickEvent={handleDescriptionOpen}
+                />
+              </div>
 
-            {/* 비디오 설명 */}
-            {isOpenDescription && (
-              <Styled.VideoDescriptionWrapper>
-                <p>{data?.videoDetail.description}</p>
-              </Styled.VideoDescriptionWrapper>
-            )}
-          </Styled.VideoTitleWrapper>
+              {/* 비디오 설명 */}
+              {isOpenDescription && (
+                <Styled.VideoDescriptionWrapper>
+                  <p>{data?.videoDetail.description}</p>
+                </Styled.VideoDescriptionWrapper>
+              )}
+            </Styled.VideoTitleWrapper>
 
-          {/* 비디오 태그 */}
-          <Styled.TagsWrapper>
-            {data?.videoDetail.tags?.map((tag: string) => (
-              <Tag key={tag} tag={tag} />
-            ))}
-          </Styled.TagsWrapper>
-        </div>
+            {/* 비디오 태그 */}
+            <Styled.TagsWrapper>
+              {data?.videoDetail.tags?.map((tag: string) => (
+                <Tag key={tag} tag={tag} />
+              ))}
+            </Styled.TagsWrapper>
+          </div>
 
-        {/* 관련영상 & 댓글 */}
-        <TapPanel concernVideoList={data?.concernVideoList} comments={data?.comments} />
-      </Styled.VideoDetailInfoContainer>
-    </Layout>
+          {/* 관련영상 & 댓글 */}
+          <TapPanel concernVideoList={data?.concernVideoList} comments={data?.comments} />
+        </Styled.VideoDetailInfoContainer>
+      </Layout>
+      {isShowReportVideoModal && (
+        <Alert onBlurModal={() => handleReportVideoButton('close')}>
+          {isSuccessReportVideo ? (
+            <>
+              <div>
+                <Text>신고가 완료되었습니다.</Text>
+                <Text>콘텐츠 유해성 확인 후 조치하겠습니다.</Text>
+              </div>
+              <Button type="button" size="M" backColor="primary" clickEvent={() => handleReportVideoButton('close')}>
+                확인
+              </Button>
+            </>
+          ) : (
+            <>
+              <div>
+                <Text>영상을 신고하시겠어요?</Text>
+              </div>
+              <div>
+                <Button type="button" size="S" backColor="border" clickEvent={() => handleReportVideoButton('close')}>
+                  취소
+                </Button>
+                <Button type="button" size="S" backColor="primary" clickEvent={() => handleReportVideoButton('submit')}>
+                  확인
+                </Button>
+              </div>
+            </>
+          )}
+        </Alert>
+      )}
+    </>
   );
 }
 
