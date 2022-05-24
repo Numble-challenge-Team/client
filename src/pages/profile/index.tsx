@@ -1,18 +1,20 @@
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { Alert, Button, Profile, Text } from '@components/Common';
+import { Alert, Button, Text } from '@components/Common';
 import ProfileEdit from '@components/Profile/ProfileEdit';
 import * as Styled from '@components/Profile/ProfileStyle';
 
 import { UserProfileType } from '@/types/profile';
 
-import { useLogoutMutation, useProfileQuery, useSignoutMutation } from '@api/queries/users';
+import { useLogoutMutation, useProfileMutation, useProfileQuery, useSignoutMutation } from '@api/queries/users';
 import { useRouter } from 'next/router';
 import dateFormatter from '@utils/dateFormatter';
+import ProfileImageEdit from '@components/Profile/ProfileImageEdit';
 
 function ProfilePage() {
   const router = useRouter();
+
   const [userProfileImage, setUserProfileImage] = useState<string>('');
   const [isOpenEditProfileInput, setIsOpenEditProfileInput] = useState<boolean>(false);
   const [isLogout, setIsLogout] = useState<boolean>(false);
@@ -39,6 +41,12 @@ function ProfilePage() {
     },
   });
 
+  const fetchSaveEditImage = useProfileMutation<FormData>({
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
   const handleModalCancel = useCallback(() => {
     if (isLogout) {
       setIsLogout((prev) => !prev);
@@ -58,6 +66,16 @@ function ProfilePage() {
 
   const handleSignoutUser = useCallback(() => {
     fetchSignoutUser.mutate(null);
+  }, []);
+
+  const handleEditImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const formData = new FormData();
+      formData.append('img', e.target.files[0]);
+      formData.append('nickname', '');
+
+      fetchSaveEditImage.mutate(formData);
+    }
   }, []);
 
   return (
@@ -80,12 +98,14 @@ function ProfilePage() {
           <ProfileEdit userData={data} setIsEditProfile={setIsEditProfile} refetch={refetch} />
         ) : (
           <>
-            <Styled.UserImageNickname>
-              {userProfileImage && <Profile profileUrl={userProfileImage} alt={data?.profileImg.name} size={128} />}
-              <Text size="textL" hasBold>
-                {data?.nickname}
-              </Text>
-            </Styled.UserImageNickname>
+            {userProfileImage && (
+              <ProfileImageEdit
+                imageUrl={userProfileImage}
+                imageName={data?.profileImg.name}
+                _onChange={(e) => handleEditImage(e)}
+              />
+            )}
+
             <Styled.UserEmail>
               <Text size="text3" fontColor="500">
                 E-mail
