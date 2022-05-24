@@ -1,8 +1,8 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
 
-import { Button, Icon, Input, Profile, Text } from '@components/Common';
+import { Button, Input, Text } from '@components/Common';
 import { NICKNAME_VALIDATION } from '@constants/validation';
 
 import { UserNicknameType, UserProfileType } from '@/types/profile';
@@ -14,6 +14,7 @@ import { useProfileMutation } from '@api/queries/users';
 
 import * as SignupStyle from '@components/Signup/SignupPageStyle';
 import * as Styled from './ProfileStyle';
+import ProfileImageEdit from './ProfileImageEdit';
 
 interface ProfileEditPropsType {
   userData?: UserProfileType;
@@ -29,7 +30,6 @@ function ProfileEdit({ userData, setIsEditProfile, refetch }: ProfileEditPropsTy
     formState: { errors },
     handleSubmit,
   } = useForm<FormRegisterType>();
-  const imageInput = useRef<HTMLInputElement>(null);
 
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
@@ -58,12 +58,6 @@ function ProfileEdit({ userData, setIsEditProfile, refetch }: ProfileEditPropsTy
     },
   });
 
-  const handleUploadImage = useCallback(() => {
-    if (imageInput.current) {
-      imageInput.current.click();
-    }
-  }, []);
-
   const handleEditProfileSubmit = useCallback((userNickname: UserNicknameType) => {
     const formData = new FormData();
     formData.append('img', new File([], 'empty'));
@@ -84,30 +78,13 @@ function ProfileEdit({ userData, setIsEditProfile, refetch }: ProfileEditPropsTy
 
   return (
     <>
-      <Styled.UserImageNickname>
-        {/* 프로필 이미지 수정 */}
-        <Styled.EditUserImageWrapper>
-          <form encType="multipart/form-data">
-            <input
-              type="file"
-              accept="image/jpg,image/png,/image/jpeg"
-              name="file"
-              hidden
-              onChange={(e) => handleEditImage(e)}
-              ref={imageInput}
-            />
-          </form>
-          {userData?.profileImg.url && (
-            <Profile profileUrl={userData?.profileImg.url} alt={userData?.profileImg.name} size={128} />
-          )}
-          <Styled.ImageEditButton onClick={handleUploadImage}>
-            <Icon type="profile-edit" />
-          </Styled.ImageEditButton>
-        </Styled.EditUserImageWrapper>
-        <Text size="textL" hasBold>
-          {userData?.nickname}
-        </Text>
-      </Styled.UserImageNickname>
+      {userData && (
+        <ProfileImageEdit
+          imageUrl={userData?.profileImg.url}
+          imageName={userData?.nickname}
+          _onChange={(e) => handleEditImage(e)}
+        />
+      )}
 
       {/* 닉네임 수정 */}
       <Styled.UserNickname>

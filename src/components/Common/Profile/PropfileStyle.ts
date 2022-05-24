@@ -8,5 +8,5 @@ export const ProfileStyle = styled.div`
 
 export const ProfileImage = styled(Image)`
   object-fit: contain;
-  border-radius: 50px;
+  border-radius: 50%;
 `;
