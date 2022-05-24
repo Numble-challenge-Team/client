@@ -10,7 +10,7 @@ export function interceptors(requestHTTP: AxiosInstance) {
 
       if (config.headers) {
         config.headers.Authorization = `Bearer ${accessToken}`;
-        config.headers.guest = !accessToken;
+        config.headers.guest = config.headers.guest || !accessToken;
         return config;
       }
     },
@@ -29,21 +29,27 @@ export function interceptors(requestHTTP: AxiosInstance) {
 
       if (error.response.status === 401) {
         try {
-          const response = await axiosService.post('/users/reissue', {
-            accessToken,
-            refreshToken,
-          });
+          if (accessToken && refreshToken) {
+            const response = await axiosService.post('/users/reissue', {
+              accessToken,
+              refreshToken,
+            });
+            localStorage.setItem('accessToken', response.data.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.data.refreshToken);
 
-          localStorage.setItem('accessToken', response.data.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.data.refreshToken);
-
-          error.config.headers.Authorization = `Bearer ${accessToken}`;
-          return requestHTTP(error.config);
-        } catch (error) {
-          console.log('토큰 만료 후 재요청 실패', { error });
-          if (axios.isAxiosError(error)) {
-            if (error.response?.status === 403) {
-              alert('로그인 유효기간이 만료 되었습니다. 다시 로그인 해주세요.');
+            error.config.headers.Authorization = `Bearer ${accessToken}`;
+            return requestHTTP(error.config);
+          }
+          alert('로그인 후 이용해 주세요.');
+          window.location.href = '/login';
+        } catch (axiosError) {
+          if (axios.isAxiosError(axiosError)) {
+            if (axiosError.response?.status === 403) {
+              if (/\/videos\/(main|search)/.test(error.config.url)) {
+                error.config.headers.guest = true;
+                return requestHTTP(error.config);
+              }
+              alert('로그인 정보가 만료되었습니다. 다시 로그인 해주세요.');
               window.location.href = '/login';
             }
           }

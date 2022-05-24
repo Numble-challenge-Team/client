@@ -1,36 +1,66 @@
-import { ChangeEventHandler } from 'react';
-
-import { useRecoilState } from 'recoil';
-import { isValidMyVideoTitle } from '@store/uploadVideo/valid';
-import { myVideoTitle, myVideoDescription } from '@store/uploadVideo/common';
+import { UploadType, UpdateType, ValidMap } from '@/types/videoForm';
+import { ChangeEventHandler, memo } from 'react';
 
 import TextareaAutosize from 'react-textarea-autosize';
+
 import * as FormStyled from './FormStyle';
-import ImgInput from './ImgInput';
-import TagInput from './TagInput';
 import InputWithTitle from './InputWithTitle';
+import TagInput from './TagInput';
+import FileInput from './FileInput';
 
 interface CommonFormProps {
+  thumbnail: {
+    file?: File | null;
+    name: string;
+    url: string;
+    size?: number;
+  };
+  title: string;
+  tags: string[];
+  description: string;
+  setVideoFormDataByKey: (key: keyof UploadType, value: UploadType[keyof UploadType]) => void;
+  initUpdateFormData?: UpdateType;
   isValid: boolean;
+  setValidMapByKey: (key: keyof ValidMap, isValid: boolean, inValidMessage?: string) => void;
 }
 
-function CommonForm({ isValid }: CommonFormProps) {
-  const [isValidTitle, setIsValidTitle] = useRecoilState(isValidMyVideoTitle);
-  const [title, setTitle] = useRecoilState(myVideoTitle);
+function CommonForm({
+  thumbnail,
+  title,
+  tags,
+  description,
+  setVideoFormDataByKey,
+  initUpdateFormData,
+  isValid,
+  setValidMapByKey,
+}: CommonFormProps) {
   const changeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setIsValidTitle(!!e.target.value);
-    setTitle(e.target.value);
+    const { value } = e.target;
+    setVideoFormDataByKey('title', value);
+    if (initUpdateFormData) {
+      setValidMapByKey('title', initUpdateFormData.title !== value && !!value);
+    } else {
+      setValidMapByKey('title', !!value);
+    }
   };
-
-  const [description, setDescription] = useRecoilState(myVideoDescription);
   const changeDescription: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setDescription(e.target.value);
+    const { value } = e.target;
+    setVideoFormDataByKey('description', value);
+    if (initUpdateFormData) {
+      setValidMapByKey('description', !!value && initUpdateFormData.description !== value);
+    }
   };
 
   return (
     <>
       <InputWithTitle title="썸네일 이미지">
-        <ImgInput />
+        <FileInput
+          type="image"
+          placeholder="썸네일 업로드"
+          fileInfo={thumbnail}
+          setVideoFormDataByKey={setVideoFormDataByKey}
+          setValidMapByKey={setValidMapByKey}
+        />
       </InputWithTitle>
 
       <InputWithTitle title="제목">
@@ -40,12 +70,17 @@ function CommonForm({ isValid }: CommonFormProps) {
           type="text"
           placeholder="제목을 입력해주세요."
           onChange={changeTitle}
-          value={title as string}
+          value={title}
         />
       </InputWithTitle>
 
       <InputWithTitle title="태그">
-        <TagInput />
+        <TagInput
+          tags={tags}
+          setVideoFormDataByKey={setVideoFormDataByKey}
+          initUpdateFormData={initUpdateFormData}
+          setValidMapByKey={setValidMapByKey}
+        />
       </InputWithTitle>
 
       <InputWithTitle title="설명">
@@ -63,4 +98,4 @@ function CommonForm({ isValid }: CommonFormProps) {
   );
 }
 
-export default CommonForm;
+export default memo(CommonForm);

@@ -2,7 +2,6 @@ import { MutationFunction, useMutation, UseMutationOptions } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { axiosWithTokenInUpload } from '@api';
 import { FetchDataType } from '@/types/fetchData';
-import { EmbedUploadType, AddUploadType } from '@/types/upload';
 
 // 임베드 영상 업로드
 export const useEmbedUploadMutation = (

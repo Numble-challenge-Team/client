@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/router';
@@ -7,9 +7,11 @@ import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
 
 import * as Styled from '@components/Layout/LayoutStyle';
+import * as SignupStyle from '@components/Signup/SignupPageStyle';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
 import { LoginRequestDataType } from '@/types/login';
+import { FormRegisterType } from '@/types/signup';
 
 import { useLoginMutation } from '@api/queries/users';
 
@@ -20,17 +22,20 @@ function LoginPage() {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<any>();
+  } = useForm<FormRegisterType>();
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
 
   const loginMutation = useLoginMutation({
+    onMutate: () => {
+      setIsFormErrorState(false);
+      setEmailErrorMessage('');
+    },
     onSuccess: (data) => {
       const { accessToken, refreshToken } = data.data.data;
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
 
-      setIsFormErrorState(false);
       router.push('/');
     },
     onError: (error) => {
@@ -49,20 +54,23 @@ function LoginPage() {
     },
   });
 
-  const handleLoginSubmit = (data: LoginRequestDataType) => {
-    setEmailErrorMessage('');
+  const handleLoginSubmit = useCallback(
+    (data: LoginRequestDataType) => {
+      setEmailErrorMessage('');
 
-    if (data.email === '' || data.password === '') {
-      setIsFormErrorState(true);
-      setEmailErrorMessage('이메일 또는 비밀번호를 입력해 주세요.');
-      return;
-    }
+      if (data.email === '' || data.password === '') {
+        setIsFormErrorState(true);
+        setEmailErrorMessage('이메일 또는 비밀번호를 입력해 주세요.');
+        return;
+      }
 
-    loginMutation.mutate(data);
-  };
+      loginMutation.mutate(data);
+    },
+    [isFormErrorState, emailErrorMessage]
+  );
 
   const handleSignupButton = () => {
-    router.push('/signup/email');
+    router.push('/signup');
   };
 
   return (
@@ -88,7 +96,7 @@ function LoginPage() {
             placeholderText="비밀번호를 입력해 주세요."
             hasErrorDisplay={isFormErrorState || !!errors.email?.message}
           />
-          {errors && <Text hasError={errors}>{errors.email?.message}</Text>}
+          {errors && <SignupStyle.ErrorMessage>{errors.email?.message}</SignupStyle.ErrorMessage>}
           {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
           <Button type="submit" margin="3.6rem 0 0 0">

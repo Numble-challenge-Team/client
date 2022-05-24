@@ -7,6 +7,7 @@ export const UserImageNickname = styled.div`
   align-items: center;
   gap: 2.8rem;
   margin-bottom: 6rem;
+  padding-top: 6rem;
 `;
 
 export const UserInfoStyle = styled.div`
@@ -27,20 +28,8 @@ export const UserNickname = styled.div`
   }
 `;
 
-export const LogoutModalStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 7.2rem 4rem 0;
-`;
-
-export const LogoutButtonWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 5rem;
-`;
-
 export const EditProfileButtonWrapper = styled.div`
-  margin-top: 18rem;
+  margin-top: 12rem;
 `;
 
 export const EditUserImageWrapper = styled.div`

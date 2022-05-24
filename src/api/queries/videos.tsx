@@ -26,8 +26,6 @@ const fetchAllVideos =
       res = await axiosWithToken.get<resVideos>(`/videos/main${commonQuery}`);
     }
 
-    console.log({ res });
-
     const { contents, hasMore, totalCount } = res.data;
     return {
       contents,

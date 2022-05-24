@@ -13,5 +13,5 @@ export interface UserNicknameType {
 }
 
 export interface UserEditDataType extends UserNicknameType {
-  img: FormData;
+  img: File;
 }

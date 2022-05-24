@@ -1,104 +1,100 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
 
-import { Button, Icon, Input, Profile, Text } from '@components/Common';
+import { Button, Input, Text } from '@components/Common';
 import { NICKNAME_VALIDATION } from '@constants/validation';
-import { UserEditDataType, UserNicknameType, UserProfileType } from '@/types/profile';
 
+import { UserNicknameType, UserProfileType } from '@/types/profile';
+import { FetchDataType } from '@/types/fetchData';
+import { FormRegisterType } from '@/types/signup';
+
+import { AxiosError } from 'axios';
 import { useProfileMutation } from '@api/queries/users';
 
+import * as SignupStyle from '@components/Signup/SignupPageStyle';
 import * as Styled from './ProfileStyle';
+import ProfileImageEdit from './ProfileImageEdit';
 
 interface ProfileEditPropsType {
   userData?: UserProfileType;
-  isEditDone: boolean;
-  setIsEditDone: Dispatch<SetStateAction<boolean>>;
+  setIsEditProfile: Dispatch<SetStateAction<boolean>>;
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
+  ) => Promise<QueryObserverResult<UserProfileType, AxiosError<FetchDataType, any>>>;
 }
 
-function ProfileEdit({ userData, isEditDone, setIsEditDone }: ProfileEditPropsType) {
+function ProfileEdit({ userData, setIsEditProfile, refetch }: ProfileEditPropsType) {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<any>();
-  const imageInput = useRef<HTMLInputElement>(null);
+  } = useForm<FormRegisterType>();
 
-  const [userProfileImage, setUserProfileImage] = useState<any>(userData?.profileImg.url);
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
-  const [userSaveEditData, setUserSaveEditData] = useState<any>({
-    nickname: '',
-  });
+  const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
 
-  const fetchSaveEditProfil = useProfileMutation<UserEditDataType>({
+  const fetchSaveEditImage = useProfileMutation<FormData>({
     onSuccess: () => {
-      setIsEditDone(false);
+      refetch();
     },
   });
-  const formData = new FormData();
 
-  const handleEditProfileSubmit = (userNickname: UserNicknameType) => {
-    console.log(formData);
+  const fetchSaveEditProfile = useProfileMutation<FormData>({
+    onMutate: () => {
+      setIsFormErrorState(false);
+      setNicknameErrorMessage('');
+    },
+    onSuccess: () => {
+      refetch();
+      setIsEditProfile(false);
+    },
+    onError: (error) => {
+      setIsFormErrorState(true);
 
-    const userEditData = {
-      img: formData,
-      nickname: userNickname.nickname,
-    };
+      if (error.response) {
+        setNicknameErrorMessage(error.response.data.message);
+      }
+    },
+  });
 
-    fetchSaveEditProfil.mutate(userEditData);
-  };
+  const handleEditProfileSubmit = useCallback((userNickname: UserNicknameType) => {
+    const formData = new FormData();
+    formData.append('img', new File([], 'empty'));
+    formData.append('nickname', userNickname.nickname);
 
-  const handleUploadImage = useCallback(() => {
-    if (imageInput.current) {
-      imageInput.current.click();
-    }
+    fetchSaveEditProfile.mutate(formData);
   }, []);
 
-  const handleEditImage = useCallback((e: any) => {
+  const handleEditImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      formData.append('img', e.target.files ? e.target.files : new File([], 'empty'));
-      // setUserProfileImage(formData);
+      const formData = new FormData();
+      formData.append('img', e.target.files[0]);
+      formData.append('nickname', '');
+
+      fetchSaveEditImage.mutate(formData);
     }
-
-    console.log('@@@11', formData, e.target.files);
   }, []);
-
-  console.log('@@@@22', userProfileImage);
 
   return (
     <>
-      <Styled.UserImageNickname>
-        {/* 프로필 이미지 수정 */}
-        <Styled.EditUserImageWrapper>
-          <form encType="multipart/form-data">
-            <input
-              type="file"
-              accept="image/jpg,image/png,/image/jpeg"
-              name="file"
-              hidden
-              onChange={(e) => handleEditImage(e)}
-              ref={imageInput}
-            />
-          </form>
-          {userData?.profileImg.url && (
-            <Profile profileUrl={userProfileImage} alt={userData?.profileImg.name} size={128} />
-          )}
-          <Styled.ImageEditButton onClick={handleUploadImage}>
-            <Icon type="profile-edit" />
-          </Styled.ImageEditButton>
-        </Styled.EditUserImageWrapper>
-        <Text size="textL" hasBold>
-          {userData?.nickname}
-        </Text>
-      </Styled.UserImageNickname>
+      {userData && (
+        <ProfileImageEdit
+          imageUrl={userData?.profileImg.url}
+          imageName={userData?.nickname}
+          nickname={userData?.nickname}
+          _onChange={(e) => handleEditImage(e)}
+        />
+      )}
 
       {/* 닉네임 수정 */}
       <Styled.UserNickname>
         <Text size="text3" fontColor="500">
           Nickname
         </Text>
-        <form onSubmit={handleSubmit(handleEditProfileSubmit)}>
+        <form encType="multipart/form-data" onSubmit={handleSubmit(handleEditProfileSubmit)}>
           <Input
-            type="name"
+            type="nickname"
             label="nickname"
             register={register}
             pattern={NICKNAME_VALIDATION}
@@ -106,6 +102,9 @@ function ProfileEdit({ userData, isEditDone, setIsEditDone }: ProfileEditPropsTy
             hasErrorDisplay={isFormErrorState || !!errors.nickname?.message}
             required
           />
+          {errors && <SignupStyle.ErrorMessage>{errors.nickname?.message}</SignupStyle.ErrorMessage>}
+          {isFormErrorState && <SignupStyle.ErrorMessage>{nicknameErrorMessage}</SignupStyle.ErrorMessage>}
+
           <Styled.EditProfileButtonWrapper>
             <Button type="submit">수정</Button>
           </Styled.EditProfileButtonWrapper>

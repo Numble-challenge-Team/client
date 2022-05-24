@@ -60,13 +60,13 @@ export const OrderButton = styled.button<{ isActive: boolean }>`
     &::before {
       content: '';
       position: absolute;
+      top: 50%;
       left: -0.8rem;
       width: 0.4rem;
       height: 0.4rem;
       background-color: ${theme.color.primary[700]};
       border-radius: 50%;
-      margin-top: 0.7rem;
-      margin-bottom: 0.7rem;
+      transform: translateY(-50%);
     }
   `}
 `;
