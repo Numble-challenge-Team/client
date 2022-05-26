@@ -4,8 +4,7 @@ import { FetchDataType } from '@/types/fetchData';
 import { axiosWithToken } from '@api';
 
 export const useReportsMutation = <BodyDataType,>(
-  url: string,
-  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction>
+  options?: UseMutationOptions<AxiosResponse, AxiosError<FetchDataType>, BodyDataType, MutationFunction | void>
 ) => {
-  return useMutation((bodyData: BodyDataType) => axiosWithToken.post(`/reports/${url}`, bodyData), options);
+  return useMutation((bodyData: BodyDataType) => axiosWithToken.post(`/reports/create?videoId=${bodyData}`), options);
 };
