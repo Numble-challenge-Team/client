@@ -5,6 +5,7 @@ interface ReportVideoModalPropsType {
   isShowReportVideoModal: boolean;
   isShowSuccessModal: boolean;
   isShowFailedModal: boolean;
+  errorMessage: string;
   handleReportVideoButton: (type: 'open' | 'close' | 'submit') => void;
 }
 
@@ -12,6 +13,7 @@ function ReportVideoModal({
   isShowReportVideoModal,
   isShowSuccessModal,
   isShowFailedModal,
+  errorMessage,
   handleReportVideoButton,
 }: ReportVideoModalPropsType) {
   return (
@@ -44,7 +46,7 @@ function ReportVideoModal({
       )}
       {isShowFailedModal && (
         <Alert onBlurModal={() => handleReportVideoButton('close')}>
-          <Text>신고는 한 번만 가능합니다.</Text>
+          <Text>{errorMessage}</Text>
           <Button type="button" size="M" backColor="primary" clickEvent={() => handleReportVideoButton('close')}>
             확인
           </Button>

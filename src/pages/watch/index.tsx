@@ -32,6 +32,7 @@ function VideoWatchPage() {
   const [isShowReportVideoModal, setIsShowReportVideoModal] = useState<boolean>(false);
   const [isSuccessReportVideo, setIsSuccessReportVideo] = useState<boolean>(false);
   const [isFailedReportVideo, setIsFailedReportVideo] = useState<boolean>(false);
+  const [reportErrorMessage, setReportErrorMessage] = useState<string>('');
 
   const [videoDetailData, setVideoDetailData] = useState<VideoIframeDataType>({
     title: '',
@@ -73,7 +74,13 @@ function VideoWatchPage() {
     onSuccess: () => {
       setIsSuccessReportVideo(true);
     },
-    onError: () => {
+    onError: (error) => {
+      if (error.response?.data.status === 404) {
+        setReportErrorMessage('로그인 후 이용가능합니다.');
+      } else if (error.response?.data.status === 403) {
+        setReportErrorMessage('신고는 한 번만 가능합니다.');
+      }
+
       setIsFailedReportVideo(true);
     },
   });
@@ -191,6 +198,7 @@ function VideoWatchPage() {
           isShowReportVideoModal={isShowReportVideoModal}
           isShowSuccessModal={isSuccessReportVideo}
           isShowFailedModal={isFailedReportVideo}
+          errorMessage={reportErrorMessage}
           handleReportVideoButton={handleReportVideoButton}
         />
       </Layout>
