@@ -1,6 +1,4 @@
-/* eslint-disable react/no-danger */
 import { useCallback, useState } from 'react';
-
 import { useRouter } from 'next/router';
 import { useQueryClient } from 'react-query';
 import ReactPlayer from 'react-player/lazy';
@@ -8,7 +6,7 @@ import { useSetRecoilState } from 'recoil';
 
 import Layout from '@components/Layout/Layout';
 import TapPanel from '@components/Watch/TapPanel/TapPanel';
-import { Alert, Button, Icon, Profile, Tag, Text, Title } from '@components/Common';
+import { Icon, Profile, Tag, Text, Title } from '@components/Common';
 import WatchSkeleton from '@components/Watch/WatchSkeleton/WatchSkeleton';
 
 import * as Styled from '@components/Watch/WatchStyle';
@@ -19,6 +17,8 @@ import dateFormatter from '@utils/dateFormatter';
 
 import { useVideoDetailMutation, useVideoDetailQuery } from '@api/queries/watch';
 import { videoDetailTitleState } from '@store/videoDetailTitle';
+import { useReportsMutation } from '@api/queries/reports';
+import ReportVideoModal from '@components/Watch/ReportVideoModal';
 
 function VideoWatchPage() {
   const router = useRouter();
@@ -31,6 +31,7 @@ function VideoWatchPage() {
   const [isLikeVideo, setIsLikeVideo] = useState<boolean>(false);
   const [isShowReportVideoModal, setIsShowReportVideoModal] = useState<boolean>(false);
   const [isSuccessReportVideo, setIsSuccessReportVideo] = useState<boolean>(false);
+  const [isFailedReportVideo, setIsFailedReportVideo] = useState<boolean>(false);
 
   const [videoDetailData, setVideoDetailData] = useState<VideoIframeDataType>({
     title: '',
@@ -39,7 +40,7 @@ function VideoWatchPage() {
 
   const { data, isLoading } = useVideoDetailQuery(videoId, {
     enabled: !!videoId,
-    staleTime: 6000,
+    staleTime: 1000 * 60,
     onSuccess: (data) => {
       const { title, url, videoType, profileImg } = data.videoDetail;
       setVideoTitle(() => title);
@@ -64,23 +65,41 @@ function VideoWatchPage() {
     },
   });
 
+  const fetchReportVideoResult = useReportsMutation({
+    retry: 0,
+    onMutate: () => {
+      setIsShowReportVideoModal(false);
+    },
+    onSuccess: () => {
+      setIsSuccessReportVideo(true);
+    },
+    onError: () => {
+      setIsFailedReportVideo(true);
+    },
+  });
+
   const handleDescriptionOpen = useCallback(() => {
     setIsOpenDescription((prev) => !prev);
   }, [isOpenDescription]);
 
   const handleReportVideoButton = useCallback(
-    (type: 'close' | 'submit') => {
+    (type: 'open' | 'close' | 'submit') => {
       switch (type) {
+        case 'open':
+          setIsShowReportVideoModal(true);
+          break;
         case 'close':
-          setIsShowReportVideoModal((prev) => !prev);
+          setIsShowReportVideoModal(false);
+          setIsSuccessReportVideo(false);
+          setIsFailedReportVideo(false);
           break;
         case 'submit':
-          setIsSuccessReportVideo(true);
+          fetchReportVideoResult.mutate(`${videoId}`);
           break;
         // no default
       }
     },
-    [isShowReportVideoModal]
+    [isShowReportVideoModal, isSuccessReportVideo, isFailedReportVideo]
   );
 
   const handleLikeVideoButton = useCallback(() => {
@@ -120,7 +139,7 @@ function VideoWatchPage() {
 
               {/* 신고 버튼 */}
               <div>
-                <button type="button" onClick={() => handleReportVideoButton('close')}>
+                <button type="button" onClick={() => handleReportVideoButton('open')}>
                   <Icon type="flag" width={18} height={18} />
                 </button>
               </div>
@@ -166,36 +185,15 @@ function VideoWatchPage() {
           {/* 관련영상 & 댓글 */}
           <TapPanel concernVideoList={data?.concernVideoList} comments={data?.comments} />
         </Styled.VideoDetailInfoContainer>
+
+        {/* 비디오 신고 요청 모달 */}
+        <ReportVideoModal
+          isShowReportVideoModal={isShowReportVideoModal}
+          isShowSuccessModal={isSuccessReportVideo}
+          isShowFailedModal={isFailedReportVideo}
+          handleReportVideoButton={handleReportVideoButton}
+        />
       </Layout>
-      {isShowReportVideoModal && (
-        <Alert onBlurModal={() => handleReportVideoButton('close')}>
-          {isSuccessReportVideo ? (
-            <>
-              <div>
-                <Text>신고가 완료되었습니다.</Text>
-                <Text>콘텐츠 유해성 확인 후 조치하겠습니다.</Text>
-              </div>
-              <Button type="button" size="M" backColor="primary" clickEvent={() => handleReportVideoButton('close')}>
-                확인
-              </Button>
-            </>
-          ) : (
-            <>
-              <div>
-                <Text>영상을 신고하시겠어요?</Text>
-              </div>
-              <div>
-                <Button type="button" size="S" backColor="border" clickEvent={() => handleReportVideoButton('close')}>
-                  취소
-                </Button>
-                <Button type="button" size="S" backColor="primary" clickEvent={() => handleReportVideoButton('submit')}>
-                  확인
-                </Button>
-              </div>
-            </>
-          )}
-        </Alert>
-      )}
     </>
   );
 }
