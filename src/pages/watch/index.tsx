@@ -76,7 +76,7 @@ function VideoWatchPage() {
     },
     onError: (error) => {
       if (error.response?.data.status === 404) {
-        setReportErrorMessage('로그인 후 이용가능합니다.');
+        setReportErrorMessage('로그인 후 이용해 주세요.');
       } else if (error.response?.data.status === 403) {
         setReportErrorMessage('신고는 한 번만 가능합니다.');
       }
