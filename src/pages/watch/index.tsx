@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player/lazy';
 import { useSetRecoilState } from 'recoil';
 
 import Layout from '@components/Layout/Layout';
+import CustomHead from '@components/CustomHead/CustomHead';
 import TapPanel from '@components/Watch/TapPanel/TapPanel';
 import { Icon, Profile, Tag, Text, Title } from '@components/Common';
 import WatchSkeleton from '@components/Watch/WatchSkeleton/WatchSkeleton';
@@ -38,14 +39,16 @@ function VideoWatchPage() {
     title: '',
     url: '',
   });
+  const [thumbnailURL, setThumbnailURL] = useState<string>('');
 
   const { data, isLoading } = useVideoDetailQuery(videoId, {
     enabled: !!videoId,
     staleTime: 1000 * 60,
     onSuccess: (data) => {
-      const { title, url, videoType, profileImg } = data.videoDetail;
+      const { title, url, videoType, profileImg, thumbnail } = data.videoDetail;
       setVideoTitle(() => title);
       setUserProfileImage(profileImg.url);
+      setThumbnailURL(thumbnail.url);
 
       if (videoType === 'embedded') {
         setVideoDetailData({ title, url });
@@ -120,6 +123,13 @@ function VideoWatchPage() {
 
   return (
     <>
+      <CustomHead
+        title={videoDetailData.title}
+        description={data?.videoDetail.description}
+        keywords={data?.videoDetail.tags}
+      >
+        <meta property="og:image" content={thumbnailURL} />
+      </CustomHead>
       <Layout hasNav={false} hasHeader={false}>
         {/* 영상 */}
         <Styled.VideoContainer>
