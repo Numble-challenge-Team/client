@@ -40,7 +40,7 @@ export function interceptors(requestHTTP: AxiosInstance) {
             error.config.headers.Authorization = `Bearer ${accessToken}`;
             return requestHTTP(error.config);
           }
-          alert('로그인 후 이용해 주세요.');
+
           window.location.href = '/login';
         } catch (axiosError) {
           if (axios.isAxiosError(axiosError)) {
@@ -49,7 +49,7 @@ export function interceptors(requestHTTP: AxiosInstance) {
                 error.config.headers.guest = true;
                 return requestHTTP(error.config);
               }
-              alert('로그인 정보가 만료되었습니다. 다시 로그인 해주세요.');
+
               window.location.href = '/login';
             }
           }
