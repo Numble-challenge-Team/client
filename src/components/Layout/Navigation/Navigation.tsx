@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import { Icon } from '@components/Common';
@@ -15,9 +16,13 @@ function Navigation() {
   const isMyVideo = router.pathname === '/my-video';
   const isLikeVideo = router.pathname === '/like-video';
   const isProfile = router.pathname === '/profile';
-  const hasToken = !!localStorage.getItem('accessToken');
+  const [hasToken, setHasToken] = useState<boolean>(false);
 
   const judgeColorWithRoute = (isRoute: boolean) => (isRoute ? Theme.color.primary[700] : Theme.color.gray[500]);
+
+  useEffect(() => {
+    setHasToken(!!localStorage.getItem('accessToken'));
+  }, []);
 
   return (
     <NavigationStyled.NavContainer>
@@ -47,7 +52,7 @@ function Navigation() {
             </Link>
           </li>
           <li>
-            <Link href={hasToken ? '"/profile"' : '/login'} passHref>
+            <Link href={hasToken ? '/profile' : '/login'} passHref>
               <NavigationStyled.NavLink isCurrentRoute={isProfile}>
                 <Icon type="user" fill={judgeColorWithRoute(isProfile)} />
                 {hasToken ? '프로필' : '로그인'}
