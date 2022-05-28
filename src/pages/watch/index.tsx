@@ -123,7 +123,9 @@ function VideoWatchPage() {
       <Layout hasNav={false} hasHeader={false}>
         {/* 영상 */}
         <Styled.VideoContainer>
-          <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+          {videoDetailData.url && (
+            <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+          )}
         </Styled.VideoContainer>
 
         <Styled.VideoDetailInfoContainer>
