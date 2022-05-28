@@ -1,7 +1,8 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import { Alert, Button, Text } from '@components/Common';
+import CustomHead from '@components/CustomHead/CustomHead';
+import { Alert, Button, Profile, Text } from '@components/Common';
 import ProfileEdit from '@components/Profile/ProfileEdit';
 import * as Styled from '@components/Profile/ProfileStyle';
 
@@ -80,6 +81,7 @@ function ProfilePage() {
 
   return (
     <>
+      <CustomHead title="프로필" />
       <Layout
         title="프로필"
         hasBackButton

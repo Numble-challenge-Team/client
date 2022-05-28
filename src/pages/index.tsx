@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
 import Layout from '@components/Layout/Layout';
+import CustomHead from '@components/CustomHead/CustomHead';
 import { Alert, Button, Text, VideoList } from '@components/Common';
 
 import { useAllVideosQuery } from '@api/queries/videos';
@@ -46,6 +47,7 @@ function Home() {
 
   return (
     <>
+      <CustomHead title="OZ" description="당신의 동물을 자랑하세요!" keywords={['OZ', '동물']} />
       {isFirstAccess ? (
         <Layout hasNav={false}>하이</Layout>
       ) : (

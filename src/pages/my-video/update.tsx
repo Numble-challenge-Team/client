@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import Layout from '@components/Layout/Layout';
+import CustomHead from '@components/CustomHead/CustomHead';
 import { VideoForm } from '@components/MyVideo/Upload/Form';
 import { Icon } from '@components/Common';
 import * as LayoutStyled from '@components/Layout/LayoutStyle';
@@ -95,24 +96,27 @@ function UpdateMyVideo(prop: UpdateMyVideoProps) {
     };
 
     return (
-      <Layout title="비디오 수정" hasBackButton>
-        {videoType === 'embedded' && (
-          <VideoForm
-            formType="embed"
-            initUpdateFormData={initUpdateFormData}
-            isUploading={updateMutation.isLoading}
-            submitFormData={updateMutation.mutate}
-          />
-        )}
-        {videoType === 'upload' && (
-          <VideoForm
-            formType="normal"
-            initUpdateFormData={initUpdateFormData}
-            isUploading={updateMutation.isLoading}
-            submitFormData={updateMutation.mutate}
-          />
-        )}
-      </Layout>
+      <>
+        <CustomHead title="비디오 수정" />
+        <Layout title="비디오 수정" hasBackButton>
+          {videoType === 'embedded' && (
+            <VideoForm
+              formType="embed"
+              initUpdateFormData={initUpdateFormData}
+              isUploading={updateMutation.isLoading}
+              submitFormData={updateMutation.mutate}
+            />
+          )}
+          {videoType === 'upload' && (
+            <VideoForm
+              formType="normal"
+              initUpdateFormData={initUpdateFormData}
+              isUploading={updateMutation.isLoading}
+              submitFormData={updateMutation.mutate}
+            />
+          )}
+        </Layout>
+      </>
     );
   }
 }

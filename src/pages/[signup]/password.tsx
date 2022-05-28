@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
+import CustomHead from '@components/CustomHead/CustomHead';
 
 import * as Styled from '@components/Layout/LayoutStyle';
 
@@ -60,46 +61,51 @@ function SignupPasswordPage() {
   }, [passwordErrorMessage]);
 
   return (
-    <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
-      <Styled.Section>
-        <Text margin="0 0 0.8rem 0">가입을 진행해 볼까요?</Text>
-        <Title margin="0 0 2.8rem 0">비밀번호를 입력해 주세요.</Title>
-        <form onSubmit={handleSubmit(handlePasswordSubmit)}>
-          <label>Password</label>
-          <Input
-            type="password"
-            label="password"
-            register={register}
-            pattern={PASSWORD_VALIDATION}
-            validate={handlePasswordValidation}
-            placeholderText="영문, 숫자 포함 8자 이상 입력해 주세요."
-            hasErrorDisplay={!!errors.password || !!errors.repeatPassword}
-            margin="1.2rem"
-          />
+    <>
+      <CustomHead title="회원가입 | 비밀번호 입력" />
+      <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
+        <Styled.Section>
+          <Text margin="0 0 0.8rem 0">가입을 진행해 볼까요?</Text>
+          <Title margin="0 0 2.8rem 0">비밀번호를 입력해 주세요.</Title>
+          <form onSubmit={handleSubmit(handlePasswordSubmit)}>
+            <label>Password</label>
+            <Input
+              type="password"
+              label="password"
+              register={register}
+              pattern={PASSWORD_VALIDATION}
+              validate={handlePasswordValidation}
+              placeholderText="영문, 숫자 포함 8자 이상 입력해 주세요."
+              hasErrorDisplay={!!errors.password || !!errors.repeatPassword}
+              margin="1.2rem"
+            />
 
-          <label>Repeat Password</label>
-          <Input
-            type="password"
-            label="repeatPassword"
-            register={register}
-            pattern={PASSWORD_VALIDATION}
-            validate={handlePasswordValidation}
-            placeholderText="비밀번호 확인"
-            hasErrorDisplay={!!errors.password || !!errors.repeatPassword}
-          />
+            <label>Repeat Password</label>
+            <Input
+              type="password"
+              label="repeatPassword"
+              register={register}
+              pattern={PASSWORD_VALIDATION}
+              validate={handlePasswordValidation}
+              placeholderText="비밀번호 확인"
+              hasErrorDisplay={!!errors.password || !!errors.repeatPassword}
+            />
 
-          {passwordErrorMessage && <Text hasError={!!passwordErrorMessage}>{passwordErrorMessage}</Text>}
-          {(errors.password?.type === 'pattern' || errors.repeatPassword?.type === 'pattern') && (
-            <Text hasError={!!errors}>{errors.repeatPassword?.message}</Text>
-          )}
-          {errors.repeatPassword?.type === 'validate' && <Text hasError={!!errors}>비밀번호가 일치하지 않습니다.</Text>}
+            {passwordErrorMessage && <Text hasError={!!passwordErrorMessage}>{passwordErrorMessage}</Text>}
+            {(errors.password?.type === 'pattern' || errors.repeatPassword?.type === 'pattern') && (
+              <Text hasError={!!errors}>{errors.repeatPassword?.message}</Text>
+            )}
+            {errors.repeatPassword?.type === 'validate' && (
+              <Text hasError={!!errors}>비밀번호가 일치하지 않습니다.</Text>
+            )}
 
-          <Button type="submit" margin="3.6rem 0 0 0">
-            다음
-          </Button>
-        </form>
-      </Styled.Section>
-    </Layout>
+            <Button type="submit" margin="3.6rem 0 0 0">
+              다음
+            </Button>
+          </form>
+        </Styled.Section>
+      </Layout>
+    </>
   );
 }
 

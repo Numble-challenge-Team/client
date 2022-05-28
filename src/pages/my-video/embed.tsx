@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import Layout from '@components/Layout/Layout';
+import CustomHead from '@components/CustomHead/CustomHead';
 import { VideoForm } from '@components/MyVideo/Upload/Form';
 
 import { useEmbedUploadMutation } from '@api/queries/upload';
@@ -32,9 +33,12 @@ function MyVideoEmbed(prop: MyVideoEmbedProps) {
   });
 
   return (
-    <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>
-      <VideoForm formType="embed" isUploading={uploadMutation.isLoading} submitFormData={uploadMutation.mutate} />
-    </Layout>
+    <>
+      <CustomHead title="임베드 영상 업로드" description="자랑하고 싶은 동물 영상을 임베드 해보세요." />
+      <Layout hasNav={false} title="임베드 영상 업로드" hasBackButton>
+        <VideoForm formType="embed" isUploading={uploadMutation.isLoading} submitFormData={uploadMutation.mutate} />
+      </Layout>
+    </>
   );
 }
 

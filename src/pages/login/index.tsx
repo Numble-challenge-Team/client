@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
+import CustomHead from '@components/CustomHead/CustomHead';
 
 import * as Styled from '@components/Layout/LayoutStyle';
 import * as SignupStyle from '@components/Signup/SignupPageStyle';
@@ -85,42 +86,43 @@ function LoginPage() {
   };
 
   return (
-    <Layout title="로그인" hasNav={false} hasHeader hasBackButton hasWhitespace>
-      <Styled.Section>
-        <Title margin="0 0 1.2rem 0">환영해요!</Title>
-        <Text margin="0 0 6rem 0">귀여운 친구들을 만나러 가 볼까요?</Text>
-        <form onSubmit={handleSubmit(handleLoginSubmit)}>
-          <label>E-mail</label>
-          <Input
-            label="email"
-            register={register}
-            pattern={EMAIL_VALIDATION}
-            placeholderText="이메일을 입력해 주세요."
-            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-            margin="1.2rem"
-          />
-          <label>Password</label>
-          <Input
-            type="password"
-            label="password"
-            register={register}
-            value={passwordValue}
-            changeEvent={handlePasswordValue}
-            placeholderText="비밀번호를 입력해 주세요."
-            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-          />
-          {errors && <SignupStyle.ErrorMessage>{errors.email?.message}</SignupStyle.ErrorMessage>}
-          {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
+    <>
+      <CustomHead title="로그인" />
+      <Layout title="로그인" hasNav={false} hasHeader hasBackButton hasWhitespace>
+        <Styled.Section>
+          <Title margin="0 0 1.2rem 0">환영해요!</Title>
+          <Text margin="0 0 6rem 0">귀여운 친구들을 만나러 가 볼까요?</Text>
+          <form onSubmit={handleSubmit(handleLoginSubmit)}>
+            <label>E-mail</label>
+            <Input
+              label="email"
+              register={register}
+              pattern={EMAIL_VALIDATION}
+              placeholderText="이메일을 입력해 주세요."
+              hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+              margin="1.2rem"
+            />
+            <label>Password</label>
+            <Input
+              type="password"
+              label="password"
+              register={register}
+              placeholderText="비밀번호를 입력해 주세요."
+              hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+            />
+            {errors && <SignupStyle.ErrorMessage>{errors.email?.message}</SignupStyle.ErrorMessage>}
+            {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
-          <Button type="submit" margin="3.6rem 0 0 0">
-            로그인
-          </Button>
-          <Button backColor="none" hasBold={false} clickEvent={handleSignupButton}>
-            회원가입
-          </Button>
-        </form>
-      </Styled.Section>
-    </Layout>
+            <Button type="submit" margin="3.6rem 0 0 0">
+              로그인
+            </Button>
+            <Button backColor="none" hasBold={false} clickEvent={handleSignupButton}>
+              회원가입
+            </Button>
+          </form>
+        </Styled.Section>
+      </Layout>
+    </>
   );
 }
 
