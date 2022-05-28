@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/router';
@@ -23,6 +23,8 @@ function LoginPage() {
     formState: { errors },
     handleSubmit,
   } = useForm<FormRegisterType>();
+
+  const [passwordValue, setPasswordValue] = useState<string>('');
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
 
@@ -54,19 +56,28 @@ function LoginPage() {
     },
   });
 
+  const handlePasswordValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setPasswordValue(e.target.value);
+  }, []);
+
   const handleLoginSubmit = useCallback(
     (data: LoginRequestDataType) => {
       setEmailErrorMessage('');
 
-      if (data.email === '' || data.password === '') {
+      if ((data.email === '' || data.password === '') && passwordValue === '') {
         setIsFormErrorState(true);
         setEmailErrorMessage('이메일 또는 비밀번호를 입력해 주세요.');
         return;
       }
 
-      loginMutation.mutate(data);
+      const loginData = {
+        email: data.email,
+        password: passwordValue || data.password,
+      };
+
+      loginMutation.mutate(loginData);
     },
-    [isFormErrorState, emailErrorMessage]
+    [passwordValue, isFormErrorState, emailErrorMessage]
   );
 
   const handleSignupButton = () => {
@@ -93,6 +104,8 @@ function LoginPage() {
             type="password"
             label="password"
             register={register}
+            value={passwordValue}
+            changeEvent={handlePasswordValue}
             placeholderText="비밀번호를 입력해 주세요."
             hasErrorDisplay={isFormErrorState || !!errors.email?.message}
           />

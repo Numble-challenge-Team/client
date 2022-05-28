@@ -11,6 +11,7 @@ export interface InputPropsType {
   register: UseFormRegister<FormRegisterType>;
   pattern?: ValidationRule<RegExp>;
   validate?: (value: string) => boolean;
+  value?: string;
   inputSize: string;
   placeholderText?: string;
   margin?: string;
