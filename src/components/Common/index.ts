@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 export { default as Button } from './Button/Button';
+export { default as Drawer } from './Drawer/Drawer';
 export { default as Header } from './Header/Header';
 export { default as SVGSprite } from './SVGSprite/SVGSprite';
 export { default as Icon } from './Icon/Icon';
