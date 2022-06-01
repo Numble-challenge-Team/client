@@ -24,6 +24,7 @@ function LoginPage() {
     handleSubmit,
   } = useForm<FormRegisterType>();
 
+  const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
@@ -56,9 +57,20 @@ function LoginPage() {
     },
   });
 
-  const handlePasswordValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  }, []);
+  const handleLoginChangeValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, type: string) => {
+      switch (type) {
+        case 'email':
+          setEmailValue(e.target.value);
+          break;
+        case 'password':
+          setPasswordValue(e.target.value);
+          break;
+        // no default
+      }
+    },
+    [emailValue, passwordValue]
+  );
 
   const handleLoginSubmit = useCallback(
     (data: LoginRequestDataType) => {
@@ -71,13 +83,13 @@ function LoginPage() {
       }
 
       const loginData = {
-        email: data.email,
+        email: emailValue || data.email,
         password: passwordValue || data.password,
       };
 
       loginMutation.mutate(loginData);
     },
-    [passwordValue, isFormErrorState, emailErrorMessage]
+    [emailValue, passwordValue, isFormErrorState, emailErrorMessage]
   );
 
   const handleSignupButton = () => {
@@ -95,6 +107,8 @@ function LoginPage() {
             label="email"
             register={register}
             pattern={EMAIL_VALIDATION}
+            value={emailValue}
+            changeEvent={(e) => handleLoginChangeValue(e, 'email')}
             placeholderText="이메일을 입력해 주세요."
             hasErrorDisplay={isFormErrorState || !!errors.email?.message}
             margin="1.2rem"
@@ -105,7 +119,7 @@ function LoginPage() {
             label="password"
             register={register}
             value={passwordValue}
-            changeEvent={handlePasswordValue}
+            changeEvent={(e) => handleLoginChangeValue(e, 'password')}
             placeholderText="비밀번호를 입력해 주세요."
             hasErrorDisplay={isFormErrorState || !!errors.email?.message}
           />
