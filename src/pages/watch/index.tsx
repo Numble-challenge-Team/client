@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from 'react-query';
@@ -121,10 +123,23 @@ function VideoWatchPage() {
 
   return (
     <>
+      <Head>
+        {/* Common */}
+        <title>{data?.videoDetail.title}</title>
+        <meta name="keywords" content={data?.videoDetail.tags?.join(', ')} />
+        <meta name="description" content={data?.videoDetail.description} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={data?.videoDetail.title} />
+        <meta property="og:description" content={data?.videoDetail.description} />
+        <meta property="og:image" content={data?.videoDetail.thumbnail.url} />
+      </Head>
       <Layout hasNav={false} hasHeader={false}>
         {/* 영상 */}
         <Styled.VideoContainer>
-          <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+          {videoDetailData.url && (
+            <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+          )}
         </Styled.VideoContainer>
 
         <Styled.VideoDetailInfoContainer>
