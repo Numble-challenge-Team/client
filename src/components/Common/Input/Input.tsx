@@ -18,7 +18,7 @@ export interface InputPropsType {
   radius: string;
   required?: boolean;
   hasErrorDisplay?: boolean;
-  changeEvent?: (e: ChangeEvent<HTMLInputElement>) => void;
+  changeEvent?: (e: ChangeEvent<HTMLInputElement>, type?: string) => void;
   keyEvent?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 

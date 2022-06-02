@@ -25,6 +25,7 @@ function LoginPage() {
     handleSubmit,
   } = useForm<FormRegisterType>();
 
+  const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
@@ -57,9 +58,20 @@ function LoginPage() {
     },
   });
 
-  const handlePasswordValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  }, []);
+  const handleLoginChangeValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, type: string) => {
+      switch (type) {
+        case 'email':
+          setEmailValue(e.target.value);
+          break;
+        case 'password':
+          setPasswordValue(e.target.value);
+          break;
+        // no default
+      }
+    },
+    [emailValue, passwordValue]
+  );
 
   const handleLoginSubmit = useCallback(
     (data: LoginRequestDataType) => {
@@ -72,13 +84,13 @@ function LoginPage() {
       }
 
       const loginData = {
-        email: data.email,
+        email: emailValue || data.email,
         password: passwordValue || data.password,
       };
 
       loginMutation.mutate(loginData);
     },
-    [passwordValue, isFormErrorState, emailErrorMessage]
+    [emailValue, passwordValue, isFormErrorState, emailErrorMessage]
   );
 
   const handleSignupButton = () => {
@@ -86,43 +98,44 @@ function LoginPage() {
   };
 
   return (
-    <>
-      <CustomHead title="로그인" />
-      <Layout title="로그인" hasNav={false} hasHeader hasBackButton hasWhitespace>
-        <Styled.Section>
-          <Title margin="0 0 1.2rem 0">환영해요!</Title>
-          <Text margin="0 0 6rem 0">귀여운 친구들을 만나러 가 볼까요?</Text>
-          <form onSubmit={handleSubmit(handleLoginSubmit)}>
-            <label>E-mail</label>
-            <Input
-              label="email"
-              register={register}
-              pattern={EMAIL_VALIDATION}
-              placeholderText="이메일을 입력해 주세요."
-              hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-              margin="1.2rem"
-            />
-            <label>Password</label>
-            <Input
-              type="password"
-              label="password"
-              register={register}
-              placeholderText="비밀번호를 입력해 주세요."
-              hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-            />
-            {errors && <SignupStyle.ErrorMessage>{errors.email?.message}</SignupStyle.ErrorMessage>}
-            {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
+    <Layout title="로그인" hasNav={false} hasHeader hasBackButton hasWhitespace>
+      <Styled.Section>
+        <Title margin="0 0 1.2rem 0">환영해요!</Title>
+        <Text margin="0 0 6rem 0">귀여운 친구들을 만나러 가 볼까요?</Text>
+        <form onSubmit={handleSubmit(handleLoginSubmit)}>
+          <label>E-mail</label>
+          <Input
+            label="email"
+            register={register}
+            pattern={EMAIL_VALIDATION}
+            value={emailValue}
+            changeEvent={(e) => handleLoginChangeValue(e, 'email')}
+            placeholderText="이메일을 입력해 주세요."
+            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+            margin="1.2rem"
+          />
+          <label>Password</label>
+          <Input
+            type="password"
+            label="password"
+            register={register}
+            value={passwordValue}
+            changeEvent={(e) => handleLoginChangeValue(e, 'password')}
+            placeholderText="비밀번호를 입력해 주세요."
+            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+          />
+          {errors && <SignupStyle.ErrorMessage>{errors.email?.message}</SignupStyle.ErrorMessage>}
+          {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
-            <Button type="submit" margin="3.6rem 0 0 0">
-              로그인
-            </Button>
-            <Button backColor="none" hasBold={false} clickEvent={handleSignupButton}>
-              회원가입
-            </Button>
-          </form>
-        </Styled.Section>
-      </Layout>
-    </>
+          <Button type="submit" margin="3.6rem 0 0 0">
+            로그인
+          </Button>
+          <Button backColor="none" hasBold={false} clickEvent={handleSignupButton}>
+            회원가입
+          </Button>
+        </form>
+      </Styled.Section>
+    </Layout>
   );
 }
 
