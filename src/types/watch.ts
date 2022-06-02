@@ -47,6 +47,7 @@ export interface VideoDetailType {
   videoType: 'embedded' | 'upload';
   url: string;
   profileImg: ProfileImgType;
+  owner: boolean;
 }
 
 export interface VideoThumbnail {

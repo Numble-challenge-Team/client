@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { useCallback, useEffect, useState } from 'react';
@@ -46,6 +47,16 @@ function Home() {
 
   return (
     <>
+      <Head>
+        {/* Common */}
+        <title>OZ</title>
+        <meta name="keywords" content={['OZ', '동물'].join(', ')} />
+        <meta name="description" content="당신의 동물을 자랑하세요!" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="OZ" />
+        <meta property="og:description" content="당신의 동물을 자랑하세요!" />
+      </Head>
       {isFirstAccess ? (
         <Layout hasNav={false}>하이</Layout>
       ) : (

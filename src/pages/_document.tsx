@@ -33,7 +33,16 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          {/* Common */}
+          <meta name="robots" content="ALL" />
+          <meta name="author" content="OZ" />
+          <meta httpEquiv="content-type" content="text/html; charset=en" />
+          <meta name="content-language" content="ko" />
+
+          {/* Open Graph */}
+          <meta property="og:type" content="website" />
+          <meta property="og:locale" content="ko_KR" />
+          <meta property="og:site_name" content="OZ" />
         </Head>
         <body>
           <Main />

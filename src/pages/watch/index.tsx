@@ -1,13 +1,16 @@
+import Head from 'next/head';
+
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from 'react-query';
 import ReactPlayer from 'react-player/lazy';
 import { useSetRecoilState } from 'recoil';
 
+import { Icon, Profile, Tag, Text, Title } from '@components/Common';
 import Layout from '@components/Layout/Layout';
 import TapPanel from '@components/Watch/TapPanel/TapPanel';
-import { Icon, Profile, Tag, Text, Title } from '@components/Common';
 import WatchSkeleton from '@components/Watch/WatchSkeleton/WatchSkeleton';
+import ReportVideoModal from '@components/Watch/ReportVideoModal';
 
 import * as Styled from '@components/Watch/WatchStyle';
 
@@ -16,9 +19,9 @@ import { VideoIframeDataType } from '@/types/watch';
 import dateFormatter from '@utils/dateFormatter';
 
 import { useVideoDetailMutation, useVideoDetailQuery } from '@api/queries/watch';
-import { videoDetailTitleState } from '@store/videoDetailTitle';
 import { useReportsMutation } from '@api/queries/reports';
-import ReportVideoModal from '@components/Watch/ReportVideoModal';
+import { videoDetailTitleState } from '@store/videoDetailTitle';
+import MoveUpdateVideoPageButton from '@components/Watch/MoveUpdateVideoPageButton/MoveUpdateVideoPageButton';
 
 function VideoWatchPage() {
   const router = useRouter();
@@ -120,10 +123,23 @@ function VideoWatchPage() {
 
   return (
     <>
+      <Head>
+        {/* Common */}
+        <title>{data?.videoDetail.title}</title>
+        <meta name="keywords" content={data?.videoDetail.tags?.join(', ')} />
+        <meta name="description" content={data?.videoDetail.description} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={data?.videoDetail.title} />
+        <meta property="og:description" content={data?.videoDetail.description} />
+        <meta property="og:image" content={data?.videoDetail.thumbnail.url} />
+      </Head>
       <Layout hasNav={false} hasHeader={false}>
         {/* 영상 */}
         <Styled.VideoContainer>
-          <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+          {videoDetailData.url && (
+            <ReactPlayer title={videoDetailData.title} width="100%" height="100%" url={videoDetailData.url} controls />
+          )}
         </Styled.VideoContainer>
 
         <Styled.VideoDetailInfoContainer>
@@ -144,11 +160,15 @@ function VideoWatchPage() {
                 </Text>
               </div>
 
-              {/* 신고 버튼 */}
+              {/* 신고 버튼 or 수정 버튼 */}
               <div>
-                <button type="button" onClick={() => handleReportVideoButton('open')}>
-                  <Icon type="flag" width={18} height={18} />
-                </button>
+                {data?.videoDetail.owner ? (
+                  <MoveUpdateVideoPageButton videoId={data?.videoDetail.videoId} />
+                ) : (
+                  <button type="button" onClick={() => handleReportVideoButton('open')}>
+                    <Icon type="flag" width={18} height={18} />
+                  </button>
+                )}
               </div>
               {/* 좋아요 버튼 */}
               <div>

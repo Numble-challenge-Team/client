@@ -30,7 +30,6 @@ function MyVideoAdd(prop: MyVideoAddProps) {
     onSuccess: submitComplete('영상 업로드가 완료되었습니다.'),
     onError: submitComplete('영상 업로드에 실패했습니다.'),
   });
-
   return (
     <Layout hasNav={false} title="직접 영상 업로드" hasBackButton>
       <VideoForm formType="normal" isUploading={uploadMutation.isLoading} submitFormData={uploadMutation.mutate} />
