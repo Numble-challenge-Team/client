@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
-import CustomHead from '@components/CustomHead/CustomHead';
 
 import * as Styled from '@components/Signup/SignupPageStyle';
 import * as SectionStyled from '@components/Layout/LayoutStyle';
@@ -108,48 +107,45 @@ function SignupNicknamePage() {
   }, [errors.nickname?.message]);
 
   return (
-    <>
-      <CustomHead title="회원가입 | 닉네임 입력" />
-      <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
-        <SectionStyled.Section>
-          <Text margin="0 0 0.8rem 0">거의 다 왔어요!</Text>
-          <Title margin="0 0 2.8rem 0">나만의 닉네임으로 시작해요.</Title>
-          <form onSubmit={handleSubmit(handleNicknameSubmit)}>
-            <label>Nickname</label>
-            <Input
-              type="name"
-              label="nickname"
-              register={register}
-              pattern={NICKNAME_VALIDATION}
-              placeholderText="별명"
-              hasErrorDisplay={isFormErrorState || !!errors.nickname?.message}
-              required
-            />
-            {errors && <Styled.ErrorMessage>{errors.nickname?.message}</Styled.ErrorMessage>}
-            {isFormErrorState && <Styled.ErrorMessage>{nicknameErrorMessage}</Styled.ErrorMessage>}
+    <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
+      <SectionStyled.Section>
+        <Text margin="0 0 0.8rem 0">거의 다 왔어요!</Text>
+        <Title margin="0 0 2.8rem 0">나만의 닉네임으로 시작해요.</Title>
+        <form onSubmit={handleSubmit(handleNicknameSubmit)}>
+          <label>Nickname</label>
+          <Input
+            type="name"
+            label="nickname"
+            register={register}
+            pattern={NICKNAME_VALIDATION}
+            placeholderText="별명"
+            hasErrorDisplay={isFormErrorState || !!errors.nickname?.message}
+            required
+          />
+          {errors && <Styled.ErrorMessage>{errors.nickname?.message}</Styled.ErrorMessage>}
+          {isFormErrorState && <Styled.ErrorMessage>{nicknameErrorMessage}</Styled.ErrorMessage>}
 
-            <Button type="submit" margin="3.6rem 0 0 0">
-              완료
-            </Button>
-          </form>
+          <Button type="submit" margin="3.6rem 0 0 0">
+            완료
+          </Button>
+        </form>
 
-          <Snackbar
-            ref={alertRef}
-            open={isShowSignupAlert}
-            autoHideDuration={2000}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            onClick={handleCloseAlert}
-            test-id="test"
-          >
-            <Alert severity={alertState}>
-              <Styled.AlertMessage>
-                {alertState === 'success' ? '회원가입이 완료되었습니다.' : '죄송합니다. 다시 회원가입 해 주세요.'}
-              </Styled.AlertMessage>
-            </Alert>
-          </Snackbar>
-        </SectionStyled.Section>
-      </Layout>
-    </>
+        <Snackbar
+          ref={alertRef}
+          open={isShowSignupAlert}
+          autoHideDuration={2000}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          onClick={handleCloseAlert}
+          test-id="test"
+        >
+          <Alert severity={alertState}>
+            <Styled.AlertMessage>
+              {alertState === 'success' ? '회원가입이 완료되었습니다.' : '죄송합니다. 다시 회원가입 해 주세요.'}
+            </Styled.AlertMessage>
+          </Alert>
+        </Snackbar>
+      </SectionStyled.Section>
+    </Layout>
   );
 }
 

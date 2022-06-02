@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
-import CustomHead from '@components/CustomHead/CustomHead';
 
 import * as Styled from '@components/Layout/LayoutStyle';
 import * as SignupStyle from '@components/Signup/SignupPageStyle';

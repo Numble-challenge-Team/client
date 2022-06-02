@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import GlobalStyle from '@styles/global-styles';
@@ -22,6 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={Theme}>
           <GlobalStyle />
+          <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
           <Component {...pageProps} />
           <SVGSprite />
         </ThemeProvider>

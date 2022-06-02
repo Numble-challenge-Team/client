@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQueryClient } from 'react-query';
@@ -6,7 +8,6 @@ import { useSetRecoilState } from 'recoil';
 
 import { Icon, Profile, Tag, Text, Title } from '@components/Common';
 import Layout from '@components/Layout/Layout';
-import CustomHead from '@components/CustomHead/CustomHead';
 import TapPanel from '@components/Watch/TapPanel/TapPanel';
 import WatchSkeleton from '@components/Watch/WatchSkeleton/WatchSkeleton';
 import ReportVideoModal from '@components/Watch/ReportVideoModal';
@@ -40,16 +41,14 @@ function VideoWatchPage() {
     title: '',
     url: '',
   });
-  const [thumbnailURL, setThumbnailURL] = useState<string>('');
 
   const { data, isLoading } = useVideoDetailQuery(videoId, {
     enabled: !!videoId,
     staleTime: 1000 * 60,
     onSuccess: (data) => {
-      const { title, url, videoType, profileImg, thumbnail } = data.videoDetail;
+      const { title, url, videoType, profileImg } = data.videoDetail;
       setVideoTitle(() => title);
       setUserProfileImage(profileImg.url);
-      setThumbnailURL(thumbnail.url);
 
       if (videoType === 'embedded') {
         setVideoDetailData({ title, url });
@@ -124,13 +123,17 @@ function VideoWatchPage() {
 
   return (
     <>
-      <CustomHead
-        title={videoDetailData.title}
-        description={data?.videoDetail.description}
-        keywords={data?.videoDetail.tags}
-      >
-        <meta property="og:image" content={thumbnailURL} />
-      </CustomHead>
+      <Head>
+        {/* Common */}
+        <title>{data?.videoDetail.title}</title>
+        <meta name="keywords" content={data?.videoDetail.tags?.join(', ')} />
+        <meta name="description" content={data?.videoDetail.description} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={data?.videoDetail.title} />
+        <meta property="og:description" content={data?.videoDetail.description} />
+        <meta property="og:image" content={data?.videoDetail.thumbnail.url} />
+      </Head>
       <Layout hasNav={false} hasHeader={false}>
         {/* 영상 */}
         <Styled.VideoContainer>

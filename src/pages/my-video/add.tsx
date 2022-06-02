@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 
 import Layout from '@components/Layout/Layout';
-import CustomHead from '@components/CustomHead/CustomHead';
 import { VideoForm } from '@components/MyVideo/Upload/Form';
 
 import { useNormalUploadMutation } from '@api/queries/upload';
@@ -32,12 +31,9 @@ function MyVideoAdd(prop: MyVideoAddProps) {
     onError: submitComplete('영상 업로드에 실패했습니다.'),
   });
   return (
-    <>
-      <CustomHead title="직접 영상 업로드" description="자랑하고 싶은 동물 영상을 업로드 해보세요." />
-      <Layout hasNav={false} title="직접 영상 업로드" hasBackButton>
-        <VideoForm formType="normal" isUploading={uploadMutation.isLoading} submitFormData={uploadMutation.mutate} />
-      </Layout>
-    </>
+    <Layout hasNav={false} title="직접 영상 업로드" hasBackButton>
+      <VideoForm formType="normal" isUploading={uploadMutation.isLoading} submitFormData={uploadMutation.mutate} />
+    </Layout>
   );
 }
 

@@ -1,9 +1,9 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { useCallback, useEffect, useState } from 'react';
 
 import Layout from '@components/Layout/Layout';
-import CustomHead from '@components/CustomHead/CustomHead';
 import { Alert, Button, Text, VideoList } from '@components/Common';
 
 import { useAllVideosQuery } from '@api/queries/videos';
@@ -47,7 +47,16 @@ function Home() {
 
   return (
     <>
-      <CustomHead title="OZ" description="당신의 동물을 자랑하세요!" keywords={['OZ', '동물']} />
+      <Head>
+        {/* Common */}
+        <title>OZ</title>
+        <meta name="keywords" content={['OZ', '동물'].join(', ')} />
+        <meta name="description" content="당신의 동물을 자랑하세요!" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="OZ" />
+        <meta property="og:description" content="당신의 동물을 자랑하세요!" />
+      </Head>
       {isFirstAccess ? (
         <Layout hasNav={false}>하이</Layout>
       ) : (

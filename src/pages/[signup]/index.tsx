@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
-import CustomHead from '@components/CustomHead/CustomHead';
 
 import * as Styled from '@components/Layout/LayoutStyle';
 
@@ -58,32 +57,29 @@ function SingupEmailPage() {
   }, [errors.email?.message]);
 
   return (
-    <>
-      <CustomHead title="회원가입 | 이메일 입력" />
-      <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
-        <Styled.Section>
-          <Text margin="0 0 0.8rem 0">안녕하세요. 오즈가 처음이신가요?</Text>
-          <Title margin="0 0 2.8rem 0">먼저 이메일을 확인해 주세요!</Title>
-          <form onSubmit={handleSubmit(handleEmailSubmit)}>
-            <label>E-mail</label>
-            <Input
-              label="email"
-              register={register}
-              pattern={EMAIL_VALIDATION}
-              placeholderText="이메일을 입력해 주세요."
-              hasErrorDisplay={isFormErrorState || !!errors.email?.message}
-              required
-            />
-            {errors && <Text hasError={!!errors}>{errors.email?.message}</Text>}
-            {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
+    <Layout title="회원가입" hasNav={false} hasHeader hasBackButton hasWhitespace>
+      <Styled.Section>
+        <Text margin="0 0 0.8rem 0">안녕하세요. 오즈가 처음이신가요?</Text>
+        <Title margin="0 0 2.8rem 0">먼저 이메일을 확인해 주세요!</Title>
+        <form onSubmit={handleSubmit(handleEmailSubmit)}>
+          <label>E-mail</label>
+          <Input
+            label="email"
+            register={register}
+            pattern={EMAIL_VALIDATION}
+            placeholderText="이메일을 입력해 주세요."
+            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+            required
+          />
+          {errors && <Text hasError={!!errors}>{errors.email?.message}</Text>}
+          {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
 
-            <Button type="submit" margin="3.6rem 0 0 0">
-              다음
-            </Button>
-          </form>
-        </Styled.Section>
-      </Layout>
-    </>
+          <Button type="submit" margin="3.6rem 0 0 0">
+            다음
+          </Button>
+        </form>
+      </Styled.Section>
+    </Layout>
   );
 }
 
