@@ -6,14 +6,13 @@ import { useRouter } from 'next/router';
 import { Button, Input, Title, Text } from '@components/Common';
 import Layout from '@components/Layout/Layout';
 
+import useLogin from '@components/Login/useLogin';
+
 import * as Styled from '@components/Layout/LayoutStyle';
-import * as SignupStyle from '@components/Signup/SignupPageStyle';
 
 import { EMAIL_VALIDATION } from '@constants/validation';
 import { LoginRequestDataType } from '@/types/login';
 import { FormRegisterType } from '@/types/signup';
-
-import { useLoginMutation } from '@api/queries/users';
 
 function LoginPage() {
   const router = useRouter();
@@ -26,36 +25,9 @@ function LoginPage() {
 
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
-  const [isFormErrorState, setIsFormErrorState] = useState<boolean>(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
+  const [noDataErrorMessage, setNoDataErrorMessage] = useState<string>('');
 
-  const loginMutation = useLoginMutation({
-    onMutate: () => {
-      setIsFormErrorState(false);
-      setEmailErrorMessage('');
-    },
-    onSuccess: (data) => {
-      const { accessToken, refreshToken } = data.data.data;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-
-      router.push('/');
-    },
-    onError: (error) => {
-      if (error.response) {
-        const { code, status, detail } = error.response.data;
-
-        setIsFormErrorState(true);
-        if (status === 404) {
-          setEmailErrorMessage(detail);
-        }
-
-        if (code === 400) {
-          setEmailErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
-        }
-      }
-    },
-  });
+  const { userLogin, loginErrorMessage } = useLogin();
 
   const handleLoginChangeValue = useCallback(
     (e: ChangeEvent<HTMLInputElement>, type: string) => {
@@ -74,11 +46,10 @@ function LoginPage() {
 
   const handleLoginSubmit = useCallback(
     (data: LoginRequestDataType) => {
-      setEmailErrorMessage('');
+      setNoDataErrorMessage('');
 
       if ((data.email === '' || data.password === '') && passwordValue === '') {
-        setIsFormErrorState(true);
-        setEmailErrorMessage('이메일 또는 비밀번호를 입력해 주세요.');
+        setNoDataErrorMessage('이메일 또는 비밀번호를 입력해 주세요.');
         return;
       }
 
@@ -87,10 +58,16 @@ function LoginPage() {
         password: passwordValue || data.password,
       };
 
-      loginMutation.mutate(loginData);
+      userLogin(loginData);
     },
-    [emailValue, passwordValue, isFormErrorState, emailErrorMessage]
+    [emailValue, passwordValue, noDataErrorMessage]
   );
+
+  const handleErrorMessage = useCallback(() => {
+    const hasErrorMessage = !!errors.email?.message || !!noDataErrorMessage || !!loginErrorMessage;
+
+    return hasErrorMessage;
+  }, [errors, noDataErrorMessage, loginErrorMessage]);
 
   const handleSignupButton = () => {
     router.push('/signup');
@@ -110,7 +87,7 @@ function LoginPage() {
             value={emailValue}
             changeEvent={(e) => handleLoginChangeValue(e, 'email')}
             placeholderText="이메일을 입력해 주세요."
-            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+            hasErrorDisplay={handleErrorMessage()}
             margin="1.2rem"
           />
           <label>Password</label>
@@ -121,10 +98,11 @@ function LoginPage() {
             value={passwordValue}
             changeEvent={(e) => handleLoginChangeValue(e, 'password')}
             placeholderText="비밀번호를 입력해 주세요."
-            hasErrorDisplay={isFormErrorState || !!errors.email?.message}
+            hasErrorDisplay={handleErrorMessage()}
           />
-          {errors && <SignupStyle.ErrorMessage>{errors.email?.message}</SignupStyle.ErrorMessage>}
-          {isFormErrorState && <Text hasError={isFormErrorState}>{emailErrorMessage}</Text>}
+          {errors && <Text hasError={!!errors.email?.message}>{errors.email?.message}</Text>}
+          {noDataErrorMessage && <Text hasError={!!noDataErrorMessage}>{noDataErrorMessage}</Text>}
+          {loginErrorMessage && <Text hasError={!!loginErrorMessage}>{loginErrorMessage}</Text>}
 
           <Button type="submit" margin="3.6rem 0 0 0">
             로그인
